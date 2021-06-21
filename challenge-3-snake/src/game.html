@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Snake</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Ssssssssnake!</h1>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div class="menu-bar">
+            <ul>
+                <li>
+                    <button id="start-button" class="menu-button">Start</button>
+                </li>
+                <li>
+                    <label>Difficulty:</label>
+                    <select id="difficulty-modifier" name="difficulty">
+                        <option value="very-easy">Very Easy</option>
+                        <option value="easy">Easy</option>
+                        <option value="normal">Normal</option>
+                        <option value="hard">Hard</option>
+                        <option value="very-hard">Very Hard</option>                
+                    </select>
+                </li>
+                <li>
+                    <label>Score: </label>
+                    <label id="score">0</label>
+                </li>
+                <li>
+                    <label>High Score: </label>
+            <label id="high-score">0</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+<script type="module" src="./game.js"></script>
+</html>
