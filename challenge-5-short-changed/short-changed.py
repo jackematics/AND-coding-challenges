@@ -41,11 +41,11 @@ def get_most_efficient_change(change_required, cash_register):
     return change
 
 print('Efficient change: ')
-print(format_change_data(get_most_efficient_change(get_change_required(7.11, 10.0), get_cash_register())))
-print(format_change_data(get_most_efficient_change(get_change_required(5.52, 7.0), get_cash_register())))
-print(format_change_data(get_most_efficient_change(get_change_required(15.23, 20.0), get_cash_register())))
-print(format_change_data(get_most_efficient_change(get_change_required(0.50, 5), get_cash_register())))
-print(format_change_data(get_most_efficient_change(get_change_required(8.85, 10), get_cash_register())))
+print('Transaction: £7.11, Cash provided: £10: ', format_change_data(get_most_efficient_change(get_change_required(7.11, 10.0), get_cash_register())))
+print('Transaction: £5.52, Cash provided: £7: ', format_change_data(get_most_efficient_change(get_change_required(5.52, 7.0), get_cash_register())))
+print('Transaction: £15.23, Cash provided: £20: ', format_change_data(get_most_efficient_change(get_change_required(15.23, 20.0), get_cash_register())))
+print('Transaction: 50p, Cash provided: £5: ', format_change_data(get_most_efficient_change(get_change_required(0.50, 5), get_cash_register())))
+print('Transaction: £8.85, Cash provided: £10: ', format_change_data(get_most_efficient_change(get_change_required(8.85, 10), get_cash_register())))
 
 # Stretch Goal
 
@@ -84,19 +84,17 @@ def get_least_efficient_change(change_required, cash_register):
             coins_used[current_cash_index][1] += 1
 
         if change_required < 0:
-            leftovers = get_most_efficient_change(-change_required, coins_used)
-            for key in leftovers:
-                change[key] = change[key] - leftovers[key]
-                change_required += (leftovers[key] * key)
+            leftover = get_most_efficient_change(-change_required, coins_used)
+            for key in leftover:
+                change[key] = change[key] - leftover[key]
+                change_required += (leftover[key] * key)
        
-    change = handle_last_change_item(change)
     return change
 
 print()
-print()
 print('Inefficient change: ')
-print(format_change_data(get_least_efficient_change(get_change_required(7.11, 10.0), get_cash_register())))
-print(format_change_data(get_least_efficient_change(get_change_required(5.52, 7.0), get_cash_register())))
-print(format_change_data(get_least_efficient_change(get_change_required(15.23, 20.0), get_cash_register())))
-print(format_change_data(get_least_efficient_change(get_change_required(0.50, 5), get_cash_register())))
-print(format_change_data(get_least_efficient_change(get_change_required(8.85, 10), get_cash_register())))
+print('Transaction: £7.11, Cash provided: £10: ', format_change_data(get_least_efficient_change(get_change_required(7.11, 10.0), get_cash_register())))
+print('Transaction: £5.52, Cash provided: £7: ', format_change_data(get_least_efficient_change(get_change_required(5.52, 7.0), get_cash_register())))
+print('Transaction: £15.23, Cash provided: £20: ', format_change_data(get_least_efficient_change(get_change_required(15.23, 20.0), get_cash_register())))
+print('Transaction: 50p, Cash provided: £5: ', format_change_data(get_least_efficient_change(get_change_required(0.50, 5), get_cash_register())))
+print('Transaction: £8.85, Cash provided: £10: ', format_change_data(get_least_efficient_change(get_change_required(8.85, 10), get_cash_register())))
