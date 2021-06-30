@@ -55,14 +55,6 @@ def initalise_coins_used(cash_register):
         denominations.append([cash[0], 0])
     return denominations
 
-def handle_last_change_item(change):
-    last_change_denomination = list(change.items())[-1][0]
-    last_change_item = change[last_change_denomination]
-    last_change_item -= 1
-    if last_change_item == 0:
-        del change[last_change_denomination]
-    return change
-
 def get_least_efficient_change(change_required, cash_register): 
     current_cash_index = len(cash_register) - 1
     initial_change = change_required
