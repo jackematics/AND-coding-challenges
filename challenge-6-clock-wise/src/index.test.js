@@ -1,18 +1,16 @@
 /**
  * @jest-environment jsdom
  */
-
-const { expect, it, describe } = require("@jest/globals");
-const { 
-    angliciseTime, 
+import { angliciseTime, 
     angliciseHour, 
     twelvifyHour, 
     angliciseMinute,
     validHour,
     validMinute,
-    validTime
-} = require('./index');
+    validTime 
+} from './index.js';
 
+const { expect, it, describe } = require("@jest/globals");
 describe('When anglicising a 24 hour time', () => {
     it('should return the 12 hour time in English plus pm if it is in the afternoon', () => {
         expect(angliciseTime('12:00')).toBe('It is twelve  pm.');

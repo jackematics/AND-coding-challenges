@@ -6,7 +6,7 @@ const submitTime = document.querySelector('#submit-time');
 const anglicisedTime = document.querySelector('#anglicised-time');
 const playAudio = document.querySelector('#play-audio');
 
-const angliciseTime = (time) => {
+export const angliciseTime = (time) => {
     const hour = time.substring(0, 2);
     const minute = time.substring(3, 5);
     const meridiem = parseInt(hour) < 12 ? 'am' : 'pm';
@@ -17,7 +17,7 @@ const angliciseTime = (time) => {
     return `It is ${anglicisedHour} ${anglicisedMinute} ${meridiem}.`;
 }
 
-const angliciseHour = (hour) => {
+export const angliciseHour = (hour) => {
     hour = twelvifyHour(hour); 
 
     if (hour[0] === '0')
@@ -28,8 +28,8 @@ const angliciseHour = (hour) => {
         return TENS[0];
 }
 
-const twelvifyHour = (hour) => {
-    twelvifiedHour = parseInt(hour) % 12;
+export const twelvifyHour = (hour) => {
+    let twelvifiedHour = parseInt(hour) % 12;
     if (twelvifiedHour === 0)
         twelvifiedHour = 12;
 
@@ -39,7 +39,7 @@ const twelvifyHour = (hour) => {
     return twelvifiedHour.toString();
 }
 
-const angliciseMinute = (minute) => {
+export const angliciseMinute = (minute) => {
     if (minute[0] === '0')
         return minute[1] === '0' ? `` : `o'${ONES[parseInt(minute[1]) - 1]}`;
     else if (minute[0] === '1' && minute[1] !== '0')
@@ -52,17 +52,17 @@ const angliciseMinute = (minute) => {
     }
 }
 
-const validHour = (hour) => {
+export const validHour = (hour) => {
     return hour.length == 2 &&
            (0 <= parseInt(hour) && parseInt(hour) <= 23);
 }
 
-const validMinute = (minute) => {
+export const validMinute = (minute) => {
     return minute.length == 2 &&
            (0 <= parseInt(minute) && parseInt(minute) <= 59);
 }
 
-const validTime = (hour, minute) => {
+export const validTime = (hour, minute) => {
     return validHour(hour) && validMinute(minute);
 }
 
@@ -101,14 +101,3 @@ if (submitTime)
 
 if (playAudio)
     playAudio.addEventListener('click', handlePlayAudio);
-
-
-module.exports = { 
-    angliciseTime, 
-    angliciseHour, 
-    twelvifyHour, 
-    angliciseMinute,
-    validHour,
-    validMinute,
-    validTime
-}
