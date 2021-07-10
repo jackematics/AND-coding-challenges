@@ -1,5 +1,5 @@
 const ONES = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-const TEENS = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen',' seventeen', 'eighteen', 'nineteen'];
+const TEENS = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
 const TENS = ['ten', 'twenty', 'thirty', 'forty', 'fifty'];
 
 const submitTime = document.querySelector('#submit-time');
@@ -9,7 +9,7 @@ const playAudio = document.querySelector('#play-audio');
 const angliciseTime = (time) => {
     const hour = time.substring(0, 2);
     const minute = time.substring(3, 5);
-    const meridiem = parseInt(hour) < 12 || parseInt(hour) === 24 ? 'am' : 'pm';
+    const meridiem = parseInt(hour) < 12 ? 'am' : 'pm';
 
     const anglicisedHour = angliciseHour(hour);
     const anglicisedMinute = angliciseMinute(minute);
@@ -52,11 +52,63 @@ const angliciseMinute = (minute) => {
     }
 }
 
+const validHour = (hour) => {
+    return hour.length == 2 &&
+           (0 <= parseInt(hour) && parseInt(hour) <= 23);
+}
+
+const validMinute = (minute) => {
+    return minute.length == 2 &&
+           (0 <= parseInt(minute) && parseInt(minute) <= 59);
+}
+
+const validTime = (hour, minute) => {
+    return validHour(hour) && validMinute(minute);
+}
+
 const handleTimeSubmit = () => {
     const hourInput = document.querySelector('#hour-input');
     const minuteInput = document.querySelector('#minute-input');
-    const time = `${hourInput.value}:${minuteInput.value}`;
-    anglicisedTime.textContent = angliciseTime(time);
+    const validationMessage = document.querySelector('#time-validation-message');
+
+    if (validTime(hourInput.value, minuteInput.value)) {
+        const time = `${hourInput.value}:${minuteInput.value}`;
+        anglicisedTime.textContent = angliciseTime(time);
+
+        validationMessage.textContent = '';
+    }
+    else {
+        validationMessage.textContent = 'Must input a valid 24-hour time.';
+    }
 }
 
-submitTime.addEventListener('click', handleTimeSubmit);
+const handlePlayAudio = () => {
+    if (anglicisedTime.textContent) {
+        const synth = window.speechSynthesis;
+        const utter = new SpeechSynthesisUtterance(anglicisedTime.textContent.toLocaleUpperCase());
+        utter.lang = 'en-gb'
+    
+        synth.speak(utter);
+    }
+    else {
+        const validationMessage = document.querySelector('#audio-validation-message');
+        validationMessage.textContent = 'There is no text to recite.';
+    }
+}
+
+if (submitTime)
+    submitTime.addEventListener('click', handleTimeSubmit);
+
+if (playAudio)
+    playAudio.addEventListener('click', handlePlayAudio);
+
+
+module.exports = { 
+    angliciseTime, 
+    angliciseHour, 
+    twelvifyHour, 
+    angliciseMinute,
+    validHour,
+    validMinute,
+    validTime
+}
