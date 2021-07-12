@@ -68,20 +68,54 @@ export const validTime = (hour, minute) => {
     return validHour(hour) && validMinute(minute);
 }
 
+const canvas = document.querySelector('#canvas');
+const ctx = canvas.getContext('2d');
+
+const timeIncrementArrow = [
+    { x: 765, y: 266 },
+    { x: 780, y: 281 },
+    { x: 750, y: 281 }
+]
+
+const timeDecrementArrow = [
+    { x: 750, y: 286 },
+    { x: 780, y: 286 },
+    { x: 765, y: 301 }
+]
+
+const timeSetButton = {
+    centreX: 593,
+    centreY: 295,
+    radiuxX: 15,
+    radiusY: 10
+}
+
+const time = {
+    hour: '00',
+    minute: '00'
+}
+
+const digitStartingPositions = [
+    { x: 625, y: 270 },
+    { x: 650, y: 270 },
+    { x: 690, y: 270 },
+    { x: 715, y: 270 }
+];
+
+const dots = [
+    { centreX: 680, centreY: 277, radius: 2 },
+    { centreX: 680, centreY: 292, radius: 2 }
+];
+
+const clockDisplay = new ClockDisplay(ctx, time, timeIncrementArrow, timeDecrementArrow, digitStartingPositions, dots);
+
 const handleTimeSubmit = () => {
-    const hourInput = document.querySelector('#hour-input');
-    const minuteInput = document.querySelector('#minute-input');
-    const validationMessage = document.querySelector('#time-validation-message');
+    const hourInput = clockDisplay.getTime().hour;
+    console.log(hourInput);
+    const minuteInput = clockDisplay.getTime().minute;
 
-    if (validTime(hourInput.value, minuteInput.value)) {
-        const time = `${hourInput.value}:${minuteInput.value}`;
-        anglicisedTime.textContent = angliciseTime(time);
-
-        validationMessage.textContent = '';
-    }
-    else {
-        validationMessage.textContent = 'Must input a valid 24-hour time.';
-    }
+    const time = `${hourInput}:${minuteInput}`;
+    anglicisedTime.textContent = angliciseTime(time);
 }
 
 const handlePlayAudio = () => {
@@ -105,40 +139,6 @@ if (submitTime) {
 if (playAudio) {
     playAudio.addEventListener('click', handlePlayAudio);
 }
-
-const canvas = document.querySelector('#canvas');
-const ctx = canvas.getContext('2d');
-
-const timeIncrementArrow = [
-    { x: 755, y: 266 },
-    { x: 770, y: 281 },
-    { x: 740, y: 281 }
-]
-
-const timeDecrementArrow = [
-    { x: 740, y: 286 },
-    { x: 770, y: 286 },
-    { x: 755, y: 301 }
-]
-
-const time = {
-    hour: '00',
-    minute: '00'
-}
-
-const digitStartingPositions = [
-    { x: 615, y: 270 },
-    { x: 640, y: 270 },
-    { x: 680, y: 270 },
-    { x: 705, y: 270 }
-];
-
-const dots = [
-    { centreX: 670, centreY: 277, radius: 2 },
-    { centreX: 670, centreY: 292, radius: 2 }
-];
-
-const clockDisplay = new ClockDisplay(ctx, time, timeIncrementArrow, timeDecrementArrow, digitStartingPositions, dots);
 
 const drawBackground = (url) => {
     return new Promise((resolve) => {
@@ -182,6 +182,13 @@ const handleCanvasClick = (canvas, e) => {
         clockDisplay.decrementTime();
         drawBedroom();
     }
+    else if (isInsideEllipse(
+        timeSetButton.centreX, timeSetButton.centreY,
+        timeSetButton.radiuxX, timeSetButton.radiusY,
+        x, y
+    )) {
+        handleTimeSubmit();
+    }
 }
 
 const isInsideTriangle = (x1, y1, x2, y2, x3, y3, x, y) => {
@@ -197,4 +204,25 @@ const area = (x1, y1, x2, y2, x3, y3) => {
     return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
 }
 
-canvas.addEventListener('mousedown', (e) => handleCanvasClick(canvas, e));
+const isInsideEllipse = (centreX, centreY, radiuxX, radiusY, x, y) => {
+    const p = (parseInt(Math.pow((x - centreX), 2)) / parseInt(Math.pow(radiusY, 2)))
+            + (parseInt(Math.pow((y - centreY), 2)) / parseInt(Math.pow(radiuxX, 2)));
+
+    return p <= 1;
+}
+
+let timer = null;
+
+const mouseDone = () => {
+    clearInterval(timer);
+}
+
+canvas.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    timer = setInterval(() => {
+        handleCanvasClick(canvas, e)
+    }, 50)
+});
+
+canvas.addEventListener("mouseup", mouseDone);
+canvas.addEventListener("mouseleave", mouseDone);

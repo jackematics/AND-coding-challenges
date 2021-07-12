@@ -7,6 +7,7 @@ class ClockDisplay {
     #time;
     #timeDecrementArrow;
     #timeIncrementArrow;
+    #timeMessage;
 
     constructor(ctx, time, timeIncrementArrow, timeDecrementArrow, digitStartingPositions, dots) {
         this.#ctx = ctx;
@@ -17,6 +18,7 @@ class ClockDisplay {
         this.#dots = dots;
         this.#dx = 20;
         this.#dy = 15; 
+        this.#timeMessage = '';
 
         this.init();
     }
@@ -25,7 +27,12 @@ class ClockDisplay {
         this.drawClockDisplay();
     }
 
+    getTime() {
+        return this.#time;
+    }
+
     drawClockDisplay() {
+        this.#drawTimeSet();
         this.#drawTimeContainer();
         this.#drawArrow(this.#timeIncrementArrow);
         this.#drawArrow(this.#timeDecrementArrow);
@@ -78,10 +85,22 @@ class ClockDisplay {
             ? `0${minuteInteger.toString()}`
             : minuteInteger.toString();
     }
+
+    #drawTimeSet() {
+        this.#ctx.beginPath();
+        this.#ctx.strokeStyle = 'red';
+        this.#ctx.ellipse(593, 295, 15, 10, 0, Math.PI * 2, false);
+        this.#ctx.fillStyle = 'red';
+        this.#ctx.fill();
+        this.#ctx.stroke();
+        this.#ctx.font = 'bold 12px Arial';
+        this.#ctx.fillStyle = 'black';
+        this.#ctx.fillText('SET', 581, 299);
+    }
     
     #drawTimeContainer() {
         this.#ctx.beginPath();
-        this.#ctx.rect(605, 264, 130, 40);
+        this.#ctx.rect(615, 264, 130, 40);
         this.#ctx.strokeStyle = 'red';
         this.#ctx.stroke();
     }
