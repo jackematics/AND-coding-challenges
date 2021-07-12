@@ -1,7 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import { angliciseTime, 
+import { 
+    angliciseTime, 
     angliciseHour, 
     twelvifyHour, 
     angliciseMinute,
