@@ -7,7 +7,7 @@ class ClockDisplay {
     #time;
     #timeDecrementArrow;
     #timeIncrementArrow;
-    #timeMessage;
+    #englishTime;
 
     constructor(ctx, time, timeIncrementArrow, timeDecrementArrow, digitStartingPositions, dots) {
         this.#ctx = ctx;
@@ -18,7 +18,7 @@ class ClockDisplay {
         this.#dots = dots;
         this.#dx = 20;
         this.#dy = 15; 
-        this.#timeMessage = '';
+        this.#englishTime = '';
 
         this.init();
     }
@@ -31,6 +31,10 @@ class ClockDisplay {
         return this.#time;
     }
 
+    setEnglishTime(englishTime) {
+        this.#englishTime = englishTime;
+    }
+
     drawClockDisplay() {
         this.#drawTimeSet();
         this.#drawTimeContainer();
@@ -38,6 +42,7 @@ class ClockDisplay {
         this.#drawArrow(this.#timeDecrementArrow);
         this.#drawDots(this.#dots);
         this.#drawTime(this.#time);
+        this.#drawEnglishTime(this.#englishTime);
     }
 
     incrementTime() {
@@ -128,6 +133,12 @@ class ClockDisplay {
         this.#ctx.fillStyle = 'red'
         this.#ctx.fill();
         this.#ctx.stroke();
+    }
+
+    #drawEnglishTime() {
+        this.#ctx.font = 'bold 40px Arial';
+        this.#ctx.fillStyle = 'black';
+        this.#ctx.fillText(this.#englishTime, 500, 150);
     }
     
     #drawTime(time) {

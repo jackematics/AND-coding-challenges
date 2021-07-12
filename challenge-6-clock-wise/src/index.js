@@ -68,6 +68,24 @@ export const validTime = (hour, minute) => {
     return validHour(hour) && validMinute(minute);
 }
 
+const handlePlayAudio = () => {
+    if (anglicisedTime.textContent) {
+        const synth = window.speechSynthesis;
+        const utter = new SpeechSynthesisUtterance(anglicisedTime.textContent.toLocaleUpperCase());
+        utter.lang = 'en-gb'
+    
+        synth.speak(utter);
+    }
+    else {
+        const validationMessage = document.querySelector('#audio-validation-message');
+        validationMessage.textContent = 'There is no text to recite.';
+    }
+}
+
+if (playAudio) {
+    playAudio.addEventListener('click', handlePlayAudio);
+}
+
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
 
@@ -109,37 +127,6 @@ const dots = [
 
 const clockDisplay = new ClockDisplay(ctx, time, timeIncrementArrow, timeDecrementArrow, digitStartingPositions, dots);
 
-const handleTimeSubmit = () => {
-    const hourInput = clockDisplay.getTime().hour;
-    console.log(hourInput);
-    const minuteInput = clockDisplay.getTime().minute;
-
-    const time = `${hourInput}:${minuteInput}`;
-    anglicisedTime.textContent = angliciseTime(time);
-}
-
-const handlePlayAudio = () => {
-    if (anglicisedTime.textContent) {
-        const synth = window.speechSynthesis;
-        const utter = new SpeechSynthesisUtterance(anglicisedTime.textContent.toLocaleUpperCase());
-        utter.lang = 'en-gb'
-    
-        synth.speak(utter);
-    }
-    else {
-        const validationMessage = document.querySelector('#audio-validation-message');
-        validationMessage.textContent = 'There is no text to recite.';
-    }
-}
-
-if (submitTime) {
-    submitTime.addEventListener('click', handleTimeSubmit);
-}
-
-if (playAudio) {
-    playAudio.addEventListener('click', handlePlayAudio);
-}
-
 const drawBackground = (url) => {
     return new Promise((resolve) => {
         const background = new Image();
@@ -163,6 +150,7 @@ const handleCanvasClick = (canvas, e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+    clockDisplay.setEnglishTime('');
 
     if (isInsideTriangle(
         timeIncrementArrow[0].x, timeIncrementArrow[0].y, 
@@ -209,6 +197,15 @@ const isInsideEllipse = (centreX, centreY, radiuxX, radiusY, x, y) => {
             + (parseInt(Math.pow((y - centreY), 2)) / parseInt(Math.pow(radiuxX, 2)));
 
     return p <= 1;
+}
+
+const handleTimeSubmit = () => {
+    const hourInput = clockDisplay.getTime().hour;
+    const minuteInput = clockDisplay.getTime().minute;
+
+    const time = `${hourInput}:${minuteInput}`;
+    clockDisplay.setEnglishTime(angliciseTime(time));
+    drawBedroom();
 }
 
 let timer = null;
