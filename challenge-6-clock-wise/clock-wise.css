@@ -1,3 +1,14 @@
 #canvas{
     border:1px solid black;
 }
+
+body {
+    background-color: #2c9e98;
+    color: #000000;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

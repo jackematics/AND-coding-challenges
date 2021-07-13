@@ -4,7 +4,6 @@ const ONES = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'n
 const TEENS = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
 const TENS = ['ten', 'twenty', 'thirty', 'forty', 'fifty'];
 
-const submitTime = document.querySelector('#submit-time');
 const anglicisedTime = document.querySelector('#anglicised-time');
 const playAudio = document.querySelector('#play-audio');
 
@@ -16,7 +15,9 @@ export const angliciseTime = (time) => {
     const anglicisedHour = angliciseHour(hour);
     const anglicisedMinute = angliciseMinute(minute);
 
-    return `It is ${anglicisedHour} ${anglicisedMinute} ${meridiem}.`;
+    return anglicisedMinute === '' 
+        ? `It is ${anglicisedHour} ${meridiem}.`
+        : `It is ${anglicisedHour} ${anglicisedMinute} ${meridiem}.`
 }
 
 export const angliciseHour = (hour) => {
@@ -70,11 +71,7 @@ export const validTime = (hour, minute) => {
 
 const handlePlayAudio = () => {
     if (anglicisedTime.textContent) {
-        const synth = window.speechSynthesis;
-        const utter = new SpeechSynthesisUtterance(anglicisedTime.textContent.toLocaleUpperCase());
-        utter.lang = 'en-gb'
-    
-        synth.speak(utter);
+        
     }
     else {
         const validationMessage = document.querySelector('#audio-validation-message');
@@ -204,8 +201,16 @@ const handleTimeSubmit = () => {
     const minuteInput = clockDisplay.getTime().minute;
 
     const time = `${hourInput}:${minuteInput}`;
-    clockDisplay.setEnglishTime(angliciseTime(time));
+    const englishTime = angliciseTime(time);
+
+    clockDisplay.setEnglishTime(englishTime);
     drawBedroom();
+
+    const synth = window.speechSynthesis;
+    const utter = new SpeechSynthesisUtterance(englishTime.toLocaleUpperCase());
+    utter.lang = 'en-gb'
+
+    synth.speak(utter);
 }
 
 let timer = null;
