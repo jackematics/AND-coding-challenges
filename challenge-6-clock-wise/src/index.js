@@ -1,13 +1,11 @@
 import ClockDisplay from "./clock-display.js";
+import { isInsideTriangle, isInsideEllipse } from './utils.js';
 
 const ONES = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const TEENS = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
 const TENS = ['ten', 'twenty', 'thirty', 'forty', 'fifty'];
 
-const anglicisedTime = document.querySelector('#anglicised-time');
-const playAudio = document.querySelector('#play-audio');
-
-export const angliciseTime = (time) => {
+const angliciseTime = (time) => {
     const hour = time.substring(0, 2);
     const minute = time.substring(3, 5);
     const meridiem = parseInt(hour) < 12 ? 'am' : 'pm';
@@ -20,7 +18,7 @@ export const angliciseTime = (time) => {
         : `It is ${anglicisedHour} ${anglicisedMinute} ${meridiem}.`
 }
 
-export const angliciseHour = (hour) => {
+const angliciseHour = (hour) => {
     hour = twelvifyHour(hour); 
 
     if (hour[0] === '0')
@@ -31,7 +29,7 @@ export const angliciseHour = (hour) => {
         return TENS[0];
 }
 
-export const twelvifyHour = (hour) => {
+const twelvifyHour = (hour) => {
     let twelvifiedHour = parseInt(hour) % 12;
     if (twelvifiedHour === 0)
         twelvifiedHour = 12;
@@ -42,9 +40,9 @@ export const twelvifyHour = (hour) => {
     return twelvifiedHour.toString();
 }
 
-export const angliciseMinute = (minute) => {
+const angliciseMinute = (minute) => {
     if (minute[0] === '0')
-        return minute[1] === '0' ? `` : `o'${ONES[parseInt(minute[1]) - 1]}`;
+        return minute[1] === '0' ? `` : `o' ${ONES[parseInt(minute[1]) - 1]}`;
     else if (minute[0] === '1' && minute[1] !== '0')
         return TEENS[parseInt(minute[1]) - 1];
     else {
@@ -53,34 +51,6 @@ export const angliciseMinute = (minute) => {
         else
             return `${TENS[parseInt(minute[0]) - 1]} ${ONES[parseInt(minute[1]) - 1]}`
     }
-}
-
-export const validHour = (hour) => {
-    return hour.length == 2 &&
-           (0 <= parseInt(hour) && parseInt(hour) <= 23);
-}
-
-export const validMinute = (minute) => {
-    return minute.length == 2 &&
-           (0 <= parseInt(minute) && parseInt(minute) <= 59);
-}
-
-export const validTime = (hour, minute) => {
-    return validHour(hour) && validMinute(minute);
-}
-
-const handlePlayAudio = () => {
-    if (anglicisedTime.textContent) {
-        
-    }
-    else {
-        const validationMessage = document.querySelector('#audio-validation-message');
-        validationMessage.textContent = 'There is no text to recite.';
-    }
-}
-
-if (playAudio) {
-    playAudio.addEventListener('click', handlePlayAudio);
 }
 
 const canvas = document.querySelector('#canvas');
@@ -172,28 +142,9 @@ const handleCanvasClick = (canvas, e) => {
         timeSetButton.radiuxX, timeSetButton.radiusY,
         x, y
     )) {
+        mouseDone();
         handleTimeSubmit();
     }
-}
-
-const isInsideTriangle = (x1, y1, x2, y2, x3, y3, x, y) => {
-    const A = area(x1, y1, x2, y2, x3, y3);
-    const A1 = area(x, y, x2, y2, x3, y3);
-    const A2 = area(x1, y1, x, y, x3, y3);
-    const A3 = area(x1, y1, x2, y2, x, y);
-
-    return (A == A1 + A2 + A3);
-}
-
-const area = (x1, y1, x2, y2, x3, y3) => { 
-    return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
-}
-
-const isInsideEllipse = (centreX, centreY, radiuxX, radiusY, x, y) => {
-    const p = (parseInt(Math.pow((x - centreX), 2)) / parseInt(Math.pow(radiusY, 2)))
-            + (parseInt(Math.pow((y - centreY), 2)) / parseInt(Math.pow(radiuxX, 2)));
-
-    return p <= 1;
 }
 
 const handleTimeSubmit = () => {
