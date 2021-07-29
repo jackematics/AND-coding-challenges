@@ -1,0 +1,5 @@
+green,white,red,black
+red,green,purple,white
+white,green,black,orange
+purple,red,orange,green
+green,black,white,orange
