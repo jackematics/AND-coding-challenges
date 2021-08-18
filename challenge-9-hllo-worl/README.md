@@ -1,6 +1,6 @@
 # Hllo Worl
 
-My solution for hllo-worl with both stretch goals completed in Ruby. My solution returns a single value rather than a list of all possible values. 
+My solution for hllo worl with both stretch goals completed in Ruby. My solution returns a single value rather than a list of all possible values. 
 
 ## How to Run
 
