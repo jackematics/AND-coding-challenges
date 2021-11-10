@@ -15,12 +15,9 @@ public class ChainCollection {
         initialiseChainGrid(inputPath);
 
         long startTime = System.currentTimeMillis();
-        long nanoStartTime = System.nanoTime();
         countChains();
-        long nanoEndTime = System.nanoTime();
         long endTime = System.currentTimeMillis();
         System.out.println("Milliseconds to complete: " + (endTime - startTime));
-        System.out.println("Nanoseconds to complete: " + (nanoEndTime - nanoStartTime));
 
         countChainLength();
     }
