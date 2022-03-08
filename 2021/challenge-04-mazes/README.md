@@ -16,3 +16,13 @@ Go into Main.java in the src directory. in the main method, there is a mazeGener
 values: set these values depending on what size you want the generated grid to be. At the end of the main method there is a new MazeGridLayout instance,
 set the gridWidth and gridHeight values to whatever size you want, this is the size of the window the grid will be displayed on (and it will affect things 
 such as the size of each grid square). Once you're happy with these, run the program. 
+
+## The Challenge
+
+This week’s challenge is to build an application capable of generating random mazes to a given specification. Given a target width and height, your algorithm should be capable of outputting a unique, solvable maze.
+:six:  Points are awarded for generating valid, solvable mazes  
+:three:  Further points are awarded for a solution which can visualise the most optimal route to solve the maze  
+:one:  Further point is awarded for a non-JavaScript solution
+
+### Notes:
+You’re free to decide on a suitable start and end location for each maze. You can also assume a minimum width and height of 10 units. Maze walls should be 1 unit in thickness. Mazes don’t necessarily have to be square.

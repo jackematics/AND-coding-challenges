@@ -7,3 +7,20 @@ Unless I'm doing this wrong, according to my timer this process takes less than 
 ## How to Run
 
 Open the challenge-13-challenging-chains folder in your preferred Java IDE (I use Intellij), run main, and the solution will appear in the console.
+
+## The Challenge
+
+For a chain which is considered ‘unbroken’, all parts of the chain can be reached without exiting the chain. For example, in this diagram:
+#######
+#
+#
+there is 1 unbroken chain. However, in this diagram:
+### #######
+
+          #
+there are actually 3 distinct unbroken chains.
+Your task is to write a program which can determine how many separate chains exist in this input problem. You can assume that links can only be connected vertically and horizontally (not diagonally) and that no two chains touch one another.
+
+:five:  Points are awarded for a working solution  
+:three:  Points are awarded for a solution which returns in less than 0.25s  
+:two:  Points are awarded for also returning the total length of chain in the input  
