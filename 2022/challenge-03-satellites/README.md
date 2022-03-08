@@ -13,9 +13,9 @@ The absolute value of each satellite represents its size, and the sign of the sa
 Given this information, the challenge is to write an algorithm capable of determining the final state of these sample problems after all collisions have taken place.
 
 ### Rewards:
-:four:  Points are awarded for a working algorithm which solves the sample problems
-:three:  Further points are awarded for using only one loop
-:three:  Further points are awarded for using a language unique among other participants
+:four:  Points are awarded for a working algorithm which solves the sample problems  
+:three:  Further points are awarded for using only one loop  
+:three:  Further points are awarded for using a language unique among other participants  
 
 ### Example:
 For the following list of satellites: [-3, 1, 1,-2, 3,-2]
