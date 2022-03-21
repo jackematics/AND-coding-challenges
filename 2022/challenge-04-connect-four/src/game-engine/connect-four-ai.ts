@@ -5,6 +5,7 @@ import GridIndex from "./grid-index";
 class ConnectFourAi {
   private readonly currentGame: ConnectFour;
   private readonly aiDisk: Disk;
+  private readonly tooHighWeighting = 5;
 
   constructor(game: ConnectFour, aiDisk: Disk) {
     this.currentGame = game;
@@ -21,122 +22,163 @@ class ConnectFourAi {
   }
 
   public calculateHorizontalMovesLeft(gridIndex: GridIndex): number {
-    let allPermutationsMovesLeft: number[] = [];
+    let allOffsetsMovesLeft: number[] = [];
 
     for (
-      let currentPermutation: number = 0;
-      currentPermutation < this.currentGame.getWinCount();
-      currentPermutation++
+      let currentOffset: number = 0;
+      currentOffset < this.currentGame.getWinCount();
+      currentOffset++
     ) {
-      let currentPermutationMovesLeft: number = this.currentGame.getWinCount();
-
-      for (
-        let currentColumn: number = gridIndex.column - currentPermutation;
-        currentColumn <
-        this.currentGame.getWinCount() + gridIndex.column - currentPermutation;
-        currentColumn++
-      ) {
-        if (this.outOfColumnBounds(currentColumn)) break;
-        if (
-          this.currentGame.getGrid()[gridIndex.row][currentColumn] ===
-          Disk.EMPTY
-        )
-          continue;
-        if (
-          this.currentGame.getGrid()[gridIndex.row][currentColumn] !==
-          this.aiDisk
-        ) {
-          currentPermutationMovesLeft = this.currentGame.getWinCount();
-          break;
-        }
-
-        currentPermutationMovesLeft--;
-      }
-
-      allPermutationsMovesLeft.push(currentPermutationMovesLeft);
+      allOffsetsMovesLeft.push(
+        this.calculateOffsetHorizontalMovesLeft(gridIndex, currentOffset)
+      );
     }
 
-    return Math.min(...allPermutationsMovesLeft);
+    return Math.min(...allOffsetsMovesLeft);
+  }
+
+  private calculateOffsetHorizontalMovesLeft(
+    gridIndex: GridIndex,
+    offset: number
+  ): number {
+    let offsetMovesLeft: number = this.currentGame.getWinCount();
+
+    for (
+      let currentColumn: number = gridIndex.column - offset;
+      currentColumn <
+      this.currentGame.getWinCount() + gridIndex.column - offset;
+      currentColumn++
+    ) {
+      if (
+        this.outOfColumnBoundsAt(currentColumn) ||
+        this.opponentsDiskAt({ row: gridIndex.row, column: currentColumn })
+      ) {
+        offsetMovesLeft = this.tooHighWeighting;
+        break;
+      }
+      if (this.emptyDiskAt({ row: gridIndex.row, column: currentColumn }))
+        continue;
+
+      offsetMovesLeft--;
+    }
+
+    return offsetMovesLeft;
   }
 
   public calculateVerticalMovesLeft(gridIndex: GridIndex): number {
-    let allPermutationsMovesLeft: number[] = [];
+    let allOffsetsMovesLeft: number[] = [];
 
-    for (let i: number = 0; i < this.currentGame.getWinCount(); i++) {
-      let currentPermutationMovesLeft: number = this.currentGame.getWinCount();
-
-      for (
-        let currentRow: number = gridIndex.row - i;
-        currentRow < this.currentGame.getWinCount() + gridIndex.row - i;
-        currentRow++
-      ) {
-        if (this.outOfRowBounds(currentRow)) break;
-        if (
-          this.currentGame.getGrid()[currentRow][gridIndex.column] ===
-          Disk.EMPTY
-        )
-          continue;
-        if (
-          this.currentGame.getGrid()[currentRow][gridIndex.column] !==
-          this.aiDisk
-        ) {
-          currentPermutationMovesLeft = this.currentGame.getWinCount();
-          break;
-        }
-
-        currentPermutationMovesLeft--;
-      }
-
-      allPermutationsMovesLeft.push(currentPermutationMovesLeft);
+    for (
+      let currentOffset: number = 0;
+      currentOffset < this.currentGame.getWinCount();
+      currentOffset++
+    ) {
+      allOffsetsMovesLeft.push(
+        this.calculateOffsetVerticalMovesLeft(gridIndex, currentOffset)
+      );
     }
 
-    return Math.min(...allPermutationsMovesLeft);
+    return Math.min(...allOffsetsMovesLeft);
+  }
+
+  private calculateOffsetVerticalMovesLeft(
+    gridIndex: GridIndex,
+    offset: number
+  ): number {
+    let offsetMovesLeft: number = this.currentGame.getWinCount();
+
+    for (
+      let currentRow: number = gridIndex.row - offset;
+      currentRow < this.currentGame.getWinCount() + gridIndex.row - offset;
+      currentRow++
+    ) {
+      if (
+        this.outOfRowBoundsAt(currentRow) ||
+        this.opponentsDiskAt({ row: currentRow, column: gridIndex.column })
+      ) {
+        offsetMovesLeft = this.tooHighWeighting;
+        break;
+      }
+      if (this.emptyDiskAt({ row: currentRow, column: gridIndex.column }))
+        continue;
+
+      offsetMovesLeft--;
+    }
+
+    return offsetMovesLeft;
   }
 
   public calculateUpRightDiagonalMovesLeft(gridIndex: GridIndex): number {
-    let allPermutationsMovesLeft: number[] = [];
+    let allOffsetsMovesLeft: number[] = [];
 
-    for (let i: number = 0; i < this.currentGame.getWinCount(); i++) {
-      let currentPermutationMovesLeft: number = this.currentGame.getWinCount();
+    for (
+      let offset: number = 0;
+      offset < this.currentGame.getWinCount();
+      offset++
+    ) {
+      const currentOffsetMovesLeft: number =
+        this.calculateOffsetUpRightDiagonalMovesLeft(gridIndex, offset);
 
-      for (
-        let currentColumn: number = gridIndex.column - i,
-          currentRow: number = gridIndex.row - i;
-        (currentColumn && currentRow) <
-        this.currentGame.getWinCount() + gridIndex.column - i;
-        currentColumn++, currentRow++
-      ) {
-        if (
-          this.outOfColumnBounds(currentColumn) ||
-          this.outOfRowBounds(currentRow)
-        )
-          break;
-        if (
-          this.currentGame.getGrid()[currentRow][currentColumn] === Disk.EMPTY
-        )
-          continue;
-        if (
-          this.currentGame.getGrid()[currentRow][currentColumn] !== this.aiDisk
-        ) {
-          currentPermutationMovesLeft = this.currentGame.getWinCount();
-          break;
-        }
-
-        currentPermutationMovesLeft--;
-      }
-
-      allPermutationsMovesLeft.push(currentPermutationMovesLeft);
+      allOffsetsMovesLeft.push(currentOffsetMovesLeft);
     }
 
-    return Math.min(...allPermutationsMovesLeft);
+    return Math.min(...allOffsetsMovesLeft);
   }
 
-  private outOfColumnBounds(column: number): boolean {
+  private calculateOffsetUpRightDiagonalMovesLeft(
+    gridIndex: GridIndex,
+    offset: number
+  ): number {
+    let offsetMovesLeft: number = this.currentGame.getWinCount();
+
+    for (
+      let currentColumn: number = gridIndex.column - offset,
+        currentRow: number = gridIndex.row - offset;
+      (currentColumn && currentRow) <
+      this.currentGame.getWinCount() + gridIndex.column - offset;
+      currentColumn++, currentRow++
+    ) {
+      if (
+        this.outOfColumnBoundsAt(currentColumn) ||
+        this.outOfRowBoundsAt(currentRow) ||
+        this.opponentsDiskAt({
+          row: currentRow,
+          column: currentColumn,
+        })
+      ) {
+        offsetMovesLeft = this.tooHighWeighting;
+        break;
+      }
+      if (this.emptyDiskAt({ row: currentRow, column: currentColumn }))
+        continue;
+
+      offsetMovesLeft--;
+    }
+
+    return offsetMovesLeft;
+  }
+
+  private outOfColumnBoundsAt(column: number): boolean {
     return column < 0 || column >= this.currentGame.getGrid()[0].length;
   }
 
-  private outOfRowBounds(row: number): boolean {
+  private outOfRowBoundsAt(row: number): boolean {
     return row < 0 || row >= this.currentGame.getGrid().length;
+  }
+
+  private emptyDiskAt(gridIndex: GridIndex): boolean {
+    return (
+      this.currentGame.getGrid()[gridIndex.row][gridIndex.column] === Disk.EMPTY
+    );
+  }
+
+  private opponentsDiskAt(gridIndex: GridIndex): boolean {
+    const opponentsDisk: Disk =
+      this.aiDisk === Disk.RED ? Disk.YELLOW : Disk.RED;
+    return (
+      this.currentGame.getGrid()[gridIndex.row][gridIndex.column] ===
+      opponentsDisk
+    );
   }
 }
 

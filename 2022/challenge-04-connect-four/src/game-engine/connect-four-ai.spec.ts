@@ -49,13 +49,13 @@ describe("ConnectFourAi", () => {
         expect(ai.calculateHorizontalMovesLeft({ row: 5, column: 3 })).toBe(2);
       });
 
-      it("should return 4 if completely obstructed", () => {
+      it("should return 5 if completely obstructed", () => {
         const game = new ConnectFour();
         const ai = new ConnectFourAi(game, Disk.RED);
 
-        game.dropDiskInColumn(4, Disk.YELLOW);
+        game.dropDiskInColumn(3, Disk.YELLOW);
 
-        expect(ai.calculateHorizontalMovesLeft({ row: 5, column: 5 })).toBe(4);
+        expect(ai.calculateHorizontalMovesLeft({ row: 5, column: 2 })).toBe(5);
       });
 
       it("should return 3 if almost obstructed and 1 disk in place", () => {
@@ -116,7 +116,7 @@ describe("ConnectFourAi", () => {
         expect(ai.calculateVerticalMovesLeft({ row: 3, column: 1 })).toBe(2);
       });
 
-      it("should return 4 if completely obstructed", () => {
+      it("should return 5 if completely obstructed", () => {
         const game = new ConnectFour();
         const ai = new ConnectFourAi(game, Disk.RED);
 
@@ -124,7 +124,7 @@ describe("ConnectFourAi", () => {
         game.dropDiskInColumn(3, Disk.RED);
         game.dropDiskInColumn(3, Disk.YELLOW);
 
-        expect(ai.calculateVerticalMovesLeft({ row: 2, column: 3 })).toBe(4);
+        expect(ai.calculateVerticalMovesLeft({ row: 2, column: 3 })).toBe(5);
       });
 
       it("should return 3 if almost connect four but 1 blocked", () => {
@@ -136,7 +136,7 @@ describe("ConnectFourAi", () => {
         game.dropDiskInColumn(3, Disk.RED);
         game.dropDiskInColumn(3, Disk.YELLOW);
 
-        expect(ai.calculateVerticalMovesLeft({ row: 1, column: 3 })).toBe(4);
+        expect(ai.calculateVerticalMovesLeft({ row: 1, column: 3 })).toBe(5);
       });
     });
 
@@ -156,7 +156,9 @@ describe("ConnectFourAi", () => {
 
         game.dropDiskInColumn(2, Disk.YELLOW);
 
-        expect(ai.calculateUpRightDiagonalMovesLeft(5, 3)).toBe(4);
+        expect(
+          ai.calculateUpRightDiagonalMovesLeft({ row: 5, column: 0 })
+        ).toBe(4);
       });
 
       // it("should return 4 for a single obstruction ahead", () => {
