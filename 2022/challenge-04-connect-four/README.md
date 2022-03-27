@@ -4,8 +4,8 @@ My solution for the Connect Four coding challenge completed in Node, Typescript 
 
 ## How to run
 
-`npm run start` and the app should run on http://localhost:3000
-`npm run test` to run the tests (the ones I didn't get too lazy to write)
+`npm run start` and the app should run on http://localhost:3000 \
+`npm run test` to run the tests (the ones I didn't get too lazy to write) \
 Enjoy
 
 ## The Challenge
@@ -14,8 +14,6 @@ Connect Four is a two-player board game where both players pick a colour (Red or
 
 ### Rewards:
 
-:four: Points are awarded for outputting the correct winner for each sample game. 
-
-:three: Further points are awarded for visualising the game on screen (either a proper UI, or as some kind of console-art). 
-
-:three: Further points are awarded for creating an interactive game which can be played against a basic computer player. 
+:four: Points are awarded for outputting the correct winner for each sample game.\
+:three: Further points are awarded for visualising the game on screen (either a proper UI, or as some kind of console-art).\
+:three: Further points are awarded for creating an interactive game which can be played against a basic computer player.\
