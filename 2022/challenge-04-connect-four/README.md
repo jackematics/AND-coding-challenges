@@ -14,6 +14,6 @@ Connect Four is a two-player board game where both players pick a colour (Red or
 
 ### Rewards:
 
-:four: Points are awarded for outputting the correct winner for each sample game
-:three: Further points are awarded for visualising the game on screen (either a proper UI, or as some kind of console-art)
-:three: Further points are awarded for creating an interactive game which can be played against a basic computer player
+:four: Points are awarded for outputting the correct winner for each sample game. 
+:three: Further points are awarded for visualising the game on screen (either a proper UI, or as some kind of console-art). 
+:three: Further points are awarded for creating an interactive game which can be played against a basic computer player. 
