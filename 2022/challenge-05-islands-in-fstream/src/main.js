@@ -1,4 +1,4 @@
-import Islands from "./islands";
+import Islands from "./islands.js";
 
 const challengeInput = [
   [0, 0, 0, 0, 0],
@@ -9,7 +9,7 @@ const challengeInput = [
 ];
 
 const challengeIsland = new Islands(challengeInput);
-console.log("Challenge solution:", challengeIsland.calculatePerimeter());
+console.log("Challenge solution:", challengeIsland.calculateTotalPerimeter());
 
 const stretchGoalInput = [
   [
@@ -92,4 +92,7 @@ const stretchGoalInput = [
 
 const stretchGoalIslands = new Islands(stretchGoalInput);
 
-console.log("Stretch goal solution:", stretchGoalIslands.calculatePerimeter());
+console.log(
+  "Stretch goal solution:",
+  stretchGoalIslands.calculateTotalPerimeter()
+);

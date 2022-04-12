@@ -1,23 +1,18 @@
-# Bucketify: What's that?
+# Islands in fstream
 
-An algorithm which divides a sentence into `word buckets`, where each bucket contains `n` or fewer characters. Only complete words can be placed into each bucket. Spaces count as a character, however you should trim leading and trailing spaces from words as they're placed into buckets. If a word is too large to fit into a bucket, it should be discarded.
+My solution to the Islands in fstream coding challenge completed in JavaScript with all stetch goals completed. Initially I completed it in Typescript but switched to JavaScript so I could fudge the < 1000 bytes stretch goal.
 
-#### Example
+## How to run
 
-For the following input:
+`npm run start` and the solutions to the challenge input and stretch goal input will be printed to the console \
+`npm run test` to run the tests \
 
-`bucketify("the quick brown fox jumps over the lazy dog", 10)`
+## The Challenge
 
-the algorithm returns:
+This is a map of a desert island, where each '1' represents a cell of dry land, and each '0' represents a cell of ocean. The task is to determine the total perimeter of the island (i.e. total length of cell edges touching water), where each cell has edges of length 1. For example, an isolated land cell without any neighbouring land cells would have a total perimeter of 4 - although the provided map doesn't actually contain any cases of this.
 
-`["the quick", "brown fox", "jumps over", "the lazy", "dog"]`
+### Rewards:
 
-# How do it run this locally?
-
-You need Node.js to run this project. The following commands are available:
-
-`npm install`: installs the project's dependencies.
-
-`npm run start`: executes algorithm using above example's as inputs.
-
-`npm run test`: executes unit tests suite for `bucketify` function.
+:five: Points are awarded for determining the correct perimeter of the example island \
+:three: Further points are awarded for an algorithm capable of returning the perimeters of multiple islands in this problem \
+:two: Further points are awarded for an algorithm in under 1000 bytes of code \
