@@ -1,5 +1,5 @@
 export default class PinGuesser {
-  private readonly POSSIBILITIES = {
+  private static readonly POSSIBILITIES = {
     0: [0, 8],
     1: [1, 2, 4],
     2: [1, 2, 3, 5],
@@ -12,9 +12,39 @@ export default class PinGuesser {
     9: [6, 8, 9],
   };
 
-  public calculatePossibilitiesByLikelihood(approximatePin: string) {}
+  // Weighting from 1 - 10 based on how likely the digit will be pressed, 10 being most likely
+  private static readonly LIKELIHOOD_WEIGHTINGS = {
+    0: 4,
+    1: 9,
+    2: 8,
+    3: 3,
+    4: 5,
+    5: 10,
+    6: 2,
+    7: 6,
+    8: 7,
+    9: 1,
+  };
 
-  public calculatePossibilities(approximatePin: string): number[][] {
+  public static calculatePossibilitiesByLikelihood(
+    approximatePin: string
+  ): number[][] {
+    const unsortedPossibilities = this.calculatePossibilities(approximatePin);
+
+    return unsortedPossibilities.sort((a, b) => {
+      return this.countWeightings(b) - this.countWeightings(a);
+    });
+  }
+
+  private static countWeightings(pinPossibility: number[]): number {
+    return pinPossibility.reduce(
+      // @ts-ignore
+      (acc, currentValue) => acc + this.LIKELIHOOD_WEIGHTINGS[currentValue],
+      0
+    );
+  }
+
+  public static calculatePossibilities(approximatePin: string): number[][] {
     const approximatePinArray: number[] = Array.from(
       String(approximatePin),
       Number
@@ -28,21 +58,23 @@ export default class PinGuesser {
     return this.recursivelyGetPossibilitiesFrom(permutations);
   }
 
-  private recursivelyGetPossibilitiesFrom(
+  private static recursivelyGetPossibilitiesFrom(
     permutations: number[][]
   ): number[][] {
     if (permutations.length === 1) {
       return permutations[0].map((x) => [x]);
     }
 
-    const a = permutations[0];
-    const b = permutations.slice(1);
+    const fixed = permutations[0];
+    const unfixed = permutations.slice(1);
     const possibilities: number[][] = [];
 
-    a.forEach((elementA) => {
-      this.recursivelyGetPossibilitiesFrom(b).forEach((elementB) => {
-        possibilities.push([elementA, ...elementB]);
-      });
+    fixed.forEach((fixedElement) => {
+      this.recursivelyGetPossibilitiesFrom(unfixed).forEach(
+        (unfixedElements) => {
+          possibilities.push([fixedElement, ...unfixedElements]);
+        }
+      );
     });
 
     return possibilities;
