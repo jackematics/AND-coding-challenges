@@ -1,4 +1,4 @@
-import PinGuesser from "./pin-guesser";
+import PinCalculator from "./pin-calculator";
 
 describe("Pin Guesser", () => {
   describe("When calculating all pin possibilities", () => {
@@ -6,7 +6,9 @@ describe("Pin Guesser", () => {
       const input = "5";
       const expected = [[2], [4], [5], [6], [8]];
 
-      expect(PinGuesser.calculatePossibilities(input)).toStrictEqual(expected);
+      expect(PinCalculator.calculatePossibilities(input)).toStrictEqual(
+        expected
+      );
     });
 
     it("should return an array of all possible combinations for a simple 2 digit pin", () => {
@@ -18,7 +20,9 @@ describe("Pin Guesser", () => {
         [8, 8],
       ];
 
-      expect(PinGuesser.calculatePossibilities(input)).toStrictEqual(expected);
+      expect(PinCalculator.calculatePossibilities(input)).toStrictEqual(
+        expected
+      );
     });
 
     it("should return an array of all possible combinations for a more complex 2 digit pin", () => {
@@ -42,7 +46,9 @@ describe("Pin Guesser", () => {
         [7, 9],
       ];
 
-      expect(PinGuesser.calculatePossibilities(input)).toStrictEqual(expected);
+      expect(PinCalculator.calculatePossibilities(input)).toStrictEqual(
+        expected
+      );
     });
 
     it("should return an array of all possible combinations for a 3 digit pin", () => {
@@ -77,7 +83,9 @@ describe("Pin Guesser", () => {
         [6, 8, 9],
       ];
 
-      expect(PinGuesser.calculatePossibilities(input)).toStrictEqual(expected);
+      expect(PinCalculator.calculatePossibilities(input)).toStrictEqual(
+        expected
+      );
     });
   });
 
@@ -87,7 +95,7 @@ describe("Pin Guesser", () => {
       const expected = [[5], [2], [8], [4], [6]];
 
       expect(
-        PinGuesser.calculatePossibilitiesByLikelihood(input)
+        PinCalculator.calculatePossibilitiesByLikelihood(input)
       ).toStrictEqual(expected);
     });
 
@@ -101,7 +109,7 @@ describe("Pin Guesser", () => {
       ];
 
       expect(
-        PinGuesser.calculatePossibilitiesByLikelihood(input)
+        PinCalculator.calculatePossibilitiesByLikelihood(input)
       ).toStrictEqual(expected);
     });
 
@@ -127,7 +135,7 @@ describe("Pin Guesser", () => {
       ];
 
       expect(
-        PinGuesser.calculatePossibilitiesByLikelihood(input)
+        PinCalculator.calculatePossibilitiesByLikelihood(input)
       ).toStrictEqual(expected);
     });
 
@@ -164,7 +172,7 @@ describe("Pin Guesser", () => {
       ];
 
       expect(
-        PinGuesser.calculatePossibilitiesByLikelihood(input)
+        PinCalculator.calculatePossibilitiesByLikelihood(input)
       ).toStrictEqual(expected);
     });
   });

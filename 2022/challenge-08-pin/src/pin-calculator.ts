@@ -1,4 +1,4 @@
-export default class PinGuesser {
+export default class PinCalculator {
   private static readonly POSSIBILITIES = {
     0: [0, 8],
     1: [1, 2, 4],
@@ -29,9 +29,7 @@ export default class PinGuesser {
   public static calculatePossibilitiesByLikelihood(
     approximatePin: string
   ): number[][] {
-    const unsortedPossibilities = this.calculatePossibilities(approximatePin);
-
-    return unsortedPossibilities.sort((a, b) => {
+    return this.calculatePossibilities(approximatePin).sort((a, b) => {
       return this.countWeightings(b) - this.countWeightings(a);
     });
   }
