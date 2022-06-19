@@ -4,7 +4,7 @@ describe("Pin Guesser", () => {
   describe("When calculating all pin possibilities", () => {
     it("should return an array of all possible combinations for a 1 digit pin", () => {
       const input = "5";
-      const expected = [[2], [5], [6], [8], [4]];
+      const expected = [[2], [4], [5], [6], [8]];
 
       expect(PinGuesser.calculatePossibilities(input)).toStrictEqual(expected);
     });
