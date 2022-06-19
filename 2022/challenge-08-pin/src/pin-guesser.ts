@@ -12,6 +12,8 @@ export default class PinGuesser {
     9: [6, 8, 9],
   };
 
+  public calculatePossibilitiesByLikelihood(approximatePin: string) {}
+
   public calculatePossibilities(approximatePin: string): number[][] {
     const approximatePinArray: number[] = Array.from(
       String(approximatePin),
@@ -22,50 +24,27 @@ export default class PinGuesser {
       // @ts-ignore
       (digit: number) => this.POSSIBILITIES[digit]
     );
-    const possibilities = this.getPossibilitiesFrom(permutations);
 
-    return possibilities;
+    return this.recursivelyGetPossibilitiesFrom(permutations);
   }
 
-  public getPossibilitiesFrom(permutations: number[][]) {
-    const possibilities: number[][] = [];
-
-    for (let i = 0; i < permutations[0].length; i++) {
-      possibilities.push([permutations[0][i]]);
+  private recursivelyGetPossibilitiesFrom(
+    permutations: number[][]
+  ): number[][] {
+    if (permutations.length === 1) {
+      return permutations[0].map((x) => [x]);
     }
 
+    const a = permutations[0];
+    const b = permutations.slice(1);
+    const possibilities: number[][] = [];
+
+    a.forEach((elementA) => {
+      this.recursivelyGetPossibilitiesFrom(b).forEach((elementB) => {
+        possibilities.push([elementA, ...elementB]);
+      });
+    });
+
     return possibilities;
   }
-
-  // public recursivelyGetPossibilities(
-  //   possibilities: number[][],
-  //   permutations: number[][],
-  //   currentPinIndex: number,
-  //   currentPermutationIndex: number
-  // ) {
-  //   let possibility: number[] = [];
-
-  //   //
-  //   possibility.push(permutations[currentPinIndex][currentPermutationIndex]);
-  //   currentPinIndex++;
-  //   possibility.push(permutations[currentPinIndex][currentPermutationIndex]);
-  //   currentPinIndex++;
-  //   possibility.push(permutations[currentPinIndex][currentPermutationIndex]);
-
-  //   // Reached last pin digit
-  //   possibilities.push(possibility);
-  //   possibility.pop();
-  //   currentPermutationIndex++;
-
-  //   possibility.push(permutations[currentPinIndex][currentPermutationIndex]);
-
-  //   possibilities.push(possibility);
-  //   possibility.pop();
-  //   currentPermutationIndex++;
-
-  //   possibility.push(permutations[currentPinIndex][currentPermutationIndex]);
-
-  //   // Reached last permutation digit
-  //   possibility.pop;
-  // }
 }
