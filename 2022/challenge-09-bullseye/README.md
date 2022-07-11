@@ -5,7 +5,7 @@ My solution to the Bullseye coding challenge completed in Typescript with all st
 ## How to run
 
 `npm run start` and the solutions to the challenge input and stretch goal input will be printed to the console \
-`npm run test` to run the tests \
+`npm run test` to run the tests
 
 ## The Challenge
 
@@ -15,17 +15,17 @@ The challenge this week is to generate a square dartboard of side length n. The 
 
 :four: Points are awarded for generating a dartboard of any given size (where n > 0). \
 :three: Further points are awarded for using only 1 loop. \
-:three: Further points are awarded for generating circular\* dartboards. \
+:three: Further points are awarded for generating circular\* dartboards.
 
 ### Example:
 
 Example:
 For a square dartboard of size 8, the expected output would look something like:
-11111111
-12222221
-12333321
-12344321
-12344321
-12333321
-12222221
+11111111 \
+12222221 \
+12333321 \
+12344321 \
+12344321 \
+12333321 \
+12222221 \
 11111111
