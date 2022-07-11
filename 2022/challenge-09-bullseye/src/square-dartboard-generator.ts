@@ -1,6 +1,6 @@
 export default class SquareDartboardGenerator {
   public static generate(n: number): number[][] {
-    if (n <= 0) throw new Error("n must be at least 1");
+    if (n <= 0) throw new Error('n must be at least 1');
 
     const topHalf = this.generateTopLeftQuadrant(n).map((x) =>
       n % 2 === 0 ? [...x, ...x.reverse()] : [...x, ...x.reverse().slice(1)]
@@ -13,7 +13,7 @@ export default class SquareDartboardGenerator {
     return [...topHalf, ...bottomHalf];
   }
 
-  private static generateTopLeftQuadrant(n: number) {
+  private static generateTopLeftQuadrant(n: number): number[][] {
     const topLeftQuadrant: number[][] = [];
     const rowLength = Math.ceil(n / 2);
 

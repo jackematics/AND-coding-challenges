@@ -1,6 +1,6 @@
 # Bullseye
 
-My solution to the PIN coding challenge completed in Typescript with all stretch goals completed (except the unique language one probably).
+My solution to the Bullseye coding challenge completed in Typescript with all stretch goals completed. I approached this by using the symmetry of a dartboard: generating the top left corner of the board then reversing and reflecting this for the other corners.
 
 ## How to run
 
@@ -9,21 +9,23 @@ My solution to the PIN coding challenge completed in Typescript with all stretch
 
 ## The Challenge
 
-A secret agent is attempting to gain access to a doorway using a PIN pad which is organised like this:
-┌───┬───┬───┐
-│ 1 │ 2 │ 3 │
-├───┼───┼───┤
-│ 4 │ 5 │ 6 │
-├───┼───┼───┤
-│ 7 │ 8 │ 9 │
-└───┼───┼───┘
-│ 0 │
-└───┘
-They observe somebody using the PIN pad on the doorway to gain access, but unfortunately couldn't get a good enough look at the exact keys which were pressed. The digits were approximately 97516, but each real digit could actually lie on a horizontally or vertically adjacent digit to the approximate ones. Your task is to use this information to determine a list of possible PIN codes.
-It's also useful to note that some keys on the PIN pad appear to be more worn/used than others. The following array represents how worn each key looks, from most worn to least: [5,1,2,8,7,4,0,3,6,9]
+The challenge this week is to generate a square dartboard of side length n. The numerical values on the board should increase with proximity to the centre of the board. For boards of an even number size, the centre will be made up of the four highest values.
 
 ### Rewards:
 
-:five: Points are awarded for determining all possible PIN codes for the example above \
-:three: Further points are awarded for completing the challenge in a unique choice of language amongst other participants \
-:two: Further points are awarded for ordering your list of possible PIN numbers by order of likelihood\*, given the above 'wear' data \
+:four: Points are awarded for generating a dartboard of any given size (where n > 0). \
+:three: Further points are awarded for using only 1 loop. \
+:three: Further points are awarded for generating circular\* dartboards. \
+
+### Example:
+
+Example:
+For a square dartboard of size 8, the expected output would look something like:
+11111111
+12222221
+12333321
+12344321
+12344321
+12333321
+12222221
+11111111
