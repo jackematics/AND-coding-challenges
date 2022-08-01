@@ -1,6 +1,6 @@
-import Soroban from './soroban';
+import SorobanCalculator from './soroban-calculator';
 
-describe('Soroban', () => {
+describe('SorobanCalculator', () => {
   describe('calculate()', () => {
     it.each([
       {
@@ -30,7 +30,7 @@ describe('Soroban', () => {
         result: 30651,
       },
     ])('should return $result from $input', ({ input, result }) => {
-      expect(Soroban.calculate(input)).toBe(result);
+      expect(SorobanCalculator.calculate(input)).toBe(result);
     });
   });
 
@@ -57,7 +57,7 @@ describe('Soroban', () => {
         'O|-|OOOO',
       ];
 
-      expect(Soroban.format(input)).toStrictEqual(result);
+      expect(SorobanCalculator.format(input)).toStrictEqual(result);
     });
   });
 
@@ -70,9 +70,12 @@ describe('Soroban', () => {
       { input: '|O-OO|OO', result: '7' },
       { input: '|O-|OOOO', result: '5' },
       { input: 'O|-|OOOO', result: '0' },
-    ])('should return $result from $input', ({ input, result }) => {
-      expect(Soroban.calculateWire(input)).toBe(result);
-    });
+    ])(
+      'should return the sum of the bead values that are moved towards the deck divide',
+      ({ input, result }) => {
+        expect(SorobanCalculator.calculateWire(input)).toBe(result);
+      }
+    );
   });
 
   describe('calculateUpperDeckLine()', () => {
@@ -80,7 +83,7 @@ describe('Soroban', () => {
       { input: '|O', result: 5 },
       { input: 'O|', result: 0 },
     ])('should return $result from $input', ({ input, result }) => {
-      expect(Soroban.calculateUpperDeck(input)).toBe(result);
+      expect(SorobanCalculator.calculateUpperDeck(input)).toBe(result);
     });
   });
 
@@ -92,7 +95,7 @@ describe('Soroban', () => {
       { input: 'OOO|O', result: 3 },
       { input: 'OOOO|', result: 4 },
     ])('should return $result from $input', ({ input, result }) => {
-      expect(Soroban.calculateLowerDeck(input)).toBe(result);
+      expect(SorobanCalculator.calculateLowerDeck(input)).toBe(result);
     });
   });
 });

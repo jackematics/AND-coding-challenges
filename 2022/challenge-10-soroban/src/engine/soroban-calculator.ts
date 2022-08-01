@@ -1,4 +1,4 @@
-export default class Soroban {
+export default class SorobanCalculator {
   static calculate(input: string[]): number {
     const formatted = this.format(input);
     let result = '';
