@@ -15,15 +15,6 @@ public:
 	SudokuChecker();
 	~SudokuChecker();
 
-	std::array<int, 9> extractColumn(
-		std::array<std::array<int, 9>, 9> sudoku, 
-		int columnIndex
-	);
-	std::array<std::array<int, 3>, 3> extractBox(
-		std::array<std::array<int, 9>, 9> sudoku,
-		int rowIndex,
-		int colIndex
-	);
 
 	SourceResult rowsValid(std::array<std::array<int, 9>, 9> sudoku);
 	SourceResult colsValid(std::array<std::array<int, 9>, 9> sudoku);
@@ -37,6 +28,15 @@ private:
 	bool boxContains(std::array<std::array<int, 3>, 3> box, int value);
 	int lineMissingValue(std::array<int, 9> line);
 	int boxMissingValue(std::array<std::array<int, 3>, 3> box);
+	std::array<int, 9> extractColumn(
+		std::array<std::array<int, 9>, 9> sudoku, 
+		int columnIndex
+	);
+	std::array<std::array<int, 3>, 3> extractBox(
+		std::array<std::array<int, 9>, 9> sudoku,
+		int rowIndex,
+		int colIndex
+	);
 };
 
 
