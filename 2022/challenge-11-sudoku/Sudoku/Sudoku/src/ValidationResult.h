@@ -1,38 +1,25 @@
 #pragma once
-
 #include <string>
-#include <format>
 
-class ValidationResult {
-public:
-	enum Source { 
-		Row,
-		Column,
-		Box
-	};
+#include "SourceResult.h"
 
-private:
-	bool valid;
-	Source source;
-	int index;
-	int missingValue;
+
+class ValidationResult
+{
+private: 
+	SourceResult rowResult;
+	SourceResult columnResult;
+	SourceResult boxResult;
 
 public:
-	ValidationResult(bool valid);
+	ValidationResult();
 	ValidationResult(
-		bool valid,
-		Source source,
-		int index,
-		int missingValue
+		SourceResult rowResult,
+		SourceResult columnResult,
+		SourceResult boxResult
 	);
 
 	bool isValid();
-	std::string errorDescription();
-
-private:
-	std::string sourceToString();
+	std::string description();
 };
-
-
-
 

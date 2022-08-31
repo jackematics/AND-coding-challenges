@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 
+#include "SourceResult.h"
 #include "ValidationResult.h"
 #include "Cell.h"
 
@@ -24,9 +25,11 @@ public:
 		int colIndex
 	);
 
-	ValidationResult rowsValid(std::array<std::array<int, 9>, 9> sudoku);
-	ValidationResult colsValid(std::array<std::array<int, 9>, 9> sudoku);
-	ValidationResult boxesValid(std::array<std::array<int, 9>, 9> sudoku);
+	SourceResult rowsValid(std::array<std::array<int, 9>, 9> sudoku);
+	SourceResult colsValid(std::array<std::array<int, 9>, 9> sudoku);
+	SourceResult boxesValid(std::array<std::array<int, 9>, 9> sudoku);
+
+	ValidationResult sudokuValid(std::array<std::array<int, 9>, 9> sudoku);
 
 private:
 	template<std::size_t SIZE>

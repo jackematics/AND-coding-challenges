@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "SudokuChecker.h"
-#include "ValidationResult.h"
+#include "SourceResult.h"
 #include "Cell.h"
 
 
@@ -38,8 +38,7 @@ int SudokuChecker::lineMissingValue(std::array<int, 9> line) {
 };
 
 bool SudokuChecker::boxContains(std::array<std::array<int, 3>, 3> box, int value) {
-	for (std::array<int, 3> row : box)
-	{
+	for (std::array<int, 3> row : box) {
 		if (lineContains(row, value)) {
 			return true;
 		}
@@ -58,22 +57,19 @@ int SudokuChecker::boxMissingValue(std::array<std::array<int, 3>, 3> box) {
 	return -1;
 }
 
-ValidationResult SudokuChecker::rowsValid(
-	std::array<std::array<int, 9>, 9> sudoku
-)
-{
+SourceResult SudokuChecker::rowsValid(std::array<std::array<int, 9>, 9> sudoku) {
 	for (int i = 0; i < sudokuDimension; i++) {
 		int missingValue = lineMissingValue(sudoku[i]);
 		if (missingValue != -1) 
-			return ValidationResult::ValidationResult(
+			return SourceResult::SourceResult(
+				SourceResult::Row,
 				false, 
-				ValidationResult::Row,
 				i, 
 				missingValue
 			);
 	}
 
-	return ValidationResult(true);
+	return SourceResult(SourceResult::Row, true);
 };
 
 std::array<int, 9> SudokuChecker::extractColumn(
@@ -89,24 +85,21 @@ std::array<int, 9> SudokuChecker::extractColumn(
 	return column;
 };
 
-ValidationResult SudokuChecker::colsValid(
-	std::array<std::array<int, 9>, 9> sudoku
-)
-{
+SourceResult SudokuChecker::colsValid(std::array<std::array<int, 9>, 9> sudoku) {
 	for (int i = 0; i < sudokuDimension; i++) {
 		std::array<int, 9> col = extractColumn(sudoku, i);
 
 		int missingValue = lineMissingValue(col);
 		if (missingValue != -1)
-			return ValidationResult::ValidationResult(
+			return SourceResult::SourceResult(
+				SourceResult::Column,
 				false,
-				ValidationResult::Column,
 				i,
 				missingValue
 			);
 	}
 
-	return ValidationResult(true);
+	return SourceResult(SourceResult::Column, true);
 };
 
 std::array<std::array<int, 3>, 3> SudokuChecker::extractBox(
@@ -125,10 +118,7 @@ std::array<std::array<int, 3>, 3> SudokuChecker::extractBox(
 	return box;
 };
 
-ValidationResult SudokuChecker::boxesValid(
-	std::array<std::array<int, 9>, 9> sudoku
-)
-{
+SourceResult SudokuChecker::boxesValid(std::array<std::array<int, 9>, 9> sudoku) {
 	for (int i = 0; i < boxValues.size(); i++) {
 		std::array<std::array<int, 3>, 3> box = extractBox(
 			sudoku,
@@ -138,13 +128,21 @@ ValidationResult SudokuChecker::boxesValid(
 
 		int missingValue = boxMissingValue(box);
 		if (missingValue != -1)
-			return ValidationResult::ValidationResult(
+			return SourceResult::SourceResult(
+				SourceResult::Box,
 				false,
-				ValidationResult::Box,
 				i,
 				missingValue
 			);
 	}
 
-	return ValidationResult(true);
+	return SourceResult(SourceResult::Box, true);
+};
+
+ValidationResult SudokuChecker::sudokuValid(std::array<std::array<int, 9>, 9> sudoku) {
+	return ValidationResult(
+		rowsValid(sudoku), 
+		colsValid(sudoku),
+		boxesValid(sudoku)
+	);
 };

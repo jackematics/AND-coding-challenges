@@ -1,38 +1,35 @@
+#include <stdexcept>
+#include <string>
+
 #include "pch.h"
 #include "ValidationResult.h"
-
-ValidationResult::ValidationResult(bool valid)
-	: valid(valid) {}
+#include "SourceResult.h"
 
 ValidationResult::ValidationResult(
-	bool valid, 
-	Source source,
-	int index,
-	int missingValue
-) : valid(valid), source(source), index(index), missingValue(missingValue) {}
-
-bool ValidationResult::isValid() {
-	return valid;
-}
-
-std::string ValidationResult::sourceToString() {
-	switch (source) {
-		case Row:
-			return "row";
-		case Column:
-			return "column";
-		case Box:
-			return "box";
-		default:
-			return "invalid source";
+	SourceResult rowResult, 
+	SourceResult columnResult, 
+	SourceResult boxResult
+) : rowResult(rowResult), columnResult(columnResult), boxResult(boxResult) {
+	if (
+		rowResult.getSource() != SourceResult::Row ||
+		columnResult.getSource() != SourceResult::Column ||
+		boxResult.getSource() != SourceResult::Box
+		) {
+		throw std::invalid_argument("Source results must match source type");
 	}
 }
 
-std::string ValidationResult::errorDescription()
-{
-	if (valid)
-		return "";
-
-	return std::format("Invalid Sudoku: missing value {0} in {1} {2}", missingValue, sourceToString(), index);
+bool ValidationResult::isValid() {
+	return (rowResult.isValid() 
+		&& columnResult.isValid() 
+		&& boxResult.isValid());
 }
 
+std::string ValidationResult::description() {
+	return isValid()
+		? "Valid Sudoku."
+		: "Invalid Sudoku. " +
+		rowResult.description() + " " +
+		columnResult.description() + " " +
+		boxResult.description();
+}
