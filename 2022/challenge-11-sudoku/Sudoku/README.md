@@ -1,10 +1,10 @@
 # Sudoku
 
-My solution for the Sudoku coding challenge completed in C++ with all stretch goals completed. This is the first time I've really built a program in C++ so it was a bit of a learning curve and a pain to configure but I learnt a lot! There are probably some questionable design decisions in there from my unfamiliarity with the language, but it was nice to get unit tests up and running so I could do TDD. 
+My solution for the Sudoku coding challenge completed in C++ with all stretch goals completed. This is the first time I've really built a proper program in C++ so it was a bit of a learning curve and a pain to configure but I learnt a lot! There are probably some questionable design decisions in there from my unfamiliarity with the language, but it was nice to get unit tests up and running so I could do TDD. 
 
 ## How to run
 
-Open the solution file in your preferred C++ IDE, I used Visual Studio (on Windows because it sucks on Mac). Build the solution and Sudoku project. You may need to restore nuget packages. Run the debugger (F5 / ctrl F5) and voila! The solution should all print out to the console.
+Open the solution file in your preferred C++ IDE, I used Visual Studio (on Windows because it sucks on Mac). Build the solution and Sudoku project. You may need to restore some nuget packages for VS. Run the debugger (F5 / ctrl F5) and voila! The solution should all print out to the console.
 
 Otherwise you can build the solution and run the Sudoku.exe at \Sudoku\bin\Debug-x64\Sudoku.
 
