@@ -1,13 +1,19 @@
 #pragma once
 #include <array>
 
+#include "ValidationResult.h"
+#include "Cell.h"
+
 class SudokuChecker {
 private:
-	const int sudokuDimension;
-	const int boxDimension;
+	int sudokuDimension;
+	int boxDimension;
+	std::array<Cell*, 9> boxValues;
 
 public:
 	SudokuChecker();
+	~SudokuChecker();
+
 	std::array<int, 9> extractColumn(
 		std::array<std::array<int, 9>, 9> sudoku, 
 		int columnIndex
@@ -17,13 +23,17 @@ public:
 		int rowIndex,
 		int colIndex
 	);
-	bool lineValid(std::array<int, 9> line);
-	bool boxValid(std::array<std::array<int, 3>, 3> box);
+
+	ValidationResult rowsValid(std::array<std::array<int, 9>, 9> sudoku);
+	ValidationResult colsValid(std::array<std::array<int, 9>, 9> sudoku);
+	ValidationResult boxesValid(std::array<std::array<int, 9>, 9> sudoku);
 
 private:
 	template<std::size_t SIZE>
 	bool lineContains(std::array<int, SIZE> row, int value);
 	bool boxContains(std::array<std::array<int, 3>, 3> box, int value);
+	int lineMissingValue(std::array<int, 9> line);
+	int boxMissingValue(std::array<std::array<int, 3>, 3> box);
 };
 
 
