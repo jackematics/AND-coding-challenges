@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
     printResults('0', result0);
     printResults('1', result1);
     printResults('2', result2);
+    std::cin.get();
 	
 	testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
