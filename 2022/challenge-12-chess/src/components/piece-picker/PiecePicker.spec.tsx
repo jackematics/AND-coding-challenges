@@ -3,19 +3,23 @@ import PieceType from '../../enums/piece';
 import PiecePicker from './PiecePicker';
 
 describe('PiecePicker', () => {
-  it.each(['pawn', 'rook', 'knight', 'bishop', 'queen', 'king'])(
-    'should highlight %s when clicked',
-    (pieceTag) => {
-      render(<PiecePicker />);
+  it.each([
+    PieceType.Pawn,
+    PieceType.Rook,
+    PieceType.Knight,
+    PieceType.Bishop,
+    PieceType.Queen,
+    PieceType.King,
+  ])('should highlight %s when clicked', (pieceTag) => {
+    render(<PiecePicker />);
 
-      const piece = screen.getByAltText(pieceTag);
-      let style = window.getComputedStyle(piece);
-      expect(style.backgroundColor).toBe('');
-      fireEvent.click(piece);
-      style = window.getComputedStyle(piece);
-      expect(style.backgroundColor).toBe('rgb(192, 192, 192)');
-    }
-  );
+    const piece = screen.getByAltText(pieceTag);
+    let style = window.getComputedStyle(piece);
+    expect(style.backgroundColor).toBe('');
+    fireEvent.click(piece);
+    style = window.getComputedStyle(piece);
+    expect(style.backgroundColor).toBe('rgb(192, 192, 192)');
+  });
 
   it('should unhighlight other pieces when a piece is clicked', () => {
     render(<PiecePicker />);
