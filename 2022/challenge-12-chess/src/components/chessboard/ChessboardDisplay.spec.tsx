@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import Chessboard from '../../engine/chessboard';
-import PieceType from '../../enums/piece';
+import PieceType from '../../engine/pieces/enum/piece';
 import ChessboardDisplay from './ChessboardDisplay';
+import TileColour from './tile-colour';
 
 describe('ChessboardDisplay', () => {
   it.each([
@@ -64,4 +65,30 @@ describe('ChessboardDisplay', () => {
       expect(displayedPiece).toBeTruthy();
     }
   );
+
+  it('should highlight two spaces in front of a pawn green on row 2', () => {
+    render(
+      <ChessboardDisplay
+        chessboard={new Chessboard()}
+        selectedPieceMetadata={{
+          src: '/assets/pawn-white.png',
+          alt: PieceType.Pawn,
+          type: PieceType.Pawn,
+          highlight: '',
+        }}
+      />
+    );
+
+    const selectedTile = screen.getByTitle('A2');
+    fireEvent.click(selectedTile);
+
+    const greenTile1 = screen.getByTitle('A3');
+    const greenTile2 = screen.getByTitle('A4');
+
+    const greenTile1Style = window.getComputedStyle(greenTile1);
+    const greenTile2Style = window.getComputedStyle(greenTile2);
+
+    expect(greenTile1Style.backgroundColor).toBe(TileColour.Green);
+    expect(greenTile2Style.backgroundColor).toBe(TileColour.Green);
+  });
 });

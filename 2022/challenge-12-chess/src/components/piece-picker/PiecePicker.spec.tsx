@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import PieceType from '../../enums/piece';
+import PieceType from '../../engine/pieces/enum/piece';
 import PiecePicker from './PiecePicker';
 
 describe('PiecePicker', () => {
@@ -11,7 +11,7 @@ describe('PiecePicker', () => {
     PieceType.Queen,
     PieceType.King,
   ])('should highlight %s when clicked', (pieceTag) => {
-    render(<PiecePicker />);
+    render(<PiecePicker pieceMetadataCallback={() => {}} />);
 
     const piece = screen.getByAltText(pieceTag);
     let style = window.getComputedStyle(piece);
@@ -22,7 +22,7 @@ describe('PiecePicker', () => {
   });
 
   it('should unhighlight other pieces when a piece is clicked', () => {
-    render(<PiecePicker />);
+    render(<PiecePicker pieceMetadataCallback={() => {}} />);
     const paleGreyRgb = 'rgb(192, 192, 192)';
 
     const pawn = screen.getByAltText(PieceType.Pawn);

@@ -1,4 +1,4 @@
-import PieceType from '../../../enums/piece';
+import PieceType from '../../../engine/pieces/enum/piece';
 
 export type AllPiecesMetadata = {
   '': PieceMetadata;

@@ -1,10 +1,14 @@
-import PieceType from '../enums/piece';
+import IPiece from './pieces/ipiece';
+import PieceType from './pieces/enum/piece';
 import Tile from './tile';
 import { BoardIndex } from './types/board-index';
+import NullPiece from './pieces/null/null-piece';
+import PieceFactory from './piece-factory';
 
 export default class Chessboard {
   private readonly boardDim = 8;
   private readonly board: Tile[][];
+  private readonly pieceFactory = new PieceFactory();
 
   constructor() {
     this.board = [];
@@ -22,15 +26,24 @@ export default class Chessboard {
     return this.board;
   }
 
-  public setSelectedTile(boardIndex: BoardIndex, piece: PieceType): void {
+  public setSelectedTilePiece(
+    boardIndex: BoardIndex,
+    pieceType: PieceType
+  ): void {
     this.nullAllTilePieces();
-    this.board[boardIndex.row][boardIndex.col].setPiece(piece);
+    this.board[boardIndex.row][boardIndex.col].setPiece(
+      this.pieceFactory.createPiece(pieceType, boardIndex)
+    );
+  }
+
+  public getValidTileIndexes(index: BoardIndex): BoardIndex[] {
+    return this.board[index.row][index.col].getPiece().getValidTileIndexes();
   }
 
   private nullAllTilePieces(): void {
     for (let row = 0; row < this.boardDim; row++) {
       for (let col = 0; col < this.boardDim; col++) {
-        this.board[row][col].setPiece(PieceType.Null);
+        this.board[row][col].setPiece(new NullPiece());
       }
     }
   }

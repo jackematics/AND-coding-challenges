@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Piece } from './PieceStyle';
 import { AllPiecesMetadata, PieceMetadata } from './types/all-pieces-metadata';
-import PieceType from '../../enums/piece';
+import PieceType from '../../engine/pieces/enum/piece';
+import { PiecePickerProps } from './types/piece-picker-props';
 
-const PiecePicker = () => {
+const PiecePicker = ({ pieceMetadataCallback }: PiecePickerProps) => {
   const [allPiecesMetadata, setAllPiecesMetadata] = useState<AllPiecesMetadata>(
     {
       [PieceType.Null]: {
@@ -50,9 +51,6 @@ const PiecePicker = () => {
       },
     }
   );
-  const selectedPiece = useRef<PieceMetadata>(
-    allPiecesMetadata[PieceType.Null]
-  );
 
   const highlightSelected = (currentPieceKey: string) => {
     const paleGreyRgb = 'rgb(192, 192, 192)';
@@ -78,7 +76,8 @@ const PiecePicker = () => {
   ) => {
     e.preventDefault();
     highlightSelected(currentPieceKey);
-    selectedPiece.current.type = currentPieceKey as PieceType;
+    // @ts-ignore
+    pieceMetadataCallback(allPiecesMetadata[currentPieceKey]);
   };
 
   const setPiece = (key: string, value: PieceMetadata): JSX.Element => {

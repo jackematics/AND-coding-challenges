@@ -1,9 +1,8 @@
-import { useReducer, useState } from 'react';
-import Chessboard from '../../engine/chessboard';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import Tile from '../../engine/tile';
 import { BoardIndex } from '../../engine/types/board-index';
-import PieceType from '../../enums/piece';
-import TileColour from '../../enums/tile-colour';
+import PieceType from '../../engine/pieces/enum/piece';
+import TileColour from './tile-colour';
 import {
   Board,
   BoardTile,
@@ -19,21 +18,40 @@ const ChessboardDisplay = ({
   selectedPieceMetadata,
 }: ChessboardProps) => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const validTileIndexes = useRef<BoardIndex[]>([]);
+
+  useEffect(() => {
+    validTileIndexes.current = [];
+    forceUpdate();
+  }, [selectedPieceMetadata]);
 
   const setColour = (boardIndex: BoardIndex): TileColour => {
-    return (boardIndex.row + boardIndex.col) % 2 === 1
-      ? TileColour.Brown
-      : TileColour.White;
+    let colour =
+      (boardIndex.row + boardIndex.col) % 2 === 1
+        ? TileColour.Brown
+        : TileColour.White;
+
+    if (
+      validTileIndexes.current.find(
+        (index) => index.row === boardIndex.row && index.col === boardIndex.col
+      )
+    ) {
+      colour = TileColour.Green;
+    }
+
+    return colour;
   };
 
   const handleTileClick = (boardIndex: BoardIndex) => {
-    chessboard.setSelectedTile(boardIndex, selectedPieceMetadata.type);
+    chessboard.setSelectedTilePiece(boardIndex, selectedPieceMetadata.type);
+    validTileIndexes.current = chessboard.getValidTileIndexes(boardIndex);
+
     forceUpdate();
   };
 
   const setBoardTile = (boardIndex: BoardIndex, tile: Tile): JSX.Element => {
     const piece =
-      tile.getPiece() === PieceType.Null ? (
+      tile.getPieceType() === PieceType.Null ? (
         <></>
       ) : (
         <GridPiece
@@ -46,12 +64,11 @@ const ChessboardDisplay = ({
       <>
         <TilePieceContainer>
           {piece}
-          <div
+          <BoardTile
             title={tile.getName()}
+            tileColour={setColour(boardIndex)}
             onClick={() => handleTileClick(boardIndex)}
-          >
-            <BoardTile tileColour={setColour(boardIndex)} />
-          </div>
+          />
         </TilePieceContainer>
       </>
     );

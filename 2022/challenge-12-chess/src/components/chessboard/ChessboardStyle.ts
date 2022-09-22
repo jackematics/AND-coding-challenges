@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TileColour from '../../enums/tile-colour';
+import TileColour from './tile-colour';
 
 export const BoardWrapper = styled.div`
   display: grid;
@@ -14,7 +14,14 @@ export const TilePieceContainer = styled.div`
   position: relative;
 `;
 
-export const BoardTile = styled.div<{ tileColour: TileColour }>`
+interface BoardTileProps {
+  title: string;
+  tileColour: TileColour;
+}
+
+export const BoardTile = styled.div.attrs((props: BoardTileProps) => ({
+  title: props.title,
+}))<BoardTileProps>`
   width: 90px;
   height: 90px;
   z-index: 1;

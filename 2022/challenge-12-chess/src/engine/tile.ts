@@ -1,10 +1,12 @@
-import PieceType from '../enums/piece';
+import PieceType from './pieces/enum/piece';
+import IPiece from './pieces/ipiece';
+import NullPiece from './pieces/null/null-piece';
 import { BoardIndex } from './types/board-index';
 
 export default class Tile {
   private readonly boardIndex: BoardIndex;
   private readonly maxRank: number = 8;
-  private piece: PieceType = PieceType.Null;
+  private piece: IPiece = new NullPiece();
   private readonly conversions = {
     1: 'A',
     2: 'B',
@@ -20,15 +22,19 @@ export default class Tile {
     this.boardIndex = gridIndex;
   }
 
-  public getGridIndex(): BoardIndex {
+  public getBoardIndex(): BoardIndex {
     return this.boardIndex;
   }
 
-  public getPiece(): PieceType {
+  public getPiece(): IPiece {
     return this.piece;
   }
 
-  public setPiece(piece: PieceType): void {
+  public getPieceType(): PieceType {
+    return this.piece.getType();
+  }
+
+  public setPiece(piece: IPiece): void {
     this.piece = piece;
   }
 
