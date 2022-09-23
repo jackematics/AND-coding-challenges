@@ -1,6 +1,6 @@
 # Chess
 
-My solution for the Chess coding challenge completed in Node, Typescript and React with all stretch goals completed. This was a bigger time investment than expected, I started doing strict TDD then ended up down a bunch of refactoring rabbit holes and eventually just had the most basic unit tests barely covering functionality. But it seems to work!
+My solution for the Chess coding challenge completed in Node, Typescript and React with all stretch goals completed. This was a bigger time investment than expected, I started doing strict TDD then ended up down a bunch of refactoring rabbit holes and eventually just had the most basic unit tests barely covering functionality. But it seems to work! I've diverged from the brief a bit in providing all valid moves for a selected piece at a selected square rather than two specified squares. Also annoyingly the white pieces I downloaded are in fact transparent, not white, but I can't be bothered looking for different pieces.
 
 ## How to run
 
