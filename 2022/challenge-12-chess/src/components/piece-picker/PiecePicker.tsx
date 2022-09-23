@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Piece } from './PieceStyle';
 import { AllPiecesMetadata, PieceMetadata } from './types/all-pieces-metadata';
 import PieceType from '../../engine/pieces/enum/piece';
 import { PiecePickerProps } from './types/piece-picker-props';
+import './piece-picker.css';
 
 const PiecePicker = ({ pieceMetadataCallback }: PiecePickerProps) => {
   const [allPiecesMetadata, setAllPiecesMetadata] = useState<AllPiecesMetadata>(
@@ -52,6 +53,38 @@ const PiecePicker = ({ pieceMetadataCallback }: PiecePickerProps) => {
     }
   );
 
+  const switchColour = (e: any) => {
+    const checked = e.currentTarget.checked;
+
+    setAllPiecesMetadata((prevMetadata) => ({
+      [PieceType.Null]: { ...prevMetadata[''] },
+      [PieceType.Pawn]: {
+        ...prevMetadata.pawn,
+        src: checked ? '/assets/pawn-black.png' : '/assets/pawn-white.png',
+      },
+      [PieceType.Rook]: {
+        ...prevMetadata.rook,
+        src: checked ? '/assets/rook-black.png' : '/assets/rook-white.png',
+      },
+      [PieceType.Knight]: {
+        ...prevMetadata.knight,
+        src: checked ? '/assets/knight-black.png' : '/assets/knight-white.png',
+      },
+      [PieceType.Bishop]: {
+        ...prevMetadata.bishop,
+        src: checked ? '/assets/bishop-black.png' : '/assets/bishop-white.png',
+      },
+      [PieceType.Queen]: {
+        ...prevMetadata.queen,
+        src: checked ? '/assets/queen-black.png' : '/assets/queen-white.png',
+      },
+      [PieceType.King]: {
+        ...prevMetadata.king,
+        src: checked ? '/assets/king-black.png' : '/assets/king-white.png',
+      },
+    }));
+  };
+
   const highlightSelected = (currentPieceKey: string) => {
     const paleGreyRgb = 'rgb(192, 192, 192)';
     setAllPiecesMetadata((prevMetadata) => ({
@@ -97,6 +130,10 @@ const PiecePicker = ({ pieceMetadataCallback }: PiecePickerProps) => {
 
   return (
     <>
+      <label className="switch">
+        <input type="checkbox" onClick={switchColour} />
+        <span className="slider"></span>
+      </label>
       {Object.entries(allPiecesMetadata).map(([key, value]) =>
         setPiece(key, value)
       )}
