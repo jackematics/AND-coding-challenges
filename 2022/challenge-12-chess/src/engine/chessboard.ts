@@ -1,4 +1,3 @@
-import IPiece from './pieces/ipiece';
 import PieceType from './pieces/enum/piece';
 import Tile from './tile';
 import { BoardIndex } from './types/board-index';

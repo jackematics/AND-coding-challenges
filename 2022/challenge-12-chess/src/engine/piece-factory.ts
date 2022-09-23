@@ -4,6 +4,7 @@ import IPiece from './pieces/ipiece';
 import King from './pieces/king/king';
 import Knight from './pieces/knight/knight';
 import NullPiece from './pieces/null/null-piece';
+import BlackPawn from './pieces/pawn/black-pawn';
 import Pawn from './pieces/pawn/pawn';
 import Queen from './pieces/queen/queen';
 import Rook from './pieces/rook/rook';
@@ -14,6 +15,9 @@ export default class PieceFactory {
     switch (type) {
       case PieceType.Pawn:
         return new Pawn(index);
+
+      case PieceType.BlackPawn:
+        return new BlackPawn(index);
 
       case PieceType.Rook:
         return new Rook(index);
