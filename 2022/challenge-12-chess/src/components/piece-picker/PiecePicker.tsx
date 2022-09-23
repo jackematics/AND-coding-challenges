@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Piece } from './PieceStyle';
 import { AllPiecesMetadata, PieceMetadata } from './types/all-pieces-metadata';
 import PieceType from '../../engine/pieces/enum/piece';
@@ -61,6 +61,7 @@ const PiecePicker = ({ pieceMetadataCallback }: PiecePickerProps) => {
       [PieceType.Pawn]: {
         ...prevMetadata.pawn,
         src: checked ? '/assets/pawn-black.png' : '/assets/pawn-white.png',
+        type: checked ? PieceType.BlackPawn : PieceType.Pawn,
       },
       [PieceType.Rook]: {
         ...prevMetadata.rook,
