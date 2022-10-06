@@ -1,5 +1,5 @@
 import './App.css';
-import MinesweeperDisplay from './components/minesweeper/MinesweeperDisplay';
+import MinesweeperDisplay from './components/minesweeper-display/MinesweeperDisplay';
 
 function App() {
   return (
