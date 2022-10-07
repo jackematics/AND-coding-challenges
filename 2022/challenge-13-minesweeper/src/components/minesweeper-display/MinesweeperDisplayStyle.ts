@@ -15,14 +15,19 @@ export const Row = styled.div`
   position: relative;
 `;
 
-export const Button = styled.button.attrs((props) => ({
+interface TileDisplayProps {
+  title: string;
+  tileStyle: TileStyle;
+}
+
+export const TileDisplay = styled.button.attrs((props: TileDisplayProps) => ({
   title: props.title,
-}))`
+}))<TileDisplayProps>`
   height: 25px;
   width: 25px;
-  background-color: #e5e4e4;
-  border-top: 3px solid white;
-  border-right: 3px solid grey;
-  border-bottom: 3px solid grey;
-  border-left: 3px solid white;
+  background-color: ${(props) => props.tileStyle.backgroundColour};
+  border-top: ${(props) => props.tileStyle.borderTop};
+  border-right: ${(props) => props.tileStyle.borderRight};
+  border-bottom: ${(props) => props.tileStyle.borderBottom};
+  border-left: ${(props) => props.tileStyle.borderLeft};
 `;
