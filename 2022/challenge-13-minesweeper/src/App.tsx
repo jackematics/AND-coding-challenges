@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <header>
         <h1>Minesweeper</h1>
-        <MinesweeperDisplay model={minesweeper} />
+        <MinesweeperDisplay minesweeper={minesweeper} />
       </header>
     </div>
   );

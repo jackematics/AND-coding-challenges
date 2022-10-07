@@ -18,7 +18,7 @@ export default class Minesweeper {
     for (let row = 0; row < metadata.rows; row++) {
       let currentRow = [];
       for (let col = 0; col < metadata.cols; col++) {
-        currentRow.push(new Tile(TileType.Empty));
+        currentRow.push(new Tile(TileType.Empty, { row, col }));
       }
 
       this.grid.push(currentRow);

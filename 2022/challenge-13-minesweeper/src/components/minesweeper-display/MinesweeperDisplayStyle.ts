@@ -14,20 +14,3 @@ export const Row = styled.div`
   align-items: center;
   position: relative;
 `;
-
-interface TileDisplayProps {
-  title: string;
-  tileStyle: TileStyle;
-}
-
-export const TileDisplay = styled.button.attrs((props: TileDisplayProps) => ({
-  title: props.title,
-}))<TileDisplayProps>`
-  height: 25px;
-  width: 25px;
-  background-color: ${(props) => props.tileStyle.backgroundColour};
-  border-top: ${(props) => props.tileStyle.borderTop};
-  border-right: ${(props) => props.tileStyle.borderRight};
-  border-bottom: ${(props) => props.tileStyle.borderBottom};
-  border-left: ${(props) => props.tileStyle.borderLeft};
-`;
