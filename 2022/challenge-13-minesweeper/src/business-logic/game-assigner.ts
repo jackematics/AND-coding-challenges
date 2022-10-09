@@ -1,8 +1,9 @@
 import TileType from '../enums/tile-type';
 import MinesweeperMetadata from '../types/minesweeper-metadata';
+import { IAssigner } from './iassigner';
 import Tile from './tile';
 
-export default class GameAssigner {
+export default class GameAssigner implements IAssigner {
   public assign(metadata: MinesweeperMetadata): Tile[][] {
     const grid: Tile[][] = [];
 
