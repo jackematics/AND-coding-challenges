@@ -1,9 +1,14 @@
 import './App.css';
+import GameAssigner from './business-logic/game-assigner';
 import Minesweeper from './business-logic/minesweeper';
 import MinesweeperDisplay from './components/minesweeper-display/MinesweeperDisplay';
 
 function App() {
-  const minesweeper = new Minesweeper({ rows: 9, cols: 9, mines: 10 });
+  const assigner = new GameAssigner();
+  const minesweeper = new Minesweeper(
+    { rows: 9, cols: 9, mines: 10 },
+    assigner
+  );
 
   return (
     <div className="App">

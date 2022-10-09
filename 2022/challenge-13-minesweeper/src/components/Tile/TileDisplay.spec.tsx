@@ -9,7 +9,6 @@ describe('TileDisplay', () => {
     render(<TileDisplay tile={tile} />);
 
     let noSurroundingMines = screen.getByTestId('1,1');
-    console.log(noSurroundingMines);
 
     fireEvent.click(noSurroundingMines);
     noSurroundingMines = screen.getByTestId('1,1');
@@ -19,4 +18,6 @@ describe('TileDisplay', () => {
     expect(style.backgroundColor).toBe('rgb(219, 219, 219)');
     expect(style.border).toBe('1px solid #575757');
   });
+
+  // it('should show a mine with a red background if a mine is clicked')
 });
