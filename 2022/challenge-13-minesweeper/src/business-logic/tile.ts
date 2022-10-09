@@ -23,10 +23,6 @@ export default class Tile {
     return this.type;
   }
 
-  public setType(type: TileType) {
-    this.type = type;
-  }
-
   public getGridIndex() {
     return this.gridIndex;
   }
