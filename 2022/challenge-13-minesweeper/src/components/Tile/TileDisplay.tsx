@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import Tile from '../../business-logic/tile';
-import { EmptyTile, HiddenTile } from './TileStyle';
+import TileType from '../../enums/tile-type';
+import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
   tile: Tile;
@@ -9,7 +10,7 @@ interface TileDisplayProps {
 const TileDisplay = ({ tile }: TileDisplayProps) => {
   const [revealed, setRevealed] = useState<boolean>(false);
 
-  const revealTile = (tile: Tile) => {
+  const revealTile = (e: React.MouseEvent<HTMLElement>, tile: Tile) => {
     tile.reveal();
     setRevealed(true);
   };
@@ -18,19 +19,28 @@ const TileDisplay = ({ tile }: TileDisplayProps) => {
     if (tile.isHidden())
       return (
         <>
-          <HiddenTile
+          <TileImage
             title="hidden-tile"
+            src="/assets/hidden-tile.svg"
             data-testid={`${tile.getGridIndex().row},${
               tile.getGridIndex().col
             }`}
-            onClick={() => revealTile(tile)}
+            onClick={(e) => revealTile(e, tile)}
+            onDragStart={(e) => e.preventDefault()}
           />
         </>
       );
 
-    return (
-      <EmptyTile
+    return tile.getType() === TileType.Empty ? (
+      <TileImage
         title="empty-tile"
+        src="/assets/empty-tile.svg"
+        data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
+      />
+    ) : (
+      <TileImage
+        title="red-mine-tile"
+        src="/assets/red-mine-tile.svg"
         data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
       />
     );
