@@ -1,5 +1,4 @@
 import TileType from '../enums/tile-type';
-import Bounds from '../types/bounds';
 import GridIndex from '../types/grid-index';
 import IAssigner from './iassigner';
 import Tile from './tile';

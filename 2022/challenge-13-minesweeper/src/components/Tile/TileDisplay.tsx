@@ -19,19 +19,19 @@ const TileDisplay = ({
 }: TileDisplayProps) => {
   const [lastClicked, setLastClicked] = useState<Tile>();
 
-  const handleHiddenTileClick = (tile: Tile) => {
-    if (tile.getType() === TileType.Mine) {
-      gameOverCallback(true);
-    }
-
+  const revealSurroundingIfAllEmpty = (tile: Tile) => {
     if (
       tile.getType() === TileType.Empty &&
       tile.getSurroundingMineCount() === 0
     ) {
       revealSurroundingTilesCallback(tile);
     }
-    tile.reveal();
+  };
 
+  const handleHiddenTileClick = (tile: Tile) => {
+    gameOverCallback(tile.getType() === TileType.Mine ? true : false);
+    revealSurroundingIfAllEmpty(tile);
+    tile.reveal();
     setLastClicked(tile);
   };
 

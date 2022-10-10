@@ -18,35 +18,34 @@ describe('MinesweeperDisplay', () => {
 
   describe('when an empty square with no surrounding minds is clicked', () => {
     let minesweeper: Minesweeper;
+    const assigner = {
+      assign: () => {
+        return [
+          [
+            new Tile(TileType.Empty, { row: 0, col: 0 }),
+            new Tile(TileType.Empty, { row: 0, col: 1 }),
+            new Tile(TileType.Empty, { row: 0, col: 2 }),
+          ],
+          [
+            new Tile(TileType.Empty, { row: 1, col: 0 }),
+            new Tile(TileType.Empty, { row: 1, col: 1 }),
+            new Tile(TileType.Empty, { row: 1, col: 2 }),
+          ],
+          [
+            new Tile(TileType.Empty, { row: 2, col: 0 }),
+            new Tile(TileType.Empty, { row: 2, col: 1 }),
+            new Tile(TileType.Empty, { row: 2, col: 2 }),
+          ],
+          [
+            new Tile(TileType.Empty, { row: 3, col: 0 }),
+            new Tile(TileType.Empty, { row: 3, col: 1 }),
+            new Tile(TileType.Mine, { row: 3, col: 2 }),
+          ],
+        ];
+      },
+    };
 
     beforeEach(() => {
-      const assigner = {
-        assign: () => {
-          return [
-            [
-              new Tile(TileType.Empty, { row: 0, col: 0 }),
-              new Tile(TileType.Empty, { row: 0, col: 1 }),
-              new Tile(TileType.Empty, { row: 0, col: 2 }),
-            ],
-            [
-              new Tile(TileType.Empty, { row: 1, col: 0 }),
-              new Tile(TileType.Empty, { row: 1, col: 1 }),
-              new Tile(TileType.Empty, { row: 1, col: 2 }),
-            ],
-            [
-              new Tile(TileType.Empty, { row: 2, col: 0 }),
-              new Tile(TileType.Empty, { row: 2, col: 1 }),
-              new Tile(TileType.Empty, { row: 2, col: 2 }),
-            ],
-            [
-              new Tile(TileType.Empty, { row: 3, col: 0 }),
-              new Tile(TileType.Empty, { row: 3, col: 1 }),
-              new Tile(TileType.Mine, { row: 3, col: 2 }),
-            ],
-          ];
-        },
-      };
-
       minesweeper = new Minesweeper(assigner);
     });
 
