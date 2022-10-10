@@ -6,6 +6,7 @@ export default class Tile {
   private type: TileType;
   private readonly gridIndex: GridIndex;
   private surroundingMineCount: number = 0;
+  private mineFlag = false;
 
   constructor(type: TileType, gridIndex: GridIndex) {
     this.type = type;
@@ -34,5 +35,13 @@ export default class Tile {
 
   public setSurroundingMineCount(count: number) {
     this.surroundingMineCount = count;
+  }
+
+  public toggleMineFlag() {
+    this.mineFlag = !this.mineFlag;
+  }
+
+  public mineFlagged() {
+    return this.mineFlag;
   }
 }

@@ -160,4 +160,31 @@ describe('MinesweeperDisplay', () => {
       expect(shouldBeUnclickable.title).toBe('hidden-tile');
     });
   });
+
+  describe('when a hidden tile is right-clicked', () => {
+    it('should flag the tile as a potential mine', () => {
+      const assigner = {
+        assign: () => {
+          return [
+            [
+              new Tile(TileType.Empty, { row: 0, col: 0 }),
+              new Tile(TileType.Mine, { row: 0, col: 1 }),
+              new Tile(TileType.Empty, { row: 0, col: 2 }),
+            ],
+          ];
+        },
+      };
+
+      const minesweeper = new Minesweeper(assigner);
+
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
+      const hiddenTile = screen.getByTestId('0,1');
+      fireEvent.contextMenu(hiddenTile);
+
+      const flaggedTile = screen.getByTestId('0,1');
+
+      expect(flaggedTile.title).toBe('flagged-tile');
+    });
+  });
 });
