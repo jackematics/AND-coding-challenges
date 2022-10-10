@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import GameAssigner from '../../business-logic/game-assigner';
-import Minesweeper from '../../business-logic/minesweeper';
-import Tile from '../../business-logic/tile';
-import TileType from '../../enums/tile-type';
-import MinesweeperDisplay from './MinesweeperDisplay';
+import GameAssigner from '../business-logic/game-assigner';
+import Minesweeper from '../business-logic/minesweeper';
+import Tile from '../business-logic/tile';
+import MinesweeperDisplay from '../components/minesweeper-display/MinesweeperDisplay';
+import TileType from '../enums/tile-type';
 
 describe('MinesweeperDisplay', () => {
   it('should render the initial minesweeper display as a grid of 9 x 9 tiles', () => {

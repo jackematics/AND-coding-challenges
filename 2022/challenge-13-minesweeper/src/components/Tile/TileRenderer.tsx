@@ -1,8 +1,20 @@
 import Tile from '../../business-logic/tile';
+import MineType from '../../enums/mine-type';
+import GridIndex from '../../types/grid-index';
 import { TileImage } from './TileStyle';
 
-export default class SurroundingMinesRenderer {
-  public static render(tile: Tile) {
+export default class TileRenderer {
+  public static renderMineTile(mineType: MineType, tileGridIndex: GridIndex) {
+    return (
+      <TileImage
+        title={mineType}
+        src={`/assets/${mineType}.svg`}
+        data-testid={`${tileGridIndex.row},${tileGridIndex.col}`}
+      />
+    );
+  }
+
+  public static renderNumericalTile(tile: Tile) {
     const testId = `${tile.getGridIndex().row},${tile.getGridIndex().col}`;
 
     return {

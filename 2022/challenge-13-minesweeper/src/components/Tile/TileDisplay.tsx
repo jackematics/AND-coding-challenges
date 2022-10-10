@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Tile from '../../business-logic/tile';
+import MineType from '../../enums/mine-type';
 import TileType from '../../enums/tile-type';
-import SurroundingMinesRenderer from './SurroundingMinesRenderer';
+import TileRenderer from './TileRenderer';
 import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
@@ -71,17 +72,11 @@ const TileDisplay = ({
     }
 
     if (tile.getType() === TileType.Mine) {
-      const mineType = lastClicked === tile ? 'red-mine-tile' : 'mine-tile';
-      return (
-        <TileImage
-          title={mineType}
-          src={`/assets/${mineType}.svg`}
-          data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
-        />
-      );
+      const mineType = lastClicked === tile ? MineType.RedMine : MineType.Mine;
+      return TileRenderer.renderMineTile(mineType, tile.getGridIndex());
     }
 
-    return SurroundingMinesRenderer.render(tile);
+    return TileRenderer.renderNumericalTile(tile);
   };
 
   return <>{setTile(tile)}</>;
