@@ -1,22 +1,23 @@
 import { useState } from 'react';
 import Tile from '../../business-logic/tile';
 import TileType from '../../enums/tile-type';
-import GridIndex from '../../types/grid-index';
 import SurroundingMinesRenderer from './SurroundingMinesRenderer';
 import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
   tile: Tile;
   gameOverCallback: (gameOver: boolean) => void;
+  clickable: boolean;
 }
 
-const TileDisplay = ({ tile, gameOverCallback }: TileDisplayProps) => {
+const TileDisplay = ({
+  tile,
+  gameOverCallback,
+  clickable,
+}: TileDisplayProps) => {
   const [lastClicked, setLastClicked] = useState<Tile>();
 
-  const handleHiddenTileClick = (
-    e: React.MouseEvent<HTMLElement>,
-    tile: Tile
-  ) => {
+  const handleHiddenTileClick = (tile: Tile) => {
     tile.reveal();
     if (tile.getType() === TileType.Mine) {
       gameOverCallback(true);
@@ -35,7 +36,7 @@ const TileDisplay = ({ tile, gameOverCallback }: TileDisplayProps) => {
             data-testid={`${tile.getGridIndex().row},${
               tile.getGridIndex().col
             }`}
-            onClick={(e) => handleHiddenTileClick(e, tile)}
+            onClick={() => (clickable ? handleHiddenTileClick(tile) : '')}
             onDragStart={(e) => e.preventDefault()}
           />
         </>

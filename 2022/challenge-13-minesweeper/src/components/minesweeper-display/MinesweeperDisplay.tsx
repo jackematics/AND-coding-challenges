@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Minesweeper from '../../business-logic/minesweeper';
 import Tile from '../../business-logic/tile';
-import TileType from '../../enums/tile-type';
 import TileDisplay from '../Tile/TileDisplay';
 import { Board, BoardWrapper, Row } from './MinesweeperDisplayStyle';
 
@@ -23,7 +22,11 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
     return (
       <>
         {tileRow.map((tile, col) => (
-          <TileDisplay tile={tile} gameOverCallback={handleGameOver} />
+          <TileDisplay
+            tile={tile}
+            gameOverCallback={handleGameOver}
+            clickable={!gameOver}
+          />
         ))}
       </>
     );

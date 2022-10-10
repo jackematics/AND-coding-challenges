@@ -85,27 +85,9 @@ describe('MinesweeperDisplay', () => {
   );
 
   describe('When a mine is clicked', () => {
-    it('should show a mine', () => {
-      const assigner = {
-        assign: () => {
-          return [
-            [
-              new Tile(TileType.Mine, { row: 1, col: 1 }),
-              new Tile(TileType.Empty, { row: 1, col: 2 }),
-            ],
-          ];
-        },
-      };
+    let minesweeper: Minesweeper;
 
-      const minesweeper = new Minesweeper(assigner);
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
-      let mine = screen.getByTestId('1,1');
-      fireEvent.click(mine);
-      mine = screen.getByTestId('1,1');
-      expect(mine.title).toBe('red-mine-tile');
-    });
-
-    it('should reveal all other mines on screen', () => {
+    beforeEach(() => {
       const assigner = {
         assign: () => {
           return [
@@ -123,13 +105,37 @@ describe('MinesweeperDisplay', () => {
         },
       };
 
-      const minesweeper = new Minesweeper(assigner);
+      minesweeper = new Minesweeper(assigner);
+    });
 
+    it('should show a mine', () => {
       render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      let mine = screen.getByTestId('1,1');
+      fireEvent.click(mine);
+      mine = screen.getByTestId('1,1');
+      expect(mine.title).toBe('red-mine-tile');
+    });
+
+    it('should reveal all other mines on screen', () => {
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
       let mine = screen.getByTestId('1,1');
       fireEvent.click(mine);
       const allOtherMines = screen.getAllByTitle('mine-tile');
       expect(allOtherMines.length).toBe(3);
+    });
+
+    it('should make all other tiles unclickable', () => {
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
+      let mine = screen.getByTestId('1,1');
+      fireEvent.click(mine);
+
+      let shouldBeUnclickable = screen.getByTestId('0,1');
+      fireEvent.click(shouldBeUnclickable);
+      shouldBeUnclickable = screen.getByTestId('0,1');
+
+      expect(shouldBeUnclickable.title).toBe('hidden-tile');
     });
   });
 });
