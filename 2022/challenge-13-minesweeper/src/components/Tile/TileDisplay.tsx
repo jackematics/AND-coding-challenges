@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Tile from '../../business-logic/tile';
+import HiddenType from '../../enums/hidden-type';
 import MineType from '../../enums/mine-type';
 import TileType from '../../enums/tile-type';
 import TileRenderer from './TileRenderer';
-import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
   tile: Tile;
@@ -31,43 +31,33 @@ const TileDisplay = ({
   };
 
   const handleHiddenTileClick = (tile: Tile) => {
-    gameOverCallback(tile.getType() === TileType.Mine ? true : false);
-    revealSurroundingIfAllEmpty(tile);
-    tile.reveal();
-    setLastClicked(tile);
+    if (clickable) {
+      gameOverCallback(tile.getType() === TileType.Mine ? true : false);
+      revealSurroundingIfAllEmpty(tile);
+      tile.reveal();
+      setLastClicked(tile);
+    }
   };
 
   const handleFlagSet = (e: any, tile: Tile) => {
-    e.preventDefault();
-    tile.toggleMineFlag();
-    setMineFlagged(tile.mineFlagged());
+    if (clickable) {
+      e.preventDefault();
+      tile.toggleMineFlag();
+      setMineFlagged(tile.mineFlagged());
+    }
   };
 
   const setTile = (tile: Tile) => {
     if (tile.isHidden()) {
-      if (tile.mineFlagged())
-        return (
-          <TileImage
-            title="flagged-tile"
-            src="/assets/flagged-tile.svg"
-            data-testid={`${tile.getGridIndex().row},${
-              tile.getGridIndex().col
-            }`}
-            onClick={() => (clickable ? handleHiddenTileClick(tile) : '')}
-            onContextMenu={(e) => (clickable ? handleFlagSet(e, tile) : '')}
-            onDragStart={(e) => e.preventDefault()}
-          />
-        );
+      const hiddenType = tile.mineFlagged()
+        ? HiddenType.Flagged
+        : HiddenType.Hidden;
 
-      return (
-        <TileImage
-          title="hidden-tile"
-          src="/assets/hidden-tile.svg"
-          data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
-          onClick={() => (clickable ? handleHiddenTileClick(tile) : '')}
-          onContextMenu={(e) => (clickable ? handleFlagSet(e, tile) : '')}
-          onDragStart={(e) => e.preventDefault()}
-        />
+      return TileRenderer.renderHiddenTile(
+        hiddenType,
+        tile,
+        handleHiddenTileClick,
+        handleFlagSet
       );
     }
 
