@@ -1,19 +1,28 @@
 import { useState } from 'react';
 import Tile from '../../business-logic/tile';
 import TileType from '../../enums/tile-type';
+import GridIndex from '../../types/grid-index';
 import SurroundingMinesRenderer from './SurroundingMinesRenderer';
 import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
   tile: Tile;
+  gameOverCallback: (gameOver: boolean) => void;
 }
 
-const TileDisplay = ({ tile }: TileDisplayProps) => {
-  const [revealed, setRevealed] = useState<boolean>(false);
+const TileDisplay = ({ tile, gameOverCallback }: TileDisplayProps) => {
+  const [lastClicked, setLastClicked] = useState<Tile>();
 
-  const revealTile = (e: React.MouseEvent<HTMLElement>, tile: Tile) => {
+  const handleHiddenTileClick = (
+    e: React.MouseEvent<HTMLElement>,
+    tile: Tile
+  ) => {
     tile.reveal();
-    setRevealed(true);
+    if (tile.getType() === TileType.Mine) {
+      gameOverCallback(true);
+    }
+
+    setLastClicked(tile);
   };
 
   const setTile = (tile: Tile) => {
@@ -26,20 +35,22 @@ const TileDisplay = ({ tile }: TileDisplayProps) => {
             data-testid={`${tile.getGridIndex().row},${
               tile.getGridIndex().col
             }`}
-            onClick={(e) => revealTile(e, tile)}
+            onClick={(e) => handleHiddenTileClick(e, tile)}
             onDragStart={(e) => e.preventDefault()}
           />
         </>
       );
 
-    if (tile.getType() === TileType.Mine)
+    if (tile.getType() === TileType.Mine) {
+      const mineType = lastClicked === tile ? 'red-mine-tile' : 'mine-tile';
       return (
         <TileImage
-          title="red-mine-tile"
-          src="/assets/red-mine-tile.svg"
+          title={mineType}
+          src={`/assets/${mineType}.svg`}
           data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
         />
       );
+    }
 
     return SurroundingMinesRenderer.render(tile);
   };

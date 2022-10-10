@@ -84,25 +84,52 @@ describe('MinesweeperDisplay', () => {
     }
   );
 
-  it('should show a mine', () => {
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Mine, { row: 1, col: 1 }),
-            new Tile(TileType.Empty, { row: 1, col: 2 }),
-          ],
-        ];
-      },
-    };
+  describe('When a mine is clicked', () => {
+    it('should show a mine', () => {
+      const assigner = {
+        assign: () => {
+          return [
+            [
+              new Tile(TileType.Mine, { row: 1, col: 1 }),
+              new Tile(TileType.Empty, { row: 1, col: 2 }),
+            ],
+          ];
+        },
+      };
 
-    const minesweeper = new Minesweeper(assigner);
-    render(<MinesweeperDisplay minesweeper={minesweeper} />);
-    let mine = screen.getByTestId('1,1');
+      const minesweeper = new Minesweeper(assigner);
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      let mine = screen.getByTestId('1,1');
+      fireEvent.click(mine);
+      mine = screen.getByTestId('1,1');
+      expect(mine.title).toBe('red-mine-tile');
+    });
 
-    fireEvent.click(mine);
-    mine = screen.getByTestId('1,1');
+    it('should reveal all other mines on screen', () => {
+      const assigner = {
+        assign: () => {
+          return [
+            [
+              new Tile(TileType.Mine, { row: 0, col: 0 }),
+              new Tile(TileType.Empty, { row: 0, col: 1 }),
+              new Tile(TileType.Mine, { row: 0, col: 2 }),
+            ],
+            [
+              new Tile(TileType.Mine, { row: 1, col: 0 }),
+              new Tile(TileType.Mine, { row: 1, col: 1 }),
+              new Tile(TileType.Empty, { row: 1, col: 2 }),
+            ],
+          ];
+        },
+      };
 
-    expect(mine.title).toBe('red-mine-tile');
+      const minesweeper = new Minesweeper(assigner);
+
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      let mine = screen.getByTestId('1,1');
+      fireEvent.click(mine);
+      const allOtherMines = screen.getAllByTitle('mine-tile');
+      expect(allOtherMines.length).toBe(3);
+    });
   });
 });
