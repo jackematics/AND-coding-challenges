@@ -12,16 +12,9 @@ type MinesweeperProps = {
 const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
   const [gameOver, setGameOver] = useState<boolean>(false);
 
-  const handleGameOver = (gameOver: boolean) => {
-    if (gameOver) {
-      minesweeper.getGrid().forEach((row) => {
-        row.forEach((tile) => {
-          if (tile.getType() === TileType.Mine) {
-            tile.reveal();
-          }
-        });
-      });
-
+  const handleGameOver = (isGameOver: boolean) => {
+    if (isGameOver) {
+      minesweeper.gameOver();
       setGameOver(true);
     }
   };
