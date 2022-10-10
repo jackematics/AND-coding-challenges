@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import Minesweeper from '../../business-logic/minesweeper';
 import Tile from '../../business-logic/tile';
 import TileDisplay from '../Tile/TileDisplay';
@@ -10,12 +10,18 @@ type MinesweeperProps = {
 
 const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const handleGameOver = (isGameOver: boolean) => {
     if (isGameOver) {
       minesweeper.gameOver();
       setGameOver(true);
     }
+  };
+
+  const revealSurroundingTiles = (tile: Tile) => {
+    minesweeper.revealSurroundingTiles(tile);
+    forceUpdate();
   };
 
   const renderTiles = (tileRow: Tile[]): JSX.Element => {
@@ -25,6 +31,7 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
           <TileDisplay
             tile={tile}
             gameOverCallback={handleGameOver}
+            revealSurroundingTilesCallback={() => revealSurroundingTiles(tile)}
             clickable={!gameOver}
           />
         ))}

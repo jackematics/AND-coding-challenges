@@ -7,21 +7,30 @@ import { TileImage } from './TileStyle';
 interface TileDisplayProps {
   tile: Tile;
   gameOverCallback: (gameOver: boolean) => void;
+  revealSurroundingTilesCallback: (tile: Tile) => void;
   clickable: boolean;
 }
 
 const TileDisplay = ({
   tile,
   gameOverCallback,
+  revealSurroundingTilesCallback,
   clickable,
 }: TileDisplayProps) => {
   const [lastClicked, setLastClicked] = useState<Tile>();
 
   const handleHiddenTileClick = (tile: Tile) => {
-    tile.reveal();
     if (tile.getType() === TileType.Mine) {
       gameOverCallback(true);
     }
+
+    if (
+      tile.getType() === TileType.Empty &&
+      tile.getSurroundingMineCount() === 0
+    ) {
+      revealSurroundingTilesCallback(tile);
+    }
+    tile.reveal();
 
     setLastClicked(tile);
   };

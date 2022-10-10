@@ -1,8 +1,10 @@
 import TileType from '../enums/tile-type';
+import Bounds from '../types/bounds';
 import GridIndex from '../types/grid-index';
 import MinesweeperMetadata from '../types/minesweeper-metadata';
 import IAssigner from './iassigner';
 import Tile from './tile';
+import GridOperations from './utils/grid-operations';
 
 export default class GameAssigner implements IAssigner {
   private readonly metadata: MinesweeperMetadata;
@@ -88,7 +90,14 @@ export default class GameAssigner implements IAssigner {
     for (let row = centre.row - 1; row <= centre.row + 1; row++) {
       for (let col = centre.col - 1; col <= centre.col + 1; col++) {
         if (row === centre.row && col === centre.col) continue;
-        if (this.indexOutOfBounds({ row, col }, 0, grid.length)) continue;
+        if (
+          GridOperations.indexOutOfBounds(
+            { row, col },
+            { lower: 0, upper: grid.length - 1 },
+            { lower: 0, upper: grid[0].length - 1 }
+          )
+        )
+          continue;
 
         if (grid[row][col].getType() === TileType.Mine) {
           count++;
@@ -97,18 +106,5 @@ export default class GameAssigner implements IAssigner {
     }
 
     tile.setSurroundingMineCount(count);
-  }
-
-  private indexOutOfBounds(
-    gridIndex: GridIndex,
-    lowerBound: number,
-    upperBound: number
-  ): boolean {
-    return (
-      gridIndex.row < lowerBound ||
-      gridIndex.row >= upperBound ||
-      gridIndex.col < lowerBound ||
-      gridIndex.col >= upperBound
-    );
   }
 }
