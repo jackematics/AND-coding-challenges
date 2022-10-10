@@ -12,23 +12,9 @@ export default class GameAssigner implements IAssigner {
   }
 
   public assign(): Tile[][] {
-    const grid: Tile[][] = [];
     const mineCoordinateSet = this.generateMineCoordinates();
-
-    for (let row = 0; row < this.metadata.rows; row++) {
-      let currentRow = [];
-      for (let col = 0; col < this.metadata.cols; col++) {
-        const tileType = mineCoordinateSet.find(
-          (coord) => coord.row === row && coord.col === col
-        )
-          ? TileType.Mine
-          : TileType.Empty;
-
-        currentRow.push(new Tile(tileType, { row, col }));
-      }
-
-      grid.push(currentRow);
-    }
+    const grid: Tile[][] = this.initialiseGrid(mineCoordinateSet);
+    this.setSurroundingMineCounts(grid);
 
     return grid;
   }
@@ -64,5 +50,65 @@ export default class GameAssigner implements IAssigner {
 
   private getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
+  }
+
+  private initialiseGrid(mineCoordinateSet: GridIndex[]) {
+    const grid: Tile[][] = [];
+
+    for (let row = 0; row < this.metadata.rows; row++) {
+      let currentRow = [];
+      for (let col = 0; col < this.metadata.cols; col++) {
+        const tileType = mineCoordinateSet.find(
+          (coord) => coord.row === row && coord.col === col
+        )
+          ? TileType.Mine
+          : TileType.Empty;
+
+        currentRow.push(new Tile(tileType, { row, col }));
+      }
+
+      grid.push(currentRow);
+    }
+
+    return grid;
+  }
+
+  private setSurroundingMineCounts(grid: Tile[][]): void {
+    grid.forEach((row) =>
+      row.forEach((tile) => {
+        this.setSurroundingMineCount(tile, grid);
+      })
+    );
+  }
+
+  private setSurroundingMineCount(tile: Tile, grid: Tile[][]): void {
+    const centre = tile.getGridIndex();
+    let count = 0;
+
+    for (let row = centre.row - 1; row <= centre.row + 1; row++) {
+      for (let col = centre.col - 1; col <= centre.col + 1; col++) {
+        if (row === centre.row && col === centre.col) continue;
+        if (this.indexOutOfBounds({ row, col }, 0, grid.length)) continue;
+
+        if (grid[row][col].getType() === TileType.Mine) {
+          count++;
+        }
+      }
+    }
+
+    tile.setSurroundingMineCount(count);
+  }
+
+  private indexOutOfBounds(
+    gridIndex: GridIndex,
+    lowerBound: number,
+    upperBound: number
+  ): boolean {
+    return (
+      gridIndex.row < lowerBound ||
+      gridIndex.row >= upperBound ||
+      gridIndex.col < lowerBound ||
+      gridIndex.col >= upperBound
+    );
   }
 }

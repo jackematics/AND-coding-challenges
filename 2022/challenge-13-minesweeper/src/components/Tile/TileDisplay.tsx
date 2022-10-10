@@ -1,6 +1,7 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import Tile from '../../business-logic/tile';
 import TileType from '../../enums/tile-type';
+import SurroundingMinesRenderer from './SurroundingMinesRenderer';
 import { TileImage } from './TileStyle';
 
 interface TileDisplayProps {
@@ -15,7 +16,7 @@ const TileDisplay = ({ tile }: TileDisplayProps) => {
     setRevealed(true);
   };
 
-  const setTile = (tile: Tile): JSX.Element => {
+  const setTile = (tile: Tile) => {
     if (tile.isHidden())
       return (
         <>
@@ -31,19 +32,16 @@ const TileDisplay = ({ tile }: TileDisplayProps) => {
         </>
       );
 
-    return tile.getType() === TileType.Empty ? (
-      <TileImage
-        title="empty-tile"
-        src="/assets/empty-tile.svg"
-        data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
-      />
-    ) : (
-      <TileImage
-        title="red-mine-tile"
-        src="/assets/red-mine-tile.svg"
-        data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
-      />
-    );
+    if (tile.getType() === TileType.Mine)
+      return (
+        <TileImage
+          title="red-mine-tile"
+          src="/assets/red-mine-tile.svg"
+          data-testid={`${tile.getGridIndex().row},${tile.getGridIndex().col}`}
+        />
+      );
+
+    return SurroundingMinesRenderer.render(tile);
   };
 
   return <>{setTile(tile)}</>;

@@ -5,6 +5,7 @@ export default class Tile {
   private hidden = true;
   private type: TileType;
   private readonly gridIndex: GridIndex;
+  private surroundingMineCount: number = 0;
 
   constructor(type: TileType, gridIndex: GridIndex) {
     this.type = type;
@@ -25,5 +26,13 @@ export default class Tile {
 
   public getGridIndex() {
     return this.gridIndex;
+  }
+
+  public getSurroundingMineCount() {
+    return this.surroundingMineCount;
+  }
+
+  public setSurroundingMineCount(count: number) {
+    this.surroundingMineCount = count;
   }
 }
