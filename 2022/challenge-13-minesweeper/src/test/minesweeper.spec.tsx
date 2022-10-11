@@ -57,7 +57,7 @@ describe('MinesweeperDisplay', () => {
       fireEvent.click(noSurroundingMines);
       const revealedTile = screen.getByTestId('1,1');
 
-      expect(revealedTile.title).toBe('empty-tile');
+      expect(revealedTile.title).toBe('0-tile');
     });
 
     it('should reveal all squares around the empty tile and subsequent empty tiles revealed', () => {
@@ -67,21 +67,21 @@ describe('MinesweeperDisplay', () => {
 
       fireEvent.click(noSurroundingMines);
 
-      const revealedTiles = screen.getAllByTitle('empty-tile');
+      const revealedTiles = screen.getAllByTitle('0-tile');
 
       expect(revealedTiles.length).toBe(11);
     });
   });
 
   it.each([
-    { surroundingMines: 1, tileTitle: 'one-tile' },
-    { surroundingMines: 2, tileTitle: 'two-tile' },
-    { surroundingMines: 3, tileTitle: 'three-tile' },
-    { surroundingMines: 4, tileTitle: 'four-tile' },
-    { surroundingMines: 5, tileTitle: 'five-tile' },
-    { surroundingMines: 6, tileTitle: 'six-tile' },
-    { surroundingMines: 7, tileTitle: 'seven-tile' },
-    { surroundingMines: 8, tileTitle: 'eight-tile' },
+    { surroundingMines: 1, tileTitle: '1-tile' },
+    { surroundingMines: 2, tileTitle: '2-tile' },
+    { surroundingMines: 3, tileTitle: '3-tile' },
+    { surroundingMines: 4, tileTitle: '4-tile' },
+    { surroundingMines: 5, tileTitle: '5-tile' },
+    { surroundingMines: 6, tileTitle: '6-tile' },
+    { surroundingMines: 7, tileTitle: '7-tile' },
+    { surroundingMines: 8, tileTitle: '8-tile' },
   ])(
     'should show a $surroundingMines if there are $surroundingMines surrounding mines',
     ({ surroundingMines, tileTitle }) => {
