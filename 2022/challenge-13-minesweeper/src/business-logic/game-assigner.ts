@@ -116,23 +116,8 @@ export default class GameAssigner implements IAssigner {
     grid: Tile[][]
   ) {
     return (
-      this.tileNotCentre(gridIndex, centreTileIndex) &&
-      this.tileInBounds(gridIndex, grid)
-    );
-  }
-
-  private tileNotCentre(
-    gridIndex: GridIndex,
-    centreTileIndex: GridIndex
-  ): boolean {
-    return gridIndex !== centreTileIndex;
-  }
-
-  private tileInBounds(gridIndex: GridIndex, grid: Tile[][]): boolean {
-    return !GridOperations.indexOutOfBounds(
-      gridIndex,
-      { lower: 0, upper: grid.length - 1 },
-      { lower: 0, upper: grid[0].length - 1 }
+      !GridOperations.tilesHaveSameIndex(gridIndex, centreTileIndex) &&
+      !GridOperations.indexOutOfBounds(gridIndex, grid)
     );
   }
 }

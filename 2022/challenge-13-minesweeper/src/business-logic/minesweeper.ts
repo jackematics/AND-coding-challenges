@@ -35,15 +35,8 @@ export default class Minesweeper {
 
     for (let row = centre.row - 1; row <= centre.row + 1; row++) {
       for (let col = centre.col - 1; col <= centre.col + 1; col++) {
-        if (row === centre.row && col === centre.col) continue;
-        if (
-          GridOperations.indexOutOfBounds(
-            { row, col },
-            { lower: 0, upper: this.grid.length - 1 },
-            { lower: 0, upper: this.grid[0].length - 1 }
-          )
-        )
-          continue;
+        if (GridOperations.tilesHaveSameIndex({ row, col }, centre)) continue;
+        if (GridOperations.indexOutOfBounds({ row, col }, this.grid)) continue;
 
         const currentTile = this.grid[row][col];
         if (!currentTile.isHidden()) continue;
