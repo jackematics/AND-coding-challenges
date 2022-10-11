@@ -1,6 +1,5 @@
 import Bounds from '../../types/bounds';
 import GridIndex from '../../types/grid-index';
-import Tile from '../tile';
 
 export default class GridOperations {
   public static indexOutOfBounds(

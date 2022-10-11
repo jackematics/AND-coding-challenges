@@ -1,5 +1,4 @@
 import TileType from '../enums/tile-type';
-import Bounds from '../types/bounds';
 import GridIndex from '../types/grid-index';
 import MinesweeperMetadata from '../types/minesweeper-metadata';
 import IAssigner from './iassigner';
@@ -89,22 +88,48 @@ export default class GameAssigner implements IAssigner {
 
     for (let row = centre.row - 1; row <= centre.row + 1; row++) {
       for (let col = centre.col - 1; col <= centre.col + 1; col++) {
-        if (row === centre.row && col === centre.col) continue;
-        if (
-          GridOperations.indexOutOfBounds(
-            { row, col },
-            { lower: 0, upper: grid.length - 1 },
-            { lower: 0, upper: grid[0].length - 1 }
-          )
-        )
-          continue;
-
-        if (grid[row][col].getType() === TileType.Mine) {
-          count++;
-        }
+        count += this.incrementCountIfMineAdjacent({ row, col }, centre, grid);
       }
     }
 
     tile.setSurroundingMineCount(count);
+  }
+
+  private incrementCountIfMineAdjacent(
+    gridIndex: GridIndex,
+    centreTileIndex: GridIndex,
+    grid: Tile[][]
+  ): number {
+    let tileQualifies = true;
+
+    tileQualifies = this.NotCentreTileQualify(gridIndex, centreTileIndex);
+    tileQualifies = this.IndexInBoundsQualify(gridIndex, grid);
+
+    if (
+      tileQualifies &&
+      grid[gridIndex.row][gridIndex.col].getType() === TileType.Mine
+    ) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  private NotCentreTileQualify(
+    gridIndex: GridIndex,
+    centreTileIndex: GridIndex
+  ): boolean {
+    return !(
+      gridIndex.row === centreTileIndex.row &&
+      gridIndex.col === centreTileIndex.col
+    );
+  }
+
+  private IndexInBoundsQualify(gridIndex: GridIndex, grid: Tile[][]): boolean {
+    return !GridOperations.indexOutOfBounds(
+      gridIndex,
+      { lower: 0, upper: grid.length - 1 },
+      { lower: 0, upper: grid[0].length - 1 }
+    );
   }
 }
