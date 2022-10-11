@@ -7,14 +7,14 @@ import TileRenderer from './TileRenderer';
 
 interface TileDisplayProps {
   tile: Tile;
-  gameOverCallback: (gameOver: boolean) => void;
+  checkGameStateCallback: (tile: Tile) => void;
   revealSurroundingTilesCallback: (tile: Tile) => void;
   clickable: boolean;
 }
 
 const TileDisplay = ({
   tile,
-  gameOverCallback,
+  checkGameStateCallback,
   revealSurroundingTilesCallback,
   clickable,
 }: TileDisplayProps) => {
@@ -32,10 +32,10 @@ const TileDisplay = ({
 
   const handleHiddenTileClick = (tile: Tile) => {
     if (clickable) {
-      gameOverCallback(tile.getType() === TileType.Mine ? true : false);
       revealSurroundingIfAllEmpty(tile);
       tile.reveal();
       setLastClicked(tile);
+      checkGameStateCallback(tile);
     }
   };
 

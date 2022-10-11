@@ -1,6 +1,8 @@
 import { useReducer, useState } from 'react';
 import Minesweeper from '../../business-rules/minesweeper';
 import Tile from '../../business-rules/tile';
+import GameState from '../../enums/game-state';
+import TileType from '../../enums/tile-type';
 import TileDisplay from '../Tile/TileDisplay';
 import { Board, BoardWrapper, Face, Row } from './MinesweeperDisplayStyle';
 
@@ -9,23 +11,31 @@ type MinesweeperProps = {
 };
 
 const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
-  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [gameState, setGameState] = useState<GameState>(GameState.InPlay);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const setFaceType = () => {
-    return gameOver ? 'sad-face' : 'happy-face';
+    return {
+      [GameState.InPlay]: 'happy-face',
+      [GameState.GameOver]: 'sad-face',
+      [GameState.GameWin]: 'sunglasses-face',
+    }[gameState];
   };
 
   const handleGameReset = () => {
     minesweeper.reset();
-    setGameOver(false);
+    setGameState(GameState.InPlay);
     forceUpdate();
   };
 
-  const handleGameOver = (isGameOver: boolean) => {
-    if (isGameOver) {
+  const handleGameStateCheck = (tile: Tile) => {
+    if (tile.getType() === TileType.Mine ? true : false) {
       minesweeper.gameOver();
-      setGameOver(true);
+      setGameState(GameState.GameOver);
+    }
+
+    if (minesweeper.gameWin()) {
+      setGameState(GameState.GameWin);
     }
   };
 
@@ -40,9 +50,9 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
         {tileRow.map((tile, col) => (
           <TileDisplay
             tile={tile}
-            gameOverCallback={handleGameOver}
+            checkGameStateCallback={handleGameStateCheck}
             revealSurroundingTilesCallback={() => revealSurroundingTiles(tile)}
-            clickable={!gameOver}
+            clickable={!gameState}
           />
         ))}
       </>

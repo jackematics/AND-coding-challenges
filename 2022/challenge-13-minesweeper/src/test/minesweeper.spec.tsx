@@ -22,7 +22,7 @@ describe('MinesweeperDisplay', () => {
         return [
           [
             new Tile(TileType.Empty, { row: 0, col: 0 }),
-            new Tile(TileType.Empty, { row: 0, col: 1 }),
+            new Tile(TileType.Mine, { row: 0, col: 1 }),
             new Tile(TileType.Empty, { row: 0, col: 2 }),
           ],
           [
@@ -220,7 +220,7 @@ describe('MinesweeperDisplay', () => {
     });
   });
 
-  describe('When a game ends', () => {
+  describe('On game over', () => {
     let minesweeper: Minesweeper;
     const assigner = {
       assign: () => {
@@ -238,7 +238,7 @@ describe('MinesweeperDisplay', () => {
       minesweeper = new Minesweeper(assigner);
     });
 
-    it('should show a sad face on game over', () => {
+    it('should show a sad face', () => {
       render(<MinesweeperDisplay minesweeper={minesweeper} />);
 
       let happyFace = screen.getByTitle('happy-face');
@@ -250,6 +250,38 @@ describe('MinesweeperDisplay', () => {
 
       const sadFace = screen.getByTitle('sad-face');
       expect(sadFace).toBeTruthy();
+    });
+  });
+
+  describe('On a game win, where every hidden tile is uncovered except mine tiles', () => {
+    let minesweeper: Minesweeper;
+    const assigner = {
+      assign: () => {
+        return [
+          [
+            new Tile(TileType.Empty, { row: 0, col: 0 }),
+            new Tile(TileType.Mine, { row: 0, col: 1 }),
+            new Tile(TileType.Empty, { row: 0, col: 2 }),
+          ],
+        ];
+      },
+    };
+
+    beforeEach(() => {
+      minesweeper = new Minesweeper(assigner);
+    });
+
+    it('should show a sunglasses face', () => {
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
+      let emptyA = screen.getByTestId('0,0');
+      let emptyB = screen.getByTestId('0,2');
+
+      fireEvent.click(emptyA);
+      fireEvent.click(emptyB);
+
+      const sunglassesFace = screen.getByTitle('sunglasses-face');
+      expect(sunglassesFace).toBeTruthy();
     });
   });
 });

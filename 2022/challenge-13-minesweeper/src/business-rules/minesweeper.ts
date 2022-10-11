@@ -56,4 +56,22 @@ export default class Minesweeper {
   public reset() {
     this.grid = this.assigner.assign();
   }
+
+  public gameWin(): boolean {
+    let win = true;
+
+    this.grid.forEach((row: Tile[]) => {
+      row.forEach((tile: Tile) => {
+        if (tile.getType() === TileType.Mine) {
+          return;
+        }
+
+        if (tile.isHidden()) {
+          win = false;
+        }
+      });
+    });
+
+    return win;
+  }
 }
