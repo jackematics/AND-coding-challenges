@@ -88,44 +88,47 @@ export default class GameAssigner implements IAssigner {
 
     for (let row = centre.row - 1; row <= centre.row + 1; row++) {
       for (let col = centre.col - 1; col <= centre.col + 1; col++) {
-        count += this.incrementCountIfMineAdjacent({ row, col }, centre, grid);
+        count += this.incrementCountWhenMineAdjacent(
+          { row, col },
+          centre,
+          grid
+        );
       }
     }
 
     tile.setSurroundingMineCount(count);
   }
 
-  private incrementCountIfMineAdjacent(
+  private incrementCountWhenMineAdjacent(
     gridIndex: GridIndex,
     centreTileIndex: GridIndex,
     grid: Tile[][]
   ): number {
-    let tileQualifies = true;
-
-    tileQualifies = this.NotCentreTileQualify(gridIndex, centreTileIndex);
-    tileQualifies = this.IndexInBoundsQualify(gridIndex, grid);
-
-    if (
-      tileQualifies &&
+    return this.tileQualifies(gridIndex, centreTileIndex, grid) &&
       grid[gridIndex.row][gridIndex.col].getType() === TileType.Mine
-    ) {
-      return 1;
-    }
-
-    return 0;
+      ? 1
+      : 0;
   }
 
-  private NotCentreTileQualify(
+  private tileQualifies(
     gridIndex: GridIndex,
-    centreTileIndex: GridIndex
-  ): boolean {
-    return !(
-      gridIndex.row === centreTileIndex.row &&
-      gridIndex.col === centreTileIndex.col
+    centreTileIndex: GridIndex,
+    grid: Tile[][]
+  ) {
+    return (
+      this.tileNotCentre(gridIndex, centreTileIndex) &&
+      this.tileInBounds(gridIndex, grid)
     );
   }
 
-  private IndexInBoundsQualify(gridIndex: GridIndex, grid: Tile[][]): boolean {
+  private tileNotCentre(
+    gridIndex: GridIndex,
+    centreTileIndex: GridIndex
+  ): boolean {
+    return gridIndex !== centreTileIndex;
+  }
+
+  private tileInBounds(gridIndex: GridIndex, grid: Tile[][]): boolean {
     return !GridOperations.indexOutOfBounds(
       gridIndex,
       { lower: 0, upper: grid.length - 1 },
