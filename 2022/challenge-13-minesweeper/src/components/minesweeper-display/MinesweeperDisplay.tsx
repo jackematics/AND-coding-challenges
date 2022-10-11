@@ -28,15 +28,22 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
     forceUpdate();
   };
 
-  const handleGameStateCheck = (tile: Tile) => {
+  const handleGameOverCheck = (tile: Tile) => {
     if (tile.getType() === TileType.Mine ? true : false) {
       minesweeper.gameOver();
       setGameState(GameState.GameOver);
     }
+  };
 
+  const handleWinCheck = () => {
     if (minesweeper.gameWin()) {
       setGameState(GameState.GameWin);
     }
+  };
+
+  const handleGameStateCheck = (tile: Tile) => {
+    handleGameOverCheck(tile);
+    handleWinCheck();
   };
 
   const revealSurroundingTiles = (tile: Tile) => {
@@ -52,7 +59,7 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
             tile={tile}
             checkGameStateCallback={handleGameStateCheck}
             revealSurroundingTilesCallback={() => revealSurroundingTiles(tile)}
-            clickable={!gameState}
+            clickable={gameState === GameState.InPlay}
           />
         ))}
       </>
