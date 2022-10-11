@@ -1,8 +1,8 @@
 import { useReducer, useState } from 'react';
-import Minesweeper from '../../business-logic/minesweeper';
-import Tile from '../../business-logic/tile';
+import Minesweeper from '../../business-rules/minesweeper';
+import Tile from '../../business-rules/tile';
 import TileDisplay from '../Tile/TileDisplay';
-import { Board, BoardWrapper, Row } from './MinesweeperDisplayStyle';
+import { Board, BoardWrapper, Face, Row } from './MinesweeperDisplayStyle';
 
 type MinesweeperProps = {
   minesweeper: Minesweeper;
@@ -11,6 +11,16 @@ type MinesweeperProps = {
 const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  const setFaceType = () => {
+    return gameOver ? 'sad-face' : 'happy-face';
+  };
+
+  const handleGameReset = () => {
+    minesweeper.reset();
+    setGameOver(false);
+    forceUpdate();
+  };
 
   const handleGameOver = (isGameOver: boolean) => {
     if (isGameOver) {
@@ -51,6 +61,11 @@ const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
 
   return (
     <>
+      <Face
+        title={setFaceType()}
+        src={`/assets/${setFaceType()}.svg`}
+        onClick={() => handleGameReset()}
+      />
       <BoardWrapper>
         <Board>{renderTileRows()}</Board>
       </BoardWrapper>

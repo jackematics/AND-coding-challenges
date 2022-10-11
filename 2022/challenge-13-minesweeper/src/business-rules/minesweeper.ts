@@ -5,9 +5,11 @@ import Tile from './tile';
 import GridOperations from './utils/grid-operations';
 
 export default class Minesweeper {
-  private readonly grid: Tile[][] = [];
+  private grid: Tile[][] = [];
+  private readonly assigner: IAssigner;
 
   constructor(assigner: IAssigner) {
+    this.assigner = assigner;
     this.grid = assigner.assign();
   }
 
@@ -49,5 +51,9 @@ export default class Minesweeper {
           this.revealSurroundingTiles(currentTile);
       }
     }
+  }
+
+  public reset() {
+    this.grid = this.assigner.assign();
   }
 }

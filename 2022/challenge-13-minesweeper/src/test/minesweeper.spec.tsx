@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import GameAssigner from '../business-logic/game-assigner';
-import Minesweeper from '../business-logic/minesweeper';
-import Tile from '../business-logic/tile';
+import GameAssigner from '../business-rules/game-assigner';
+import Minesweeper from '../business-rules/minesweeper';
+import Tile from '../business-rules/tile';
 import MinesweeperDisplay from '../components/minesweeper-display/MinesweeperDisplay';
 import TileType from '../enums/tile-type';
 
@@ -14,6 +14,38 @@ describe('MinesweeperDisplay', () => {
     const tiles = screen.getAllByTitle('hidden-tile');
 
     expect(tiles.length).toBe(81);
+  });
+
+  it('should reset the game when the face is clicked', () => {
+    const assigner = {
+      assign: () => {
+        return [
+          [
+            new Tile(TileType.Empty, { row: 0, col: 0 }),
+            new Tile(TileType.Empty, { row: 0, col: 1 }),
+            new Tile(TileType.Empty, { row: 0, col: 2 }),
+          ],
+          [
+            new Tile(TileType.Empty, { row: 1, col: 0 }),
+            new Tile(TileType.Mine, { row: 2, col: 1 }),
+            new Tile(TileType.Empty, { row: 3, col: 2 }),
+          ],
+        ];
+      },
+    };
+    const minesweeper = new Minesweeper(assigner);
+    render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
+    const tile = screen.getByTestId('0,0');
+
+    fireEvent.click(tile);
+
+    const face = screen.getByTitle('happy-face');
+    fireEvent.click(face);
+
+    const refreshedTiles = screen.getAllByTitle('hidden-tile');
+
+    expect(refreshedTiles.length).toBe(6);
   });
 
   describe('when an empty square with no surrounding minds is clicked', () => {
@@ -185,6 +217,39 @@ describe('MinesweeperDisplay', () => {
       const flaggedTile = screen.getByTestId('0,1');
 
       expect(flaggedTile.title).toBe('flagged-tile');
+    });
+  });
+
+  describe('When a game ends', () => {
+    let minesweeper: Minesweeper;
+    const assigner = {
+      assign: () => {
+        return [
+          [
+            new Tile(TileType.Empty, { row: 0, col: 0 }),
+            new Tile(TileType.Mine, { row: 0, col: 1 }),
+            new Tile(TileType.Empty, { row: 0, col: 2 }),
+          ],
+        ];
+      },
+    };
+
+    beforeEach(() => {
+      minesweeper = new Minesweeper(assigner);
+    });
+
+    it('should show a sad face on game over', () => {
+      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+
+      let happyFace = screen.getByTitle('happy-face');
+      expect(happyFace).toBeTruthy();
+
+      let mine = screen.getByTestId('0,1');
+
+      fireEvent.click(mine);
+
+      const sadFace = screen.getByTitle('sad-face');
+      expect(sadFace).toBeTruthy();
     });
   });
 });

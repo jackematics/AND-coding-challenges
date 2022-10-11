@@ -14,3 +14,10 @@ export const Row = styled.div`
   align-items: center;
   position: relative;
 `;
+
+export const Face = styled.img.attrs((props) => ({
+  src: props.src,
+}))`
+  height: 45px;
+  width: 45px;
+`;

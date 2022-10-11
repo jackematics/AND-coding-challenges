@@ -1,6 +1,6 @@
 import './App.css';
-import GameAssigner from './business-logic/game-assigner';
-import Minesweeper from './business-logic/minesweeper';
+import GameAssigner from './business-rules/game-assigner';
+import Minesweeper from './business-rules/minesweeper';
 import MinesweeperDisplay from './components/minesweeper-display/MinesweeperDisplay';
 
 function App() {

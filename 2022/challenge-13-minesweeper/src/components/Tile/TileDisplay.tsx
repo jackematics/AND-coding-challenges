@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Tile from '../../business-logic/tile';
+import Tile from '../../business-rules/tile';
 import HiddenType from '../../enums/hidden-type';
 import MineType from '../../enums/mine-type';
 import TileType from '../../enums/tile-type';
