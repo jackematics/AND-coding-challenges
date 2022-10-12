@@ -43,7 +43,7 @@ const TileDisplay = ({
     if (clickable) {
       e.preventDefault();
       tile.toggleMineFlag();
-      setMineFlagged(tile.mineFlagged());
+      setMineFlagged(!mineFlagged);
     }
   };
 
