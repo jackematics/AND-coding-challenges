@@ -212,5 +212,25 @@ describe('MinesweeperDisplay', () => {
 
       expect(tiles.length).toBe(81);
     });
+
+    it('should initialise an intermediate difficulty game when intermediate is selected', () => {
+      render(<Game />);
+
+      const beginner = screen.getByTitle('intermediate');
+      fireEvent.click(beginner);
+      const tiles = screen.getAllByTitle('hidden-tile');
+
+      expect(tiles.length).toBe(256);
+    });
+
+    it('should initialise an expert difficulty game when expert is selected', () => {
+      render(<Game />);
+
+      const beginner = screen.getByTitle('expert');
+      fireEvent.click(beginner);
+      const tiles = screen.getAllByTitle('hidden-tile');
+
+      expect(tiles.length).toBe(480);
+    });
   });
 });
