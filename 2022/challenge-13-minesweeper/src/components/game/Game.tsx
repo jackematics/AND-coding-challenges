@@ -20,21 +20,24 @@ const Game = () => {
   const minesweeper = new Minesweeper(assigner);
 
   return (
-    <div className="App">
+    <>
       <DifficultySelector
         title={'beginner'}
+        highlightBorder={difficulty === Difficulty.Beginner}
         onClick={() => setDifficulty(Difficulty.Beginner)}
       >
         Beginner
       </DifficultySelector>
       <DifficultySelector
         title={'intermediate'}
+        highlightBorder={difficulty === Difficulty.Intermediate}
         onClick={() => setDifficulty(Difficulty.Intermediate)}
       >
         Intermediate
       </DifficultySelector>
       <DifficultySelector
         title={'expert'}
+        highlightBorder={difficulty === Difficulty.Expert}
         onClick={() => setDifficulty(Difficulty.Expert)}
       >
         Expert
@@ -42,7 +45,7 @@ const Game = () => {
       <div>
         <MinesweeperDisplay minesweeper={minesweeper} difficulty={difficulty} />
       </div>
-    </div>
+    </>
   );
 };
 

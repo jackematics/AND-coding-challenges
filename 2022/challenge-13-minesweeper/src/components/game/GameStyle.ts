@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
-export const DifficultyButton = styled.button`
+interface DifficultyButtonProps {
+  highlightBorder: boolean;
+}
+
+export const DifficultyButton = styled.button<DifficultyButtonProps>`
   appearance: none;
   background-color: #eded09;
-  border: 1px solid rgba(27, 31, 35, 0.15);
+  border: 2px solid
+    ${(props) => (props.highlightBorder ? 'black' : 'rgba(27, 31, 35, 0.15)')};
   border-radius: 6px;
   box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
   box-sizing: border-box;
