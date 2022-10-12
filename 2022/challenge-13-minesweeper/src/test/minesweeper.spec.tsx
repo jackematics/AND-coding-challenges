@@ -4,6 +4,7 @@ import Minesweeper from '../business-rules/minesweeper';
 import Tile from '../business-rules/tile';
 import Game from '../components/game/Game';
 import MinesweeperDisplay from '../components/minesweeper-display/MinesweeperDisplay';
+import Difficulty from '../enums/difficulty';
 import TileType from '../enums/tile-type';
 import TestHelper from './test-helper';
 
@@ -11,7 +12,12 @@ describe('MinesweeperDisplay', () => {
   it('should render the initial minesweeper display as a grid of 9 x 9 tiles', () => {
     const assigner = new GameAssigner({ rows: 9, cols: 9, mines: 10 });
     const minesweeper = new Minesweeper(assigner);
-    render(<MinesweeperDisplay minesweeper={minesweeper} />);
+    render(
+      <MinesweeperDisplay
+        minesweeper={minesweeper}
+        difficulty={Difficulty.Beginner}
+      />
+    );
 
     const tiles = screen.getAllByTitle('hidden-tile');
 
@@ -21,7 +27,12 @@ describe('MinesweeperDisplay', () => {
   it('should reset the game when the face is clicked', () => {
     const assigner = TestHelper.checkResetAssigner;
     const minesweeper = new Minesweeper(assigner);
-    render(<MinesweeperDisplay minesweeper={minesweeper} />);
+    render(
+      <MinesweeperDisplay
+        minesweeper={minesweeper}
+        difficulty={Difficulty.Beginner}
+      />
+    );
 
     const tile = screen.getByTestId('0,0');
 
@@ -44,7 +55,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should show an empty square', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let noSurroundingMines = screen.getByTestId('1,1');
 
@@ -55,7 +71,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should reveal all squares around the empty tile and subsequent empty tiles revealed', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let noSurroundingMines = screen.getByTestId('1,1');
 
@@ -90,7 +111,12 @@ describe('MinesweeperDisplay', () => {
       };
 
       const minesweeper = new Minesweeper(assigner);
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let oneSurroundingMine = screen.getByTestId('1,1');
 
@@ -110,7 +136,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should show a mine', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
       let mine = screen.getByTestId('1,1');
       fireEvent.click(mine);
       mine = screen.getByTestId('1,1');
@@ -118,7 +149,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should reveal all other mines on screen', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let mine = screen.getByTestId('1,1');
       fireEvent.click(mine);
@@ -127,7 +163,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should make all other tiles unclickable', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let mine = screen.getByTestId('1,1');
       fireEvent.click(mine);
@@ -146,7 +187,12 @@ describe('MinesweeperDisplay', () => {
 
       const minesweeper = new Minesweeper(assigner);
 
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       const hiddenTile = screen.getByTestId('0,1');
       fireEvent.contextMenu(hiddenTile);
@@ -166,7 +212,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should show a sad face', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let happyFace = screen.getByTitle('happy-face');
       expect(happyFace).toBeTruthy();
@@ -189,7 +240,12 @@ describe('MinesweeperDisplay', () => {
     });
 
     it('should show a sunglasses face', () => {
-      render(<MinesweeperDisplay minesweeper={minesweeper} />);
+      render(
+        <MinesweeperDisplay
+          minesweeper={minesweeper}
+          difficulty={Difficulty.Beginner}
+        />
+      );
 
       let emptyA = screen.getByTestId('0,0');
       let emptyB = screen.getByTestId('0,2');
@@ -216,8 +272,8 @@ describe('MinesweeperDisplay', () => {
     it('should initialise an intermediate difficulty game when intermediate is selected', () => {
       render(<Game />);
 
-      const beginner = screen.getByTitle('intermediate');
-      fireEvent.click(beginner);
+      const intermediate = screen.getByTitle('intermediate');
+      fireEvent.click(intermediate);
       const tiles = screen.getAllByTitle('hidden-tile');
 
       expect(tiles.length).toBe(256);
@@ -226,8 +282,8 @@ describe('MinesweeperDisplay', () => {
     it('should initialise an expert difficulty game when expert is selected', () => {
       render(<Game />);
 
-      const beginner = screen.getByTitle('expert');
-      fireEvent.click(beginner);
+      const expert = screen.getByTitle('expert');
+      fireEvent.click(expert);
       const tiles = screen.getAllByTitle('hidden-tile');
 
       expect(tiles.length).toBe(480);

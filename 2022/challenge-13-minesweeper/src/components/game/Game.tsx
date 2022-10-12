@@ -3,7 +3,7 @@ import GameAssigner from '../../business-rules/game-assigner';
 import Minesweeper from '../../business-rules/minesweeper';
 import Difficulty from '../../enums/difficulty';
 import MinesweeperDisplay from '../minesweeper-display/MinesweeperDisplay';
-import { DifficultyButton } from './GameStyle';
+import { DifficultyButton as DifficultySelector } from './GameStyle';
 
 const Game = () => {
   const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Beginner);
@@ -21,26 +21,26 @@ const Game = () => {
 
   return (
     <div className="App">
-      <DifficultyButton
+      <DifficultySelector
         title={'beginner'}
         onClick={() => setDifficulty(Difficulty.Beginner)}
       >
         Beginner
-      </DifficultyButton>
-      <DifficultyButton
+      </DifficultySelector>
+      <DifficultySelector
         title={'intermediate'}
         onClick={() => setDifficulty(Difficulty.Intermediate)}
       >
         Intermediate
-      </DifficultyButton>
-      <DifficultyButton
+      </DifficultySelector>
+      <DifficultySelector
         title={'expert'}
         onClick={() => setDifficulty(Difficulty.Expert)}
       >
         Expert
-      </DifficultyButton>
+      </DifficultySelector>
       <div>
-        <MinesweeperDisplay minesweeper={minesweeper} />
+        <MinesweeperDisplay minesweeper={minesweeper} difficulty={difficulty} />
       </div>
     </div>
   );

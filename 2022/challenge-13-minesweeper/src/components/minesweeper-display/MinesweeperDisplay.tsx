@@ -1,6 +1,7 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Minesweeper from '../../business-rules/minesweeper';
 import Tile from '../../business-rules/tile';
+import Difficulty from '../../enums/difficulty';
 import GameState from '../../enums/game-state';
 import TileType from '../../enums/tile-type';
 import TileDisplay from '../tile-display/TileDisplay';
@@ -8,11 +9,18 @@ import { Board, BoardWrapper, Face, Row } from './MinesweeperDisplayStyle';
 
 type MinesweeperProps = {
   minesweeper: Minesweeper;
+  difficulty: Difficulty;
 };
 
-const MinesweeperDisplay = ({ minesweeper }: MinesweeperProps) => {
+const MinesweeperDisplay = ({ minesweeper, difficulty }: MinesweeperProps) => {
   const [gameState, setGameState] = useState<GameState>(GameState.InPlay);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  useEffect(() => {
+    minesweeper.reset();
+    setGameState(GameState.InPlay);
+    forceUpdate();
+  }, [difficulty]);
 
   const setFaceType = () => {
     return {
