@@ -4,6 +4,7 @@ import Minesweeper from '../business-rules/minesweeper';
 import Tile from '../business-rules/tile';
 import MinesweeperDisplay from '../components/minesweeper-display/MinesweeperDisplay';
 import TileType from '../enums/tile-type';
+import TestHelper from './test-helper';
 
 describe('MinesweeperDisplay', () => {
   it('should render the initial minesweeper display as a grid of 9 x 9 tiles', () => {
@@ -17,22 +18,7 @@ describe('MinesweeperDisplay', () => {
   });
 
   it('should reset the game when the face is clicked', () => {
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Empty, { row: 0, col: 0 }),
-            new Tile(TileType.Mine, { row: 0, col: 1 }),
-            new Tile(TileType.Empty, { row: 0, col: 2 }),
-          ],
-          [
-            new Tile(TileType.Empty, { row: 1, col: 0 }),
-            new Tile(TileType.Mine, { row: 2, col: 1 }),
-            new Tile(TileType.Empty, { row: 3, col: 2 }),
-          ],
-        ];
-      },
-    };
+    const assigner = TestHelper.checkResetAssigner;
     const minesweeper = new Minesweeper(assigner);
     render(<MinesweeperDisplay minesweeper={minesweeper} />);
 
@@ -50,32 +36,7 @@ describe('MinesweeperDisplay', () => {
 
   describe('when an empty square with no surrounding minds is clicked', () => {
     let minesweeper: Minesweeper;
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Empty, { row: 0, col: 0 }),
-            new Tile(TileType.Empty, { row: 0, col: 1 }),
-            new Tile(TileType.Empty, { row: 0, col: 2 }),
-          ],
-          [
-            new Tile(TileType.Empty, { row: 1, col: 0 }),
-            new Tile(TileType.Empty, { row: 1, col: 1 }),
-            new Tile(TileType.Empty, { row: 1, col: 2 }),
-          ],
-          [
-            new Tile(TileType.Empty, { row: 2, col: 0 }),
-            new Tile(TileType.Empty, { row: 2, col: 1 }),
-            new Tile(TileType.Empty, { row: 2, col: 2 }),
-          ],
-          [
-            new Tile(TileType.Empty, { row: 3, col: 0 }),
-            new Tile(TileType.Empty, { row: 3, col: 1 }),
-            new Tile(TileType.Mine, { row: 3, col: 2 }),
-          ],
-        ];
-      },
-    };
+    const assigner = TestHelper.checkEmptySquareAssigner;
 
     beforeEach(() => {
       minesweeper = new Minesweeper(assigner);
@@ -141,22 +102,7 @@ describe('MinesweeperDisplay', () => {
 
   describe('When a mine is clicked', () => {
     let minesweeper: Minesweeper;
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Mine, { row: 0, col: 0 }),
-            new Tile(TileType.Empty, { row: 0, col: 1 }),
-            new Tile(TileType.Mine, { row: 0, col: 2 }),
-          ],
-          [
-            new Tile(TileType.Mine, { row: 1, col: 0 }),
-            new Tile(TileType.Mine, { row: 1, col: 1 }),
-            new Tile(TileType.Empty, { row: 1, col: 2 }),
-          ],
-        ];
-      },
-    };
+    const assigner = TestHelper.checkMineSquareAssigner;
 
     beforeEach(() => {
       minesweeper = new Minesweeper(assigner);
@@ -195,17 +141,7 @@ describe('MinesweeperDisplay', () => {
 
   describe('when a hidden tile is right-clicked', () => {
     it('should flag the tile as a potential mine', () => {
-      const assigner = {
-        assign: () => {
-          return [
-            [
-              new Tile(TileType.Empty, { row: 0, col: 0 }),
-              new Tile(TileType.Mine, { row: 0, col: 1 }),
-              new Tile(TileType.Empty, { row: 0, col: 2 }),
-            ],
-          ];
-        },
-      };
+      const assigner = TestHelper.simpleAssigner;
 
       const minesweeper = new Minesweeper(assigner);
 
@@ -222,17 +158,7 @@ describe('MinesweeperDisplay', () => {
 
   describe('On game over', () => {
     let minesweeper: Minesweeper;
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Empty, { row: 0, col: 0 }),
-            new Tile(TileType.Mine, { row: 0, col: 1 }),
-            new Tile(TileType.Empty, { row: 0, col: 2 }),
-          ],
-        ];
-      },
-    };
+    const assigner = TestHelper.simpleAssigner;
 
     beforeEach(() => {
       minesweeper = new Minesweeper(assigner);
@@ -255,17 +181,7 @@ describe('MinesweeperDisplay', () => {
 
   describe('On a game win, where every hidden tile is uncovered except mine tiles', () => {
     let minesweeper: Minesweeper;
-    const assigner = {
-      assign: () => {
-        return [
-          [
-            new Tile(TileType.Empty, { row: 0, col: 0 }),
-            new Tile(TileType.Mine, { row: 0, col: 1 }),
-            new Tile(TileType.Empty, { row: 0, col: 2 }),
-          ],
-        ];
-      },
-    };
+    const assigner = TestHelper.simpleAssigner;
 
     beforeEach(() => {
       minesweeper = new Minesweeper(assigner);
