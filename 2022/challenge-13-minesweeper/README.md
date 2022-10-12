@@ -1,6 +1,6 @@
 # Minesweeper
 
-My solution for the Minesweeper coding challenge completed in Node, Typescript and React with all stretch goals completed. Built using strict TDD. All assets are pilfered directly from minesweeper.com which is why it looks so much like their version. I didn't pilfer the logic though!
+My solution for the Minesweeper coding challenge completed in Node, Typescript and React with all stretch goals completed. Built using strict TDD. All assets are pilfered directly from minesweeper.com which is why it looks so much like their version. I didn't pilfer the logic though! Also, the fact that you can hit a mine on your first click is a feature, not a bug. Life's not fair and neither is this game.
 
 ## How to run
 
