@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import GameAssigner from '../business-rules/game-assigner';
 import Minesweeper from '../business-rules/minesweeper';
 import Tile from '../business-rules/tile';
+import Game from '../components/game/Game';
 import MinesweeperDisplay from '../components/minesweeper-display/MinesweeperDisplay';
 import TileType from '../enums/tile-type';
 import TestHelper from './test-helper';
@@ -198,6 +199,18 @@ describe('MinesweeperDisplay', () => {
 
       const sunglassesFace = screen.getByTitle('sunglasses-face');
       expect(sunglassesFace).toBeTruthy();
+    });
+  });
+
+  describe('When selecting difficulty', () => {
+    it('should initialise a beginner difficulty game when beginner is selected', () => {
+      render(<Game />);
+
+      const beginner = screen.getByTitle('beginner');
+      fireEvent.click(beginner);
+      const tiles = screen.getAllByTitle('hidden-tile');
+
+      expect(tiles.length).toBe(81);
     });
   });
 });

@@ -3,7 +3,7 @@ import Minesweeper from '../../business-rules/minesweeper';
 import Tile from '../../business-rules/tile';
 import GameState from '../../enums/game-state';
 import TileType from '../../enums/tile-type';
-import TileDisplay from '../Tile/TileDisplay';
+import TileDisplay from '../tile-display/TileDisplay';
 import { Board, BoardWrapper, Face, Row } from './MinesweeperDisplayStyle';
 
 type MinesweeperProps = {

@@ -1,0 +1,49 @@
+import { useState } from 'react';
+import GameAssigner from '../../business-rules/game-assigner';
+import Minesweeper from '../../business-rules/minesweeper';
+import Difficulty from '../../enums/difficulty';
+import MinesweeperDisplay from '../minesweeper-display/MinesweeperDisplay';
+import { DifficultyButton } from './GameStyle';
+
+const Game = () => {
+  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Beginner);
+
+  const applyDifficultyModifier = () => {
+    return {
+      [Difficulty.Beginner]: { rows: 9, cols: 9, mines: 10 },
+      [Difficulty.Intermediate]: { rows: 16, cols: 16, mines: 40 },
+      [Difficulty.Expert]: { rows: 16, cols: 30, mines: 99 },
+    }[difficulty];
+  };
+
+  const assigner = new GameAssigner(applyDifficultyModifier());
+  const minesweeper = new Minesweeper(assigner);
+
+  return (
+    <div className="App">
+      <DifficultyButton
+        title={'beginner'}
+        onClick={() => setDifficulty(Difficulty.Beginner)}
+      >
+        Beginner
+      </DifficultyButton>
+      <DifficultyButton
+        title={'intermediate'}
+        onClick={() => setDifficulty(Difficulty.Intermediate)}
+      >
+        Intermediate
+      </DifficultyButton>
+      <DifficultyButton
+        title={'expert'}
+        onClick={() => setDifficulty(Difficulty.Expert)}
+      >
+        Expert
+      </DifficultyButton>
+      <div>
+        <MinesweeperDisplay minesweeper={minesweeper} />
+      </div>
+    </div>
+  );
+};
+
+export default Game;
