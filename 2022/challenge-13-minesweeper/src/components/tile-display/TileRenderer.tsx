@@ -19,6 +19,7 @@ export default class TileRenderer {
         onClick={() => handleHiddenTileClick(tile)}
         onContextMenu={(e) => handleFlagSet(e, tile)}
         onDragStart={(e) => e.preventDefault()}
+        onMouseOver={(e) => (e.currentTarget.title = '')}
       />
     );
   }
@@ -31,6 +32,7 @@ export default class TileRenderer {
         data-testid={`${tileGridIndex.row},${tileGridIndex.col}`}
         onContextMenu={(e) => e.preventDefault()}
         onDragStart={(e) => e.preventDefault()}
+        onMouseOver={(e) => (e.currentTarget.title = '')}
       />
     );
   }
@@ -45,6 +47,7 @@ export default class TileRenderer {
         data-testid={testId}
         onContextMenu={(e) => e.preventDefault()}
         onDragStart={(e) => e.preventDefault()}
+        onMouseOver={(e) => (e.currentTarget.title = '')}
       />
     );
   }
