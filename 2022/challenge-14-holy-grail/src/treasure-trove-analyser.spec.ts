@@ -1,4 +1,4 @@
-import TreasureTroveAnalyser from './treasure-trove-analyser';
+import TreasureTroveAnalyser from './treasure-trove-analyser.js';
 
 describe('TreasureTroveAnalyser()', () => {
   it('should store json and all other referenced in accessible field from a url', async () => {
