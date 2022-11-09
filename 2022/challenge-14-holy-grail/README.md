@@ -1,6 +1,8 @@
-# Bullseye
+# Holy Grail
 
-My solution to the Bullseye coding challenge completed in Typescript with all stretch goals completed. I approached this by using the symmetry of a dartboard: generating the top left corner of the board then reversing and reflecting this for the other corners.
+My solution to the Holy Grail coding challenge completed in Typescript with all stretch goals completed. This might be the most cursed, unreadable piece of code I've submitted recently, but my brain is melting recursively so I'm giving myself a pat on the back. It was also super dumb of me to use Typescript because of how awkward the json inputs are so I basically ignored it and used it like js (cba changing to vanilla js).
+
+I've written tests but since I didn't know what the output was supposed to be (I could have tried creating my own example json and using that but I didn't want to spend the time) I basically cheated and used my output as the expected result. The only ones I know for sure are correct are the dead spiders and holy grail coordinates (because I manually looked through the jsons and found/counted).
 
 ## How to run
 
@@ -9,23 +11,22 @@ My solution to the Bullseye coding challenge completed in Typescript with all st
 
 ## The Challenge
 
-The challenge this week is to generate a square dartboard of side length n. The numerical values on the board should increase with proximity to the centre of the board. For boards of an even number size, the centre will be made up of the four highest values.
+Your task this week is to find the location of the Holy Grail. Given this collection of treasure chests in JSON format, you'll need to traverse and explore the contents of each JSON treasure chest to find clues. The chests and their various items may have attached notes, engravings, messages and other cryptic clues on/in them - you should explore these properties for any external links which could lead you to additional lists of treasure. If you locate such links, your code should download the list and search those chests as well. You've located the Holy Grail when you locate a chest item with the name holy-grail.
 
 ### Rewards:
 
-:four: Points are awarded for generating a dartboard of any given size (where n > 0). \
-:three: Further points are awarded for using only 1 loop. \
-:three: Further points are awarded for generating circular\* dartboards.
+:five: Points are awarded for a working algorithm which returns the location of the chest containing the Holy Grail. \
+:three: Further points are awarded for returning the total value\*\* of all chest contents across all lists. \
+:one: Further points are awarded for returning the total number of dead spiders across all lists. \
+:one: Further points are awarded for returning the most common size of boots across all lists.
+
+\*\* Values are all measured in doubloons. Any Sapphires found are worth 200 doubloons, Rubies are worth 250 doubloons, and Diamonds are worth 400 doubloons.
 
 ### Example:
 
 Example:
-For a square dartboard of size 8, the expected output would look something like:
-11111111 \
-12222221 \
-12333321 \
-12344321 \
-12344321 \
-12333321 \
-12222221 \
-11111111
+Your solution might return: \
+Holy Grail location: 20.19 -19.83 \
+Total chest value: 25600 doubloons \
+Dead spiders: 27 \
+Most common boot size: 8
