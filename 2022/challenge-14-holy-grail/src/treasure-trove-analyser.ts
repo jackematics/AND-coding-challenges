@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-type AnalysisResults = {
+export type AnalysisResults = {
   holyGrailCoordinates: string;
   totalChestValue: number;
   deadSpiders: number;

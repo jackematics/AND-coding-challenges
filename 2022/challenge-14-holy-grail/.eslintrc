@@ -23,6 +23,7 @@
     // disable it, or understand what it enforces.
     // https://typescript-eslint.io/rules/explicit-function-return-type/
     "@typescript-eslint/explicit-function-return-type": "warn",
-    "@typescript-eslint/no-empty-function": "false"
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/ban-ts-comment": 0
   }
 }

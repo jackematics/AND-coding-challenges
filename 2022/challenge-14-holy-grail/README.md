@@ -6,7 +6,9 @@ I've written tests but since I didn't know what the output was supposed to be (I
 
 ## How to run
 
-`npm run start` and the solutions to the challenge input and stretch goal input will be printed to the console \
+`npm i` to install npm packages \
+`npm run build` to be able to run main. \
+`npm run start` and the solutions to the challenge input and stretch goals input will be printed to the console. \
 `npm run test` to run the tests
 
 ## The Challenge
