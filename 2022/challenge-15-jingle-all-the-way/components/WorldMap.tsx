@@ -4,13 +4,9 @@ import Image from 'next/image';
 const WorldMap = () => {
   return (
     <>
-      <div className="flex justify-center">
-        <h1 className="font-mono text-5xl font-bold leading-relaxed">
-          Jingle All the Way
-        </h1>
-      </div>
-      <div className="flex justify-center">
+      <div>
         <Image
+          className="absolute"
           src={'/printable-world-map-hd.jpg'}
           alt={'world-map'}
           width="1288"
