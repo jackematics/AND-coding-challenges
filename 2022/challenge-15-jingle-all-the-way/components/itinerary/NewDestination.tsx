@@ -7,7 +7,7 @@ type NewDestinationProps = {
 
 const NewDestination = ({ destinationDataCallback }: NewDestinationProps) => {
   const [destination, setDestination] = useState<string>('');
-  const [eta, setEta] = useState<string>('00:00');
+  const [eta, setEta] = useState<string>('20:00');
 
   // const getCityData = async () => {
   //   console.log(`http://localhost:3000/api/city/${destination}`);
@@ -25,7 +25,7 @@ const NewDestination = ({ destinationDataCallback }: NewDestinationProps) => {
   const handleAddDestination = async () => {
     destinationDataCallback({ destination, eta });
     setDestination('');
-    setEta('00:00');
+    setEta('20:00');
   };
 
   return (
