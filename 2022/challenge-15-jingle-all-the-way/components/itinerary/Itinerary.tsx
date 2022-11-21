@@ -19,24 +19,22 @@ const Itinerary = () => {
       )
     );
 
-  const notChronological = (nextEta: string): boolean => {
+  const etaAsDate = (eta: string): Date => {
     const isAfterMidnight = (gmt: string) => {
       const hour = parseInt(gmt.split(':')[0]);
       return 0 <= hour && hour < 8;
     };
 
-    const previousEta = itinerary[itinerary.length - 1].eta;
-    const previousEtaDay = isAfterMidnight(previousEta) ? '25' : '24';
+    const etaDay = isAfterMidnight(eta) ? '25' : '24';
 
-    const previousDate = new Date(
-      `2022-12-${previousEtaDay}T${previousEta}:00`
-    );
+    return new Date(`2022-12-${etaDay}T${eta}:00`);
+  };
 
-    const nextEtaDay = isAfterMidnight(nextEta) ? '25' : '24';
+  const notChronological = (nextEta: string): boolean => {
+    const nextEtaDate = etaAsDate(nextEta);
+    const previousEtaDate = etaAsDate(itinerary[itinerary.length - 1].eta);
 
-    const nextDate = new Date(`2022-12-${nextEtaDay}T${nextEta}:00`);
-
-    return nextDate.getTime() < previousDate.getTime();
+    return nextEtaDate.getTime() < previousEtaDate.getTime();
   };
 
   const handleNewDestination = (destinationData: DestinationData) => {
