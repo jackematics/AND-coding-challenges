@@ -7,7 +7,7 @@ const WorldMap = () => {
       <div>
         <Image
           className="absolute"
-          src={'/printable-world-map-hd.jpg'}
+          src={'/assets/printable-world-map-hd.jpg'}
           alt={'world-map'}
           width="1288"
           height="870"
