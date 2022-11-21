@@ -25,10 +25,10 @@ const Itinerary = () => {
   };
 
   const handleNewDestination = (destinationData: DestinationData) => {
-    const validationResult = ItineraryValidation.calculateValidationResult(
+    const validationResult = ItineraryValidation.calculateValidationResult({
       destinationData,
-      itinerary
-    );
+      itinerary,
+    });
     setValidationMessage(validationResult.message);
 
     if (validationResult.isValid) {

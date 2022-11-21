@@ -1,52 +1,55 @@
 import { DestinationData } from '../Itinerary';
+import ValidationResult, { ValidationResultData } from './validation-results';
 
-type ValidationResult = {
-  isValid: boolean;
-  message: string;
+type ValidationData = {
+  destinationData: DestinationData;
+  itinerary: DestinationData[];
 };
 
 export default class ItineraryValidation {
   public static calculateValidationResult(
-    newDestinationData: DestinationData,
-    itinerary: DestinationData[]
-  ): ValidationResult {
-    if (this.isDuplicateDestination(newDestinationData.destination, itinerary))
-      return {
-        isValid: false,
-        message: 'Error: duplicate destinations invalid',
-      };
-
-    if (
-      itinerary.length > 0 &&
-      this.notChronological(newDestinationData.eta, itinerary)
+    validationData: ValidationData
+  ): ValidationResultData {
+    // prettier-ignore
+    return (
+      this.isDuplicateDestination(validationData)                ? ValidationResult.duplicateDestinationResult() :
+      this.populatedAndChronologicallyDisordered(validationData) ? ValidationResult.chronilogicallyDisorderedResult()      :
+                                                                   ValidationResult.validResult()
     )
-      return {
-        isValid: false,
-        message: 'Error: itinerary must be in chronological order',
-      };
-
-    return { isValid: true, message: '' };
   }
 
   private static isDuplicateDestination(
-    potentialDuplicate: string,
-    itinerary: DestinationData[]
+    validationData: ValidationData
   ): boolean {
     return Boolean(
-      itinerary.find(
-        (destinationData) => destinationData.destination === potentialDuplicate
+      validationData.itinerary.find(
+        (destinationData) =>
+          destinationData.destination ===
+          validationData.destinationData.destination
       )
     );
   }
 
-  private static notChronological(
+  private static populatedAndChronologicallyDisordered(
+    validationData: ValidationData
+  ) {
+    return (
+      validationData.itinerary.length > 0 &&
+      this.chronologicallyDisordered(
+        validationData.destinationData.eta,
+        validationData.itinerary
+      )
+    );
+  }
+
+  private static chronologicallyDisordered(
     nextEta: string,
     itinerary: DestinationData[]
   ): boolean {
     const nextEtaDate = this.etaAsDate(nextEta);
     const previousEtaDate = this.etaAsDate(itinerary[itinerary.length - 1].eta);
 
-    return nextEtaDate.getTime() < previousEtaDate.getTime();
+    return nextEtaDate.getTime() <= previousEtaDate.getTime();
   }
 
   private static etaAsDate = (eta: string): Date => {
