@@ -45,4 +45,33 @@ describe('when adding destinations', () => {
     expect(deletedDestination).toBeNull();
     expect(deletedEta).toBeNull();
   });
+
+  it('should not add duplicate destinations and display a validation message', () => {
+    render(<Home />);
+
+    const newDestinationInput = screen.getByPlaceholderText('London');
+    const newTimeInput = screen.getByDisplayValue('00:00');
+
+    fireEvent.change(newDestinationInput, { target: { value: 'Paris' } });
+    fireEvent.change(newTimeInput, { target: { value: '00:01' } });
+
+    const addDestinationButton = screen.getByText('+');
+    fireEvent.click(addDestinationButton);
+
+    const duplicateDestinationInput = screen.getByPlaceholderText('London');
+    const notDuplicateTimeInput = screen.getByDisplayValue('00:00');
+
+    fireEvent.change(duplicateDestinationInput, { target: { value: 'Paris' } });
+    fireEvent.change(notDuplicateTimeInput, { target: { value: '23:23' } });
+
+    fireEvent.click(addDestinationButton);
+
+    const parises = screen.getAllByDisplayValue('Paris');
+    const validationMessage = screen.getByText(
+      'Error: duplicate destinations invalid'
+    );
+
+    expect(parises.length).toBe(1);
+    expect(validationMessage).toBeTruthy();
+  });
 });

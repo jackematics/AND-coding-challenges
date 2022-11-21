@@ -3,7 +3,7 @@ import { DestinationData } from './Itinerary';
 
 type EstablishedDestinationProps = {
   destinationData: DestinationData;
-  deleteDestinationCallback: (destinationDataToDelete: DestinationData) => void;
+  deleteDestinationCallback: (destinationData: DestinationData) => void;
 };
 
 const EstablishedDestination = ({
