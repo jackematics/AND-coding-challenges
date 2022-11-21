@@ -15,6 +15,16 @@ const Itinerary = () => {
     setItinerary([...itinerary, destinationData]);
   };
 
+  const handleDeleteDestination = (
+    destinationDataToDelete: DestinationData
+  ) => {
+    setItinerary(() =>
+      itinerary.filter(
+        (destinationData) => destinationData !== destinationDataToDelete
+      )
+    );
+  };
+
   return (
     <>
       <div className="flex-col">
@@ -23,6 +33,7 @@ const Itinerary = () => {
           <EstablishedDestination
             key={destination.destination}
             destinationData={destination}
+            deleteDestinationCallback={handleDeleteDestination}
           />
         ))}
         <NewDestination destinationDataCallback={handleNewDestination} />

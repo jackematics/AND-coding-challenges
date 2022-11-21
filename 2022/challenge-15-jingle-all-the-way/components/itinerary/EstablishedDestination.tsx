@@ -3,10 +3,12 @@ import { DestinationData } from './Itinerary';
 
 type EstablishedDestinationProps = {
   destinationData: DestinationData;
+  deleteDestinationCallback: (destinationDataToDelete: DestinationData) => void;
 };
 
 const EstablishedDestination = ({
   destinationData,
+  deleteDestinationCallback,
 }: EstablishedDestinationProps) => {
   return (
     <>
@@ -32,7 +34,7 @@ const EstablishedDestination = ({
         </div>
         <div className="p-2">
           <button
-            onClick={() => {}}
+            onClick={() => deleteDestinationCallback(destinationData)}
             className="bg-gray-50 border border-black text-gray-900 text-l font-bold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-7 h-7"
           >
             x
