@@ -9,19 +9,6 @@ const NewDestination = ({ destinationDataCallback }: NewDestinationProps) => {
   const [destination, setDestination] = useState<string>('');
   const [eta, setEta] = useState<string>('20:00');
 
-  // const getCityData = async () => {
-  //   console.log(`http://localhost:3000/api/city/${destination}`);
-
-  //   return await (
-  //     await fetch(`http://localhost:3000/api/city/${destination}`)
-  //   ).json();
-  // };
-
-  // const { data, status } = useQuery<City>({
-  //   queryFn: getCityData,
-  //   enabled: false,
-  // });
-
   const handleAddDestination = async () => {
     destinationDataCallback({ destination, eta });
     setDestination('');

@@ -1,19 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 import { promises as fs } from 'fs';
-import City from '../../../types/city';
+import CityData from '../../types/city-data';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<City>
+  res: NextApiResponse<CityData>
 ) {
   const jsonDirectory = path.join(process.cwd(), 'json');
   const cities = await fs.readFile(jsonDirectory + '/cities-data.json', 'utf8');
 
-  const city = req.query.city as string;
-
-  const formattedCity =
-    city.charAt(0).toUpperCase() + city.toLowerCase().slice(1);
-
-  res.status(200).json(JSON.parse(cities)[formattedCity]);
+  res.status(200).json(JSON.parse(cities));
 }

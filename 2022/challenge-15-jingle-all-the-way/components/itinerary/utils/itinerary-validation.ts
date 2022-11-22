@@ -1,9 +1,11 @@
+import CityData from '../../../types/city-data';
 import { DestinationData } from '../Itinerary';
 import ValidationResult, { ValidationResultData } from './validation-results';
 
 type ValidationData = {
   destinationData: DestinationData;
   itinerary: DestinationData[];
+  cityData: CityData[];
 };
 
 export default class ItineraryValidation {
@@ -13,6 +15,9 @@ export default class ItineraryValidation {
     if (this.isDuplicateDestination(validationData))
       return ValidationResult.duplicateDestinationResult();
 
+    if (this.cityNotAvailable(validationData))
+      return ValidationResult.cityNotAvailableResult;
+
     if (this.populatedAndChronologicallyDisordered(validationData))
       return ValidationResult.chronilogicallyDisorderedResult();
 
@@ -20,14 +25,6 @@ export default class ItineraryValidation {
       return ValidationResult.destinationEtaOutOfBoundsResult();
 
     return ValidationResult.validResult();
-
-    // // prettier-ignore
-    // return (
-    //   this.isDuplicateDestination(validationData)                ? ValidationResult.duplicateDestinationResult()      :
-    //   this.populatedAndChronologicallyDisordered(validationData) ? ValidationResult.chronilogicallyDisorderedResult() :
-    //   this.destinationEtaOutOfBounds(validationData)             ? ValidationResult.destinationEtaOutOfBoundsResult() :
-    //                                                                ValidationResult.validResult()
-    // )
   }
 
   private static isDuplicateDestination(
@@ -42,9 +39,18 @@ export default class ItineraryValidation {
     );
   }
 
+  private static cityNotAvailable(validationData: ValidationData): boolean {
+    return !Boolean(
+      validationData.cityData.find(
+        (cityData) =>
+          cityData.city === validationData.destinationData.destination
+      )
+    );
+  }
+
   private static populatedAndChronologicallyDisordered(
     validationData: ValidationData
-  ) {
+  ): boolean {
     return (
       validationData.itinerary.length > 0 &&
       this.chronologicallyDisordered(
@@ -75,7 +81,9 @@ export default class ItineraryValidation {
     return new Date(`2022-12-${etaDay}T${eta}:00`);
   };
 
-  private static destinationEtaOutOfBounds(validationData: ValidationData) {
+  private static destinationEtaOutOfBounds(
+    validationData: ValidationData
+  ): boolean {
     const hour = parseInt(validationData.destinationData.eta.split(':')[0]);
 
     return 8 <= hour && hour < 20;

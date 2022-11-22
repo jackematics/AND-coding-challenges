@@ -1,10 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
 import React from 'react';
 import Itinerary from '../components/itinerary/Itinerary';
 import WorldMap from '../components/WorldMap';
 import styles from '../styles/Home.module.css';
+import CityData from '../types/city-data';
+
+const getCityData = async () => {
+  return await (await fetch(`http://localhost:3000/api/city/`)).json();
+};
 
 export default function Home() {
+  const { data, isLoading, isError, error } = useQuery<CityData[]>({
+    queryKey: ['cities'],
+    queryFn: getCityData,
+  });
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError && error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +37,7 @@ export default function Home() {
         </h1>
       </div>
       <div className="flex">
-        <Itinerary />
+        <Itinerary cityData={data ?? []} />
         <WorldMap />
       </div>
     </div>

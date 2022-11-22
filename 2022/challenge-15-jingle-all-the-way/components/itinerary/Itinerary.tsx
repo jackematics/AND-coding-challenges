@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CityData from '../../types/city-data';
 import EstablishedDestination from './EstablishedDestination';
 import ItineraryHeadings from './ItineraryHeadings';
 import NewDestination from './NewDestination';
@@ -9,7 +10,11 @@ export type DestinationData = {
   eta: string;
 };
 
-const Itinerary = () => {
+type ItineraryProps = {
+  cityData: CityData[];
+};
+
+const Itinerary = ({ cityData }: ItineraryProps) => {
   const [itinerary, setItinerary] = useState<DestinationData[]>([]);
   const [validationMessage, setValidationMessage] = useState<string>('');
 
@@ -28,6 +33,7 @@ const Itinerary = () => {
     const validationResult = ItineraryValidation.calculateValidationResult({
       destinationData,
       itinerary,
+      cityData,
     });
     setValidationMessage(validationResult.message);
 

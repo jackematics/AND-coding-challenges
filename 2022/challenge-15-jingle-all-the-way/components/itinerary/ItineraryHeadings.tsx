@@ -10,7 +10,7 @@ const ItineraryHeadings = () => {
         <div className="p-1 pl-2 basis-1/3">
           <label className="bg-yellow-300 text-gray-900 text-sm text-center rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
             Time
-            <p className="text-xs">(8pm - 8am)</p>
+            <p className="text-xs">(20:00 - 07:59)</p>
           </label>
         </div>
       </div>

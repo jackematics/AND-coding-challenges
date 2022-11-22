@@ -17,6 +17,11 @@ export default class ValidationResult {
     return { isValid: false, message: this.duplicateMessage };
   }
 
+  public static cityNotAvailableResult = {
+    isValid: false,
+    message: 'Error: invalid city',
+  };
+
   public static chronilogicallyDisorderedResult(): ValidationResultData {
     return {
       isValid: false,
