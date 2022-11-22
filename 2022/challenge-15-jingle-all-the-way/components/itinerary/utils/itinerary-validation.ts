@@ -10,12 +10,24 @@ export default class ItineraryValidation {
   public static calculateValidationResult(
     validationData: ValidationData
   ): ValidationResultData {
-    // prettier-ignore
-    return (
-      this.isDuplicateDestination(validationData)                ? ValidationResult.duplicateDestinationResult() :
-      this.populatedAndChronologicallyDisordered(validationData) ? ValidationResult.chronilogicallyDisorderedResult()      :
-                                                                   ValidationResult.validResult()
-    )
+    if (this.isDuplicateDestination(validationData))
+      return ValidationResult.duplicateDestinationResult();
+
+    if (this.populatedAndChronologicallyDisordered(validationData))
+      return ValidationResult.chronilogicallyDisorderedResult();
+
+    if (this.destinationEtaOutOfBounds(validationData))
+      return ValidationResult.destinationEtaOutOfBoundsResult();
+
+    return ValidationResult.validResult();
+
+    // // prettier-ignore
+    // return (
+    //   this.isDuplicateDestination(validationData)                ? ValidationResult.duplicateDestinationResult()      :
+    //   this.populatedAndChronologicallyDisordered(validationData) ? ValidationResult.chronilogicallyDisorderedResult() :
+    //   this.destinationEtaOutOfBounds(validationData)             ? ValidationResult.destinationEtaOutOfBoundsResult() :
+    //                                                                ValidationResult.validResult()
+    // )
   }
 
   private static isDuplicateDestination(
@@ -62,4 +74,10 @@ export default class ItineraryValidation {
 
     return new Date(`2022-12-${etaDay}T${eta}:00`);
   };
+
+  private static destinationEtaOutOfBounds(validationData: ValidationData) {
+    const hour = parseInt(validationData.destinationData.eta.split(':')[0]);
+
+    return 8 <= hour && hour < 20;
+  }
 }

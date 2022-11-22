@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Home from '../pages';
+import Itinerary from '../components/itinerary/Itinerary';
 
 describe('when adding destinations', () => {
   it('should create a new row with the destination and ETA', () => {
-    render(<Home />);
+    render(<Itinerary />);
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -24,7 +24,7 @@ describe('when adding destinations', () => {
   });
 
   it('should delete a destination', () => {
-    render(<Home />);
+    render(<Itinerary />);
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -47,7 +47,7 @@ describe('when adding destinations', () => {
   });
 
   it('should not add duplicate destinations and display a validation message', () => {
-    render(<Home />);
+    render(<Itinerary />);
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -75,8 +75,8 @@ describe('when adding destinations', () => {
     expect(validationMessage).toBeTruthy();
   });
 
-  it('should not allow time inputs earlier than the previous, earliest being 9pm, latest 7:30am', () => {
-    render(<Home />);
+  it('should not allow time inputs earlier than the previous', () => {
+    render(<Itinerary />);
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -103,6 +103,48 @@ describe('when adding destinations', () => {
     );
 
     expect(reykjavik).toBeFalsy();
+    expect(validationMessage).toBeTruthy();
+  });
+
+  it('should not allow time inputs earlier than 8pm', () => {
+    render(<Itinerary />);
+
+    const newDestinationInput = screen.getByPlaceholderText('London');
+    const newTimeInput = screen.getByDisplayValue('20:00');
+
+    fireEvent.change(newDestinationInput, { target: { value: 'Paris' } });
+    fireEvent.change(newTimeInput, { target: { value: '19:00' } });
+
+    const addDestinationButton = screen.getByText('+');
+    fireEvent.click(addDestinationButton);
+
+    const paris = screen.queryByDisplayValue('Paris');
+    const validationMessage = screen.getByText(
+      'Error: destination ETA out of bounds'
+    );
+
+    expect(paris).toBeFalsy();
+    expect(validationMessage).toBeTruthy();
+  });
+
+  it('should not allow time inputs later than 8am', () => {
+    render(<Itinerary />);
+
+    const newDestinationInput = screen.getByPlaceholderText('London');
+    const newTimeInput = screen.getByDisplayValue('20:00');
+
+    fireEvent.change(newDestinationInput, { target: { value: 'Paris' } });
+    fireEvent.change(newTimeInput, { target: { value: '08:00' } });
+
+    const addDestinationButton = screen.getByText('+');
+    fireEvent.click(addDestinationButton);
+
+    const paris = screen.queryByDisplayValue('Paris');
+    const validationMessage = screen.getByText(
+      'Error: destination ETA out of bounds'
+    );
+
+    expect(paris).toBeFalsy();
     expect(validationMessage).toBeTruthy();
   });
 });
