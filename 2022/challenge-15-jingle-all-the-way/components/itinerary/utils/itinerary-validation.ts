@@ -13,18 +13,18 @@ export default class ItineraryValidation {
     validationData: ValidationData
   ): ValidationResultData {
     if (this.isDuplicateDestination(validationData))
-      return ValidationResult.duplicateDestinationResult();
+      return ValidationResult.duplicateDestinationResult;
 
     if (this.cityNotAvailable(validationData))
       return ValidationResult.cityNotAvailableResult;
 
     if (this.populatedAndChronologicallyDisordered(validationData))
-      return ValidationResult.chronilogicallyDisorderedResult();
+      return ValidationResult.chronilogicallyDisorderedResult;
 
     if (this.destinationEtaOutOfBounds(validationData))
-      return ValidationResult.destinationEtaOutOfBoundsResult();
+      return ValidationResult.destinationEtaOutOfBoundsResult;
 
-    return ValidationResult.validResult();
+    return ValidationResult.validResult;
   }
 
   private static isDuplicateDestination(

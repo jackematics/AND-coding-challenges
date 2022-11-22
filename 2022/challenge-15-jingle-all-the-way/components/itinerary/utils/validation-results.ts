@@ -4,42 +4,28 @@ export type ValidationResultData = {
 };
 
 export default class ValidationResult {
-  private static readonly duplicateMessage =
-    'Error: duplicate destinations invalid';
+  public static duplicateDestinationResult: ValidationResultData = {
+    isValid: false,
+    message: 'Error: duplicate destinations invalid',
+  };
 
-  private static readonly chronologicallyDisorderedMessage =
-    'Error: itinerary must be in chronological order';
-
-  private static readonly destinationEtaOutOfBoundsMessage =
-    'Error: destination ETA out of bounds';
-
-  public static duplicateDestinationResult(): ValidationResultData {
-    return { isValid: false, message: this.duplicateMessage };
-  }
-
-  public static cityNotAvailableResult = {
+  public static cityNotAvailableResult: ValidationResultData = {
     isValid: false,
     message: 'Error: invalid city',
   };
 
-  public static chronilogicallyDisorderedResult(): ValidationResultData {
-    return {
-      isValid: false,
-      message: this.chronologicallyDisorderedMessage,
-    };
-  }
+  public static chronilogicallyDisorderedResult: ValidationResultData = {
+    isValid: false,
+    message: 'Error: itinerary must be in chronological order',
+  };
 
-  public static destinationEtaOutOfBoundsResult(): ValidationResultData {
-    return {
-      isValid: false,
-      message: this.destinationEtaOutOfBoundsMessage,
-    };
-  }
+  public static destinationEtaOutOfBoundsResult: ValidationResultData = {
+    isValid: false,
+    message: 'Error: destination ETA out of bounds',
+  };
 
-  public static validResult(): ValidationResultData {
-    return {
-      isValid: true,
-      message: '',
-    };
-  }
+  public static validResult: ValidationResultData = {
+    isValid: true,
+    message: '',
+  };
 }
