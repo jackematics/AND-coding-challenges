@@ -1,11 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Itinerary from '../components/itinerary/Itinerary';
-import Home from '../pages';
+import SantaItinerary, {
+  DestinationData,
+} from '../components/itinerary/SantaItinerary';
+import ValidationResult from '../components/itinerary/utils/validation-results';
 import MockCityData from './mock-city-data';
 
 describe('when adding destinations', () => {
   it('should create a new row with the destination and ETA', () => {
-    render(<Itinerary cityData={MockCityData.mockCityData} />);
+    render(
+      <SantaItinerary
+        cityData={MockCityData.mockCityData}
+        itineraryCallback={() => {}}
+      />
+    );
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -26,7 +33,12 @@ describe('when adding destinations', () => {
   });
 
   it('should delete a destination', () => {
-    render(<Itinerary cityData={MockCityData.mockCityData} />);
+    render(
+      <SantaItinerary
+        cityData={MockCityData.mockCityData}
+        itineraryCallback={() => {}}
+      />
+    );
 
     const newDestinationInput = screen.getByPlaceholderText('London');
     const newTimeInput = screen.getByDisplayValue('20:00');
@@ -50,7 +62,12 @@ describe('when adding destinations', () => {
 
   describe('input validation', () => {
     it('should not add duplicate destinations and display a validation message', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
+      render(
+        <SantaItinerary
+          cityData={MockCityData.mockCityData}
+          itineraryCallback={() => {}}
+        />
+      );
 
       const newDestinationInput = screen.getByPlaceholderText('London');
       const newTimeInput = screen.getByDisplayValue('20:00');
@@ -73,7 +90,7 @@ describe('when adding destinations', () => {
 
       const parises = screen.getAllByDisplayValue('Paris');
       const validationMessage = screen.getByText(
-        'Error: duplicate destinations invalid'
+        ValidationResult.duplicateDestinationResult.message
       );
 
       expect(parises.length).toBe(1);
@@ -81,7 +98,12 @@ describe('when adding destinations', () => {
     });
 
     it('should not allow time inputs earlier than the previous', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
+      render(
+        <SantaItinerary
+          cityData={MockCityData.mockCityData}
+          itineraryCallback={() => {}}
+        />
+      );
 
       const newDestinationInput = screen.getByPlaceholderText('London');
       const newTimeInput = screen.getByDisplayValue('20:00');
@@ -104,7 +126,7 @@ describe('when adding destinations', () => {
 
       const reykjavik = screen.queryByDisplayValue('Reykjavik');
       const validationMessage = screen.getByText(
-        'Error: itinerary must be in chronological order'
+        ValidationResult.chronilogicallyDisorderedResult.message
       );
 
       expect(reykjavik).toBeFalsy();
@@ -112,7 +134,12 @@ describe('when adding destinations', () => {
     });
 
     it('should not allow time inputs earlier than 8pm', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
+      render(
+        <SantaItinerary
+          cityData={MockCityData.mockCityData}
+          itineraryCallback={() => {}}
+        />
+      );
 
       const newDestinationInput = screen.getByPlaceholderText('London');
       const newTimeInput = screen.getByDisplayValue('20:00');
@@ -125,7 +152,7 @@ describe('when adding destinations', () => {
 
       const paris = screen.queryByDisplayValue('Paris');
       const validationMessage = screen.getByText(
-        'Error: destination ETA out of bounds'
+        ValidationResult.destinationEtaOutOfBoundsResult.message
       );
 
       expect(paris).toBeFalsy();
@@ -133,7 +160,12 @@ describe('when adding destinations', () => {
     });
 
     it('should not allow time inputs later than 8am', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
+      render(
+        <SantaItinerary
+          cityData={MockCityData.mockCityData}
+          itineraryCallback={() => {}}
+        />
+      );
 
       const newDestinationInput = screen.getByPlaceholderText('London');
       const newTimeInput = screen.getByDisplayValue('20:00');
@@ -146,28 +178,7 @@ describe('when adding destinations', () => {
 
       const paris = screen.queryByDisplayValue('Paris');
       const validationMessage = screen.getByText(
-        'Error: destination ETA out of bounds'
-      );
-
-      expect(paris).toBeFalsy();
-      expect(validationMessage).toBeTruthy();
-    });
-
-    it('should not allow time inputs later than 8am', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
-
-      const newDestinationInput = screen.getByPlaceholderText('London');
-      const newTimeInput = screen.getByDisplayValue('20:00');
-
-      fireEvent.change(newDestinationInput, { target: { value: 'Paris' } });
-      fireEvent.change(newTimeInput, { target: { value: '08:00' } });
-
-      const addDestinationButton = screen.getByText('+');
-      fireEvent.click(addDestinationButton);
-
-      const paris = screen.queryByDisplayValue('Paris');
-      const validationMessage = screen.getByText(
-        'Error: destination ETA out of bounds'
+        ValidationResult.destinationEtaOutOfBoundsResult.message
       );
 
       expect(paris).toBeFalsy();
@@ -175,7 +186,12 @@ describe('when adding destinations', () => {
     });
 
     it('should not allow invalid cities', () => {
-      render(<Itinerary cityData={MockCityData.mockCityData} />);
+      render(
+        <SantaItinerary
+          cityData={MockCityData.mockCityData}
+          itineraryCallback={() => {}}
+        />
+      );
 
       const newDestinationInput = screen.getByPlaceholderText('London');
       const newTimeInput = screen.getByDisplayValue('20:00');
@@ -187,7 +203,9 @@ describe('when adding destinations', () => {
       fireEvent.click(addDestinationButton);
 
       const invalidCity = screen.queryByDisplayValue('Abcdefg');
-      const validationMessage = screen.getByText('Error: invalid city');
+      const validationMessage = screen.getByText(
+        ValidationResult.cityNotAvailableResult.message
+      );
 
       expect(invalidCity).toBeFalsy();
       expect(validationMessage).toBeTruthy();

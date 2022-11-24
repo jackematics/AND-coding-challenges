@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DestinationData } from './Itinerary';
+import { DestinationData } from './SantaItinerary';
 
 type NewDestinationProps = {
   destinationDataCallback: (destinationData: DestinationData) => void;

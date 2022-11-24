@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { DestinationData } from './Itinerary';
+import { DestinationData } from './SantaItinerary';
 
 type EstablishedDestinationProps = {
   destinationData: DestinationData;
   deleteDestinationCallback: (destinationData: DestinationData) => void;
 };
 
-const EstablishedDestination = ({
+const AddedDestination = ({
   destinationData,
   deleteDestinationCallback,
 }: EstablishedDestinationProps) => {
@@ -45,4 +45,4 @@ const EstablishedDestination = ({
   );
 };
 
-export default EstablishedDestination;
+export default AddedDestination;

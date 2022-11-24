@@ -1,5 +1,5 @@
 import CityData from '../../../types/city-data';
-import { DestinationData } from '../Itinerary';
+import { DestinationData } from '../SantaItinerary';
 import ValidationResult, { ValidationResultData } from './validation-results';
 
 type ValidationData = {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CityData from '../../types/city-data';
-import EstablishedDestination from './EstablishedDestination';
+import AddedDestination from './AddedDestination';
 import ItineraryHeadings from './ItineraryHeadings';
 import NewDestination from './NewDestination';
 import ItineraryValidation from './utils/itinerary-validation';
@@ -10,35 +10,46 @@ export type DestinationData = {
   eta: string;
 };
 
-type ItineraryProps = {
+type SantaItineraryProps = {
   cityData: CityData[];
+  itineraryCallback: (itinerary: DestinationData[]) => void;
 };
 
-const Itinerary = ({ cityData }: ItineraryProps) => {
+const SantaItinerary = ({
+  cityData,
+  itineraryCallback,
+}: SantaItineraryProps) => {
   const [itinerary, setItinerary] = useState<DestinationData[]>([]);
   const [validationMessage, setValidationMessage] = useState<string>('');
 
   const formatDestinationData = (
     destinationData: DestinationData
   ): DestinationData => {
+    const formatted = destinationData.destination
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.toLowerCase().slice(1))
+      .join(' ');
+
     return {
       ...destinationData,
-      destination:
-        destinationData.destination.charAt(0).toUpperCase() +
-        destinationData.destination.toLowerCase().slice(1),
+      destination: formatted,
     };
   };
 
   const handleNewDestination = (destinationData: DestinationData) => {
+    const formattedDestinationData = formatDestinationData(destinationData);
     const validationResult = ItineraryValidation.calculateValidationResult({
-      destinationData,
+      destinationData: formattedDestinationData,
       itinerary,
       cityData,
     });
     setValidationMessage(validationResult.message);
 
     if (validationResult.isValid) {
-      setItinerary([...itinerary, formatDestinationData(destinationData)]);
+      const updatedItinerary = [...itinerary, formattedDestinationData];
+
+      itineraryCallback(updatedItinerary);
+      setItinerary(updatedItinerary);
     }
   };
 
@@ -57,7 +68,7 @@ const Itinerary = ({ cityData }: ItineraryProps) => {
       <div className="flex-col">
         <ItineraryHeadings />
         {itinerary.map((destination: DestinationData) => (
-          <EstablishedDestination
+          <AddedDestination
             key={destination.destination}
             destinationData={destination}
             deleteDestinationCallback={handleDeleteDestination}
@@ -70,4 +81,4 @@ const Itinerary = ({ cityData }: ItineraryProps) => {
   );
 };
 
-export default Itinerary;
+export default SantaItinerary;
