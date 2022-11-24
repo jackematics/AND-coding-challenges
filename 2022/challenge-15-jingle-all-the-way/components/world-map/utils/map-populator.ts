@@ -1,3 +1,5 @@
+import { CityCartesianData } from '../../../types/city-data';
+
 export default class MapPopulator {
   private readonly context: CanvasRenderingContext2D;
 
@@ -14,31 +16,21 @@ export default class MapPopulator {
     );
   }
 
-  public drawDestination(
-    city: string,
-    coords: MapCoordinates,
-    previousCoords: MapCoordinates
-  ) {
-    if (previousCoords) {
-      this.drawLineBetweenDestinations(previousCoords, coords);
-    }
-    this.drawCityMarker(coords);
-    this.drawCityMarkerText(city, coords);
-  }
-
-  drawLineBetweenDestinations(
+  public drawLineBetweenDestinations(
     previousCoords: MapCoordinates,
     coords: MapCoordinates
   ) {
-    this.context.beginPath();
-    this.context.lineWidth = 3;
-    this.context.strokeStyle = '#EE4B2B';
-    this.context.moveTo(previousCoords.x, previousCoords.y);
-    this.context.lineTo(coords.x, coords.y);
-    this.context.stroke();
+    if (previousCoords) {
+      this.context.beginPath();
+      this.context.lineWidth = 3;
+      this.context.strokeStyle = '#EE4B2B';
+      this.context.moveTo(previousCoords.x, previousCoords.y);
+      this.context.lineTo(coords.x, coords.y);
+      this.context.stroke();
+    }
   }
 
-  private drawCityMarker(coords: MapCoordinates) {
+  public drawCityMarker(coords: MapCoordinates) {
     const markerSize = 4;
     const circlePolarCoords = { startAngle: 0, endAngle: 2 * Math.PI };
 
@@ -54,15 +46,15 @@ export default class MapPopulator {
     this.context.fill();
   }
 
-  private drawCityMarkerText(city: string, coords: MapCoordinates) {
+  public drawCityMarkerText(cityCartesianData: CityCartesianData) {
     const markerDistanceDelta = 4;
 
     this.context.font = '11px Comic Sans MS';
-    this.context.fillStyle = 'red';
+    this.context.fillStyle = 'black';
     this.context.fillText(
-      city,
-      coords.x + markerDistanceDelta,
-      coords.y - markerDistanceDelta
+      cityCartesianData.city,
+      cityCartesianData.coords.x + markerDistanceDelta,
+      cityCartesianData.coords.y - markerDistanceDelta
     );
   }
 }

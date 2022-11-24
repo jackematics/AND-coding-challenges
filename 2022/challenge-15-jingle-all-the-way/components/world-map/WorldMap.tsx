@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import CityData from '../../types/city-data';
+import { CityCartesianData, CityGpsData } from '../../types/city-data';
 import GpsToCartesianConverter from './utils/gps-to-cartesian-converter';
 import MapPopulator from './utils/map-populator';
 
 type WorldMapProps = {
-  destinationsData: CityData[];
+  destinationsData: CityGpsData[];
 };
 
 const WorldMap = ({ destinationsData }: WorldMapProps) => {
@@ -13,6 +13,19 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
     width: 1408,
     height: 708,
   });
+
+  const convertGpsToCartesian = (cityData: CityGpsData): CityCartesianData => {
+    const gpsCoords: GpsCoordinates = {
+      lat: parseFloat(cityData.lat),
+      long: parseFloat(cityData.long),
+    };
+    const mapCoords = GpsToCartesianConverter.convertCoordinatesToCartesian(
+      gpsCoords,
+      mapSideDimensions.current
+    );
+
+    return { city: cityData.city, coords: mapCoords };
+  };
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -25,20 +38,26 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
 
         let previousCoords: MapCoordinates;
 
-        destinationsData.map((cityData: CityData) => {
-          const gpsCoords: GpsCoordinates = {
-            lat: parseFloat(cityData.lat),
-            long: parseFloat(cityData.long),
-          };
-          const mapCoords =
-            GpsToCartesianConverter.convertCoordinatesToCartesian(
-              gpsCoords,
-              mapSideDimensions.current
+        const cartesianDestinationsData = destinationsData.map(
+          convertGpsToCartesian
+        );
+        cartesianDestinationsData.map(
+          (cityCartesianData: CityCartesianData) => {
+            populator.drawLineBetweenDestinations(
+              previousCoords,
+              cityCartesianData.coords
             );
-
-          populator.drawDestination(cityData.city, mapCoords, previousCoords);
-          previousCoords = mapCoords;
-        });
+            previousCoords = cityCartesianData.coords;
+          }
+        );
+        cartesianDestinationsData.map((cityCartesianData: CityCartesianData) =>
+          populator.drawCityMarker(cityCartesianData.coords)
+        );
+        cartesianDestinationsData.map((cityCartesianData: CityCartesianData) =>
+          populator.drawCityMarkerText(cityCartesianData)
+        );
+        // populator.drawDestination(cityData.city, mapCoords, previousCoords);
+        // previousCoords = mapCoords;
       }
     }
   }, [destinationsData, mapSideDimensions]);

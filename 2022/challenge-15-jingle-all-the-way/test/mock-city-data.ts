@@ -1,7 +1,7 @@
-import CityData from '../types/city-data';
+import { CityGpsData } from '../types/city-data';
 
 export default class MockCityData {
-  public static readonly mockCityData: CityData[] = [
+  public static readonly mockCityData: CityGpsData[] = [
     {
       city: 'Paris',
       lat: '',

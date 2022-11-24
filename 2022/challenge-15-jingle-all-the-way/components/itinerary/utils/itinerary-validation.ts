@@ -1,11 +1,11 @@
-import CityData from '../../../types/city-data';
+import { CityGpsData } from '../../../types/city-data';
 import { DestinationData } from '../SantaItinerary';
 import ValidationResult, { ValidationResultData } from './validation-results';
 
 type ValidationData = {
   destinationData: DestinationData;
   itinerary: DestinationData[];
-  cityData: CityData[];
+  cityData: CityGpsData[];
 };
 
 export default class ItineraryValidation {

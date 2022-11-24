@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CityData from '../../types/city-data';
+import { CityGpsData } from '../../types/city-data';
 import AddedDestination from './AddedDestination';
 import ItineraryHeadings from './ItineraryHeadings';
 import NewDestination from './NewDestination';
@@ -11,7 +11,7 @@ export type DestinationData = {
 };
 
 type SantaItineraryProps = {
-  cityData: CityData[];
+  cityData: CityGpsData[];
   itineraryCallback: (itinerary: DestinationData[]) => void;
 };
 

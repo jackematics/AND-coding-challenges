@@ -6,18 +6,18 @@ import SantaItinerary, {
 } from '../components/itinerary/SantaItinerary';
 import WorldMap from '../components/world-map/WorldMap';
 import styles from '../styles/Home.module.css';
-import CityData from '../types/city-data';
+import { CityGpsData } from '../types/city-data';
 
 const getCityData = async () => {
   return await (await fetch(`http://localhost:3000/api/city/`)).json();
 };
 
 export default function Home() {
-  const { data, isLoading, isError, error } = useQuery<CityData[]>({
+  const { data, isLoading, isError, error } = useQuery<CityGpsData[]>({
     queryKey: ['cities'],
     queryFn: getCityData,
   });
-  const [destinationsData, setDestinationData] = useState<CityData[]>([]);
+  const [destinationsData, setDestinationData] = useState<CityGpsData[]>([]);
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -37,7 +37,7 @@ export default function Home() {
 
     const destinationsLocationData = itinerary.map((destinationsData) =>
       data?.find((data) => data.city === destinationsData.destination)
-    ) as unknown as CityData[];
+    ) as unknown as CityGpsData[];
 
     setDestinationData(destinationsLocationData);
   };
