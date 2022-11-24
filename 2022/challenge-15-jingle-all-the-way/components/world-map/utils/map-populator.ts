@@ -42,6 +42,9 @@ export default class MapPopulator {
       circlePolarCoords.startAngle,
       circlePolarCoords.endAngle
     );
+    this.context.strokeStyle = 'black';
+    this.context.lineWidth = 2;
+    this.context.stroke();
     this.context.fillStyle = '#EE4B2B';
     this.context.fill();
   }
@@ -49,7 +52,7 @@ export default class MapPopulator {
   public drawCityMarkerText(cityCartesianData: CityCartesianData) {
     const markerDistanceDelta = 4;
 
-    this.context.font = '11px Comic Sans MS';
+    this.context.font = 'bold 13px Comic Sans MS';
     this.context.fillStyle = 'black';
     this.context.fillText(
       cityCartesianData.city,
