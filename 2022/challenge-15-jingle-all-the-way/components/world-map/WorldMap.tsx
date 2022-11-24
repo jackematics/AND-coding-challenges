@@ -10,8 +10,8 @@ type WorldMapProps = {
 const WorldMap = ({ destinationsData }: WorldMapProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mapSideDimensions = useRef<MapSideDimensions>({
-    width: 1280,
-    height: 644,
+    width: 1408,
+    height: 708,
   });
 
   useEffect(() => {
@@ -21,18 +21,20 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
 
       if (context) {
         const populator = new MapPopulator(context);
+        populator.depopulateMap(mapSideDimensions.current);
+
         destinationsData.map((cityData: CityData) => {
-          const coords: GpsCoordinates = {
+          const gpsCoords: GpsCoordinates = {
             lat: parseFloat(cityData.lat),
             long: parseFloat(cityData.long),
           };
-
-          populator.drawCityMarker(
+          const mapCoords =
             GpsToCartesianConverter.convertCoordinatesToCartesian(
-              coords,
+              gpsCoords,
               mapSideDimensions.current
-            )
-          );
+            );
+
+          populator.drawDestination(cityData.city, mapCoords);
         });
       }
     }
