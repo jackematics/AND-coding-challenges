@@ -14,9 +14,28 @@ export default class MapPopulator {
     );
   }
 
-  public drawDestination(city: string, coords: MapCoordinates) {
+  public drawDestination(
+    city: string,
+    coords: MapCoordinates,
+    previousCoords: MapCoordinates
+  ) {
+    if (previousCoords) {
+      this.drawLineBetweenDestinations(previousCoords, coords);
+    }
     this.drawCityMarker(coords);
     this.drawCityMarkerText(city, coords);
+  }
+
+  drawLineBetweenDestinations(
+    previousCoords: MapCoordinates,
+    coords: MapCoordinates
+  ) {
+    this.context.beginPath();
+    this.context.lineWidth = 3;
+    this.context.strokeStyle = '#EE4B2B';
+    this.context.moveTo(previousCoords.x, previousCoords.y);
+    this.context.lineTo(coords.x, coords.y);
+    this.context.stroke();
   }
 
   private drawCityMarker(coords: MapCoordinates) {

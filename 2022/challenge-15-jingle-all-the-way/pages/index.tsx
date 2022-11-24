@@ -35,9 +35,11 @@ export default function Home() {
         )
       );
 
-    setDestinationData(
-      data!.filter((cityData: CityData) => itineraryContainsCity(cityData.city))
-    );
+    const destinationsLocationData = itinerary.map((destinationsData) =>
+      data?.find((data) => data.city === destinationsData.destination)
+    ) as unknown as CityData[];
+
+    setDestinationData(destinationsLocationData);
   };
 
   return (

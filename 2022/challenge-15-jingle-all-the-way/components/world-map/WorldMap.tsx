@@ -23,6 +23,8 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
         const populator = new MapPopulator(context);
         populator.depopulateMap(mapSideDimensions.current);
 
+        let previousCoords: MapCoordinates;
+
         destinationsData.map((cityData: CityData) => {
           const gpsCoords: GpsCoordinates = {
             lat: parseFloat(cityData.lat),
@@ -34,7 +36,8 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
               mapSideDimensions.current
             );
 
-          populator.drawDestination(cityData.city, mapCoords);
+          populator.drawDestination(cityData.city, mapCoords, previousCoords);
+          previousCoords = mapCoords;
         });
       }
     }
