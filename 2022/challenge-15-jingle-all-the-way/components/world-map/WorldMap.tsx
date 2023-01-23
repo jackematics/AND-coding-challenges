@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { CityCartesianData, CityGpsData } from '../../types/city-data';
+import CartesianOperations from './utils/cartesian-operations';
 import GpsToCartesianConverter from './utils/gps-to-cartesian-converter';
+import MapOperations from './utils/map-operations';
 import MapPopulator from './utils/map-populator';
 
 type WorldMapProps = {
@@ -14,7 +16,9 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
     height: 708,
   });
 
-  const convertGpsToCartesian = (cityData: CityGpsData): CityCartesianData => {
+  const convertCityGpsToCartesian = (
+    cityData: CityGpsData
+  ): CityCartesianData => {
     const gpsCoords: GpsCoordinates = {
       lat: parseFloat(cityData.lat),
       long: parseFloat(cityData.long),
@@ -36,18 +40,34 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
         const populator = new MapPopulator(context);
         populator.depopulateMap(mapSideDimensions.current);
 
-        let previousCoords: MapCoordinates;
-
         const cartesianDestinationsData = destinationsData.map(
-          convertGpsToCartesian
+          convertCityGpsToCartesian
         );
+        console.log(cartesianDestinationsData);
+
+        let prevCoords: MapCoordinates;
+
         cartesianDestinationsData.map(
           (cityCartesianData: CityCartesianData) => {
-            populator.drawLineBetweenDestinations(
-              previousCoords,
-              cityCartesianData.coords
-            );
-            previousCoords = cityCartesianData.coords;
+            if (prevCoords) {
+              const closestPoint = MapOperations.calculateClosestPoint(
+                prevCoords,
+                cityCartesianData.coords,
+                mapSideDimensions.current
+              );
+
+              const drawingPoints = MapOperations.calculateDrawingPoints(
+                prevCoords,
+                closestPoint,
+                mapSideDimensions.current
+              );
+
+              drawingPoints.map((point) => {
+                populator.drawLineBetweenDestinations(point.to, point.from);
+              });
+            }
+
+            prevCoords = cityCartesianData.coords;
           }
         );
         cartesianDestinationsData.map((cityCartesianData: CityCartesianData) =>
@@ -56,8 +76,6 @@ const WorldMap = ({ destinationsData }: WorldMapProps) => {
         cartesianDestinationsData.map((cityCartesianData: CityCartesianData) =>
           populator.drawCityMarkerText(cityCartesianData)
         );
-        // populator.drawDestination(cityData.city, mapCoords, previousCoords);
-        // previousCoords = mapCoords;
       }
     }
   }, [destinationsData, mapSideDimensions]);

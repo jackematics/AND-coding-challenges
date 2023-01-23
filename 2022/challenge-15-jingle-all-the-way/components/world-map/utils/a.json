@@ -1,0 +1,60 @@
+{
+  "submissions": [
+    {
+      "name": "aleksandar.dimitrov",
+      "url": "https://github.com/asdimitrov13/advent-of-code-2022/blob/master/day1/index.js",
+      "submittedOn": "2022-12-01T08:59:30.0161333Z"
+    },
+    {
+      "name": "helen.evans",
+      "url": "https://github.com/helenijevans/advent-of-code",
+      "submittedOn": "2022-12-01T09:51:20.1595316Z"
+    },
+    {
+      "name": "thomas.lucas",
+      "url": "https://git.lucases.co.uk/tom/AdventOfCode2022/src/branch/master/1/index.py",
+      "submittedOn": "2022-12-01T10:15:05.0001523Z"
+    },
+    {
+      "name": "umair.bashir",
+      "url": "https://gitlab.com/umairbashir/advent-of-code-2022/-/blob/main/day1/part-1.js",
+      "submittedOn": "2022-12-01T12:13:57.6380869Z"
+    },
+    {
+      "name": "umair.bashir",
+      "url": "https://gitlab.com/umairbashir/advent-of-code-2022/-/blob/main/day1/part-2.js",
+      "submittedOn": "2022-12-01T12:14:51.6873768Z"
+    },
+    {
+      "name": "alex.king",
+      "url": "https://github.com/ObsidianEagle/advent-of-code-2022/blob/main/src/bin/day1.rs",
+      "submittedOn": "2022-12-01T12:53:39.4524007Z"
+    },
+    {
+      "name": "tarandeep.singh.-7723",
+      "url": "https://github.com/taranchauhan/advent-of-code-2022/tree/main/day-1",
+      "submittedOn": "2022-12-01T14:05:30.7740476Z"
+    },
+    {
+      "name": "musa.yuksel",
+      "url": "https://github.com/musayuksel/advent-of-code/tree/main/day-1",
+      "submittedOn": "2022-12-01T14:40:16.7499696Z"
+    },
+    {
+      "name": "sjones",
+      "url": "https://gitlab.com/advent-of-code-2022/1",
+      "submittedOn": "2022-12-01T14:47:15.4945933Z"
+    },
+    {
+      "name": "alice.broadhurst",
+      "url": "https://github.com/AliceBroadhurst-AndDigital/AdventOfCode2022",
+      "submittedOn": "2022-12-01T14:52:32.1496045Z"
+    },
+    {
+      "name": "rob.steel",
+      "url": "https://github.com/robs24/advent-of-code.git",
+      "submittedOn": "2022-12-01T15:49:03.321251Z"
+    }
+  ],
+  "answer": null
+}

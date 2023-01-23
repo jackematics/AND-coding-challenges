@@ -20,14 +20,12 @@ export default class MapPopulator {
     previousCoords: MapCoordinates,
     coords: MapCoordinates
   ) {
-    if (previousCoords) {
-      this.context.beginPath();
-      this.context.lineWidth = 3;
-      this.context.strokeStyle = '#EE4B2B';
-      this.context.moveTo(previousCoords.x, previousCoords.y);
-      this.context.lineTo(coords.x, coords.y);
-      this.context.stroke();
-    }
+    this.context.beginPath();
+    this.context.lineWidth = 3;
+    this.context.strokeStyle = '#EE4B2B';
+    this.context.moveTo(previousCoords.x, previousCoords.y);
+    this.context.lineTo(coords.x, coords.y);
+    this.context.stroke();
   }
 
   public drawCityMarker(coords: MapCoordinates) {
