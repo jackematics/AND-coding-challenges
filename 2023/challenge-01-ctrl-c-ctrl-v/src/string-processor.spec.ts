@@ -14,10 +14,10 @@ describe('StringProcessor', () => {
       input: 'the big red[CTRL+C] fox jumps over [CTRL+V] lazy dog.',
       expected: 'the big red fox jumps over the big red lazy dog.',
     },
-    // {
-    //   input: '[CTRL+V]the tall oak tree towers over the lush green meadow.',
-    //   expected: '',
-    // },
+    {
+      input: '[CTRL+V]the tall oak tree towers over the lush green meadow.',
+      expected: 'the tall oak tree towers over the lush green meadow.',
+    },
     // {
     //   input:
     //     '"the sun shines down[CTRL+C] on [CTRL+V][CTRL+C] the busy [CTRL+V].",',
