@@ -1,4 +1,4 @@
-const LangtonsAntUi = () => {
+const LangtonsAntDisplay = () => {
   const grid = Array.from({ length: 7 }, (_) =>
     Array.from({ length: 7 }, (_) => null)
   );
@@ -20,4 +20,4 @@ const LangtonsAntUi = () => {
   );
 };
 
-export default LangtonsAntUi;
+export default LangtonsAntDisplay;

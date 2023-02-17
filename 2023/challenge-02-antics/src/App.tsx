@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
-import LangtonsAntUi from './components/LangtonsAntUi';
+import LangtonsAntDisplay from './components/langtons-ant/LangtonsAntDisplay';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <h1 className="mb-10 text-center font-sans text-6xl font-bold">
         Langtons Ant
       </h1>
-      <LangtonsAntUi />
+      <LangtonsAntDisplay />
     </>
   );
 }
