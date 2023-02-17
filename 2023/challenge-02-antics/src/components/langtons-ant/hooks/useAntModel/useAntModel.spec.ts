@@ -44,25 +44,44 @@ describe('useAntModel', () => {
       });
     });
 
-    it('should turn the ant current cell white if black', () => {
-      const antGridIndex = { row: 1, col: 1 };
+    describe('when the ant cell is initially black', () => {
+      it('should turn the ant current cell white', () => {
+        const antGridIndex = { row: 1, col: 1 };
 
-      const { result } = renderHook(() =>
-        useAntModel(
-          new Ant({ ...antGridIndex }, 0),
-          new Grid([
-            [Colour.White, Colour.White, Colour.White],
-            [Colour.White, Colour.Black, Colour.White],
-            [Colour.White, Colour.White, Colour.White],
-          ])
-        )
-      );
+        const { result } = renderHook(() =>
+          useAntModel(
+            new Ant({ ...antGridIndex }, 0),
+            new Grid([
+              [Colour.White, Colour.White, Colour.White],
+              [Colour.White, Colour.Black, Colour.White],
+              [Colour.White, Colour.White, Colour.White],
+            ])
+          )
+        );
 
-      act(() => result.current.tick());
+        act(() => result.current.tick());
 
-      expect(result.current.gridData[antGridIndex.row][antGridIndex.col]).toBe(
-        Colour.White
-      );
+        expect(
+          result.current.gridData[antGridIndex.row][antGridIndex.col]
+        ).toBe(Colour.White);
+      });
+
+      it('should set the ant to face right', () => {
+        const antGridIndex = { row: 1, col: 1 };
+
+        const { result } = renderHook(() =>
+          useAntModel(
+            new Ant({ ...antGridIndex }, 0),
+            new Grid([
+              [Colour.White, Colour.White, Colour.White],
+              [Colour.White, Colour.Black, Colour.White],
+              [Colour.White, Colour.White, Colour.White],
+            ])
+          )
+        );
+        act(() => result.current.tick());
+        expect(result.current.antData.rotation).toBe(90);
+      });
     });
   });
 });

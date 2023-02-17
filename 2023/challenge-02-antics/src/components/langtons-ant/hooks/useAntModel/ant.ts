@@ -22,6 +22,11 @@ export default class Ant {
   public changeDirection(currentTileColour: Colour) {
     const nextIndexAntiClockwise =
       (rotations.indexOf(this.rotation) - 1 + 4) % 4;
-    this.rotation = rotations[nextIndexAntiClockwise];
+    const nextIndexClockwise = (rotations.indexOf(this.rotation) + 1) % 4;
+
+    this.rotation =
+      currentTileColour === Colour.White
+        ? rotations[nextIndexAntiClockwise]
+        : rotations[nextIndexClockwise];
   }
 }
