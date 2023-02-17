@@ -1,18 +1,11 @@
 import { Colour } from '../enums/enums';
 import { GridIndex } from '../types';
 
-type GridDims = {
-  width: number;
-  height: number;
-};
-
 export default class Grid {
   private readonly grid: Colour[][];
 
-  constructor(gridDims: GridDims) {
-    this.grid = Array.from({ length: gridDims.height }, (_) =>
-      Array.from({ length: gridDims.width }, (_) => Colour.White)
-    );
+  constructor(grid: Colour[][]) {
+    this.grid = grid;
   }
 
   public getState(): Colour[][] {

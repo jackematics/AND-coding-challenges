@@ -16,7 +16,7 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
 
   const tick = () => {
     grid.flipAntSquare(ant.getState().gridIndex);
-    setGridData(grid.getState());
+    setGridData({ ...grid.getState() });
   };
 
   return { antData, gridData, tick };

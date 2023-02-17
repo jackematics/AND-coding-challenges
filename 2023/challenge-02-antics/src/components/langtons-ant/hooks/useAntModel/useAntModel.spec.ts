@@ -7,19 +7,18 @@ import Grid from './grid/grid';
 describe('useAntModel', () => {
   describe('tick()', () => {
     it('should turn the ant current cell black if initially white', async () => {
-      const antGridIndex = { row: 3, col: 3 };
+      const antGridIndex = { row: 1, col: 1 };
       const antDirection = Direction.Up;
-      const gridDims = { width: 7, height: 7 };
 
       const { result } = renderHook(() =>
         useAntModel(
           new Ant({ ...antGridIndex }, antDirection),
-          new Grid({ ...gridDims })
+          new Grid([
+            [Colour.White, Colour.White, Colour.White],
+            [Colour.White, Colour.White, Colour.White],
+            [Colour.White, Colour.White, Colour.White],
+          ])
         )
-      );
-
-      expect(result.current.gridData[antGridIndex.row][antGridIndex.col]).toBe(
-        Colour.White
       );
       act(() => result.current.tick());
       expect(result.current.gridData[antGridIndex.row][antGridIndex.col]).toBe(
@@ -28,21 +27,18 @@ describe('useAntModel', () => {
     });
 
     it('should turn the ant current cell white if black', () => {
-      const antGridIndex = { row: 3, col: 3 };
+      const antGridIndex = { row: 1, col: 1 };
       const antDirection = Direction.Up;
-      const gridDims = { width: 7, height: 7 };
 
       const { result } = renderHook(() =>
         useAntModel(
           new Ant({ ...antGridIndex }, antDirection),
-          new Grid(gridDims)
+          new Grid([
+            [Colour.White, Colour.White, Colour.White],
+            [Colour.White, Colour.Black, Colour.White],
+            [Colour.White, Colour.White, Colour.White],
+          ])
         )
-      );
-
-      act(() => result.current.tick());
-
-      expect(result.current.gridData[antGridIndex.row][antGridIndex.col]).toBe(
-        Colour.Black
       );
 
       act(() => result.current.tick());
