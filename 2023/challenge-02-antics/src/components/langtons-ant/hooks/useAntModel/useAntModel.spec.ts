@@ -8,11 +8,10 @@ describe('useAntModel', () => {
   describe('tick()', () => {
     it('should turn the ant current cell black if initially white', async () => {
       const antGridIndex = { row: 1, col: 1 };
-      const antDirection = Direction.Up;
 
       const { result } = renderHook(() =>
         useAntModel(
-          new Ant({ ...antGridIndex }, antDirection),
+          new Ant({ ...antGridIndex }, Direction.Up),
           new Grid([
             [Colour.White, Colour.White, Colour.White],
             [Colour.White, Colour.White, Colour.White],
@@ -28,11 +27,10 @@ describe('useAntModel', () => {
 
     it('should turn the ant current cell white if black', () => {
       const antGridIndex = { row: 1, col: 1 };
-      const antDirection = Direction.Up;
 
       const { result } = renderHook(() =>
         useAntModel(
-          new Ant({ ...antGridIndex }, antDirection),
+          new Ant({ ...antGridIndex }, Direction.Up),
           new Grid([
             [Colour.White, Colour.White, Colour.White],
             [Colour.White, Colour.Black, Colour.White],
