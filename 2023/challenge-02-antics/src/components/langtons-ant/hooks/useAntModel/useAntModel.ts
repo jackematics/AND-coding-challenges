@@ -1,24 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { copy } from 'copy-anything';
 
-import { Colour, PlayState } from './enums/enums';
-import Ant from './ant';
-import Grid from './grid/grid';
-import { AntData } from './types';
+import { PlayState } from './enums/enums';
+import { AntGridData } from './types';
+import AntGrid from './ant-grid/ant-grid';
 
 type AntModel = {
-  antData: AntData;
-  gridData: Colour[][];
+  antGridData: AntGridData;
   start: () => void;
   stop: () => void;
 };
 
-const useAntModel = (ant: Ant, grid: Grid): AntModel => {
+const useAntModel = (antGrid: AntGrid): AntModel => {
   const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [playState, setPlayState] = useState<PlayState>(PlayState.Stop);
-  const [antData, setAntData] = useState<AntData>(ant.getState());
-  const [gridData, setGridData] = useState<Colour[][]>(grid.getState());
+  const [antGridData, setAntGridData] = useState<AntGridData>(
+    antGrid.getState()
+  );
 
   const start = () => {
     setPlayState(PlayState.Start);
@@ -37,16 +36,11 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
   }, [playState]);
 
   const tick = () => {
-    ant.changeDirection(grid.getColourAtIndex(ant.getState().gridIndex));
-    grid.invertAntCellColour(ant.getState().gridIndex);
-    grid.expandIfAntPassingBoundary(ant);
-    ant.move();
-
-    setAntData(copy(ant.getState()));
-    setGridData(copy(grid.getState()));
+    antGrid.tick();
+    setAntGridData(copy(antGrid.getState()));
   };
 
-  return { antData, gridData, start, stop };
+  return { antGridData, start, stop };
 };
 
 export default useAntModel;

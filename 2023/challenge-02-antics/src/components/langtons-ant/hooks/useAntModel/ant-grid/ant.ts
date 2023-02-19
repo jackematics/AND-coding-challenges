@@ -1,5 +1,5 @@
-import { Colour } from './enums/enums';
-import { AntData, GridIndex, Rotation } from './types';
+import { Colour } from '../enums/enums';
+import { AntData, GridIndex, Rotation } from '../types';
 
 const rotations: Rotation[] = [0, 90, 180, 270];
 

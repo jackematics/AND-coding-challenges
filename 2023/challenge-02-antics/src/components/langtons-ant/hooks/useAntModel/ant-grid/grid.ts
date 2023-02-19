@@ -1,4 +1,4 @@
-import Ant from '../ant';
+import Ant from './ant';
 import { Colour } from '../enums/enums';
 import { AntData, GridIndex } from '../types';
 
