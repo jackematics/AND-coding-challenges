@@ -3,7 +3,7 @@ import { copy } from 'copy-anything';
 
 import { PlayState } from './enums/enums';
 import { AntGridData } from './types';
-import AntGridModeller from './ant-grid/ant-grid';
+import AntGridModeller from './ant-grid-modeller/ant-grid-modeller';
 
 type AntModel = {
   antGridData: AntGridData;

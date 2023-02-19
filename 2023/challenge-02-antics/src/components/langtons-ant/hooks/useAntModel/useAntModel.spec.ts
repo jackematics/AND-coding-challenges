@@ -1,11 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { Colour } from './enums/enums';
 import useAntModel from '../useAntModel/useAntModel';
-import Ant from './ant-grid/ant';
-import Grid from './ant-grid/grid';
+import Ant from './ant-grid-modeller/ant';
+import Grid from './ant-grid-modeller/grid';
 import AntModelTestData from './ant-model-test-data';
 import { copy } from 'copy-anything';
-import AntGridModeller from './ant-grid/ant-grid';
+import AntGridModeller from './ant-grid-modeller/ant-grid-modeller';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
