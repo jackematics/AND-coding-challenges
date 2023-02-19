@@ -1,14 +1,20 @@
+import { copy } from 'copy-anything';
 import { AntGridData } from '../types';
 import Ant from './ant';
 import Grid from './grid';
 
 export default class AntGridModeller {
+  private readonly initialState;
   private readonly ant: Ant;
   private readonly grid: Grid;
 
   public constructor(ant: Ant, grid: Grid) {
     this.ant = ant;
     this.grid = grid;
+    this.initialState = {
+      antData: copy(this.ant.getState()),
+      gridData: copy(this.grid.getState()),
+    };
   }
 
   public tick() {
@@ -70,5 +76,10 @@ export default class AntGridModeller {
       antData: this.ant.getState(),
       gridData: this.grid.getState(),
     };
+  }
+
+  reset() {
+    this.ant.reset(this.initialState.antData);
+    this.grid.reset(this.initialState.gridData);
   }
 }

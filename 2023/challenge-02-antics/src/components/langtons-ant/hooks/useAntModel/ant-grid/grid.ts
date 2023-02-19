@@ -1,6 +1,7 @@
 import Ant from './ant';
 import { Colour } from '../enums/enums';
 import { AntData, GridIndex } from '../types';
+import { copy } from 'copy-anything';
 
 export default class Grid {
   private grid: Colour[][];
@@ -41,5 +42,9 @@ export default class Grid {
 
   private createWhiteRow() {
     return Array.from({ length: this.grid[0].length }, (_) => Colour.White);
+  }
+
+  public reset(gridData: Colour[][]) {
+    this.grid = copy(gridData);
   }
 }

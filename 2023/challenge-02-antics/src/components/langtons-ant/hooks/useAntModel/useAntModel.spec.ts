@@ -381,4 +381,33 @@ describe('useAntModel', () => {
       });
     });
   });
+
+  describe('reset()', () => {
+    it('should reset the simulation', async () => {
+      const { result } = renderHook(() =>
+        useAntModel(
+          new AntGridModeller(
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
+            new Grid(copy(AntModelTestData.initialGrid))
+          )
+        )
+      );
+
+      act(() => result.current.start());
+      act(() => jest.advanceTimersByTime(tickTimeUnit));
+      act(() => result.current.stop());
+      act(() => result.current.reset());
+
+      await waitFor(() => {
+        expect(result.current.antGridData.antData.gridIndex.row).toBe(1);
+        expect(result.current.antGridData.antData.gridIndex.col).toBe(1);
+        expect(result.current.antGridData.gridData).toStrictEqual(
+          AntModelTestData.initialGrid
+        );
+      });
+    });
+  });
 });

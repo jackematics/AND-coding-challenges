@@ -1,3 +1,4 @@
+import { copy } from 'copy-anything';
 import { Colour } from '../enums/enums';
 import { AntData, GridIndex, Rotation } from '../types';
 
@@ -42,5 +43,10 @@ export default class Ant {
       180: { ...this.gridIndex, row: this.gridIndex.row + 1 },
       270: { ...this.gridIndex, col: this.gridIndex.col - 1 },
     }[this.rotation];
+  }
+
+  public reset(antData: AntData) {
+    this.gridIndex = copy(antData.gridIndex);
+    this.rotation = copy(antData.rotation);
   }
 }

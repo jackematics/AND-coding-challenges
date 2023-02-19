@@ -6,6 +6,7 @@ import { AntGridData } from './types';
 import AntGridModeller from './ant-grid/ant-grid';
 
 type AntModel = {
+  reset(): any;
   antGridData: AntGridData;
   start: () => void;
   stop: () => void;
@@ -27,6 +28,11 @@ const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
     clearInterval(tickIntervalRef.current as NodeJS.Timeout);
   };
 
+  const reset = () => {
+    antGridModeller.reset();
+    setAntGridData(antGridModeller.getState());
+  };
+
   useEffect(() => {
     if (playState === PlayState.Start) {
       tickIntervalRef.current = setInterval(() => {
@@ -40,7 +46,7 @@ const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
     setAntGridData(copy(antGridModeller.getState()));
   };
 
-  return { antGridData, start, stop };
+  return { antGridData, start, stop, reset };
 };
 
 export default useAntModel;
