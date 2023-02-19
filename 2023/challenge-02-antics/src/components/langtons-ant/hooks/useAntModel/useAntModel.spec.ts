@@ -184,25 +184,6 @@ describe('useAntModel', () => {
             );
           });
         });
-
-        // it('should move the ant to the correct cell on the newly created boundary', async () => {
-        //   const { result } = renderHook(() =>
-        //     useAntModel(
-        //       new Ant(
-        //         copy(AntModelTestData.antTopBoundaryGridIndex),
-        //         AntModelTestData.antTopBoundaryRotation
-        //       ),
-        //       new Grid(copy(AntModelTestData.initialGridWhiteCentre))
-        //     )
-        //   );
-
-        //   act(() => result.current.start());
-        //   act(() => jest.advanceTimersByTime(tickTimeUnit));
-
-        //   await waitFor(() => {
-        //     expect(result.current.antData.gridIndex.row).toBe(0);
-        //   });
-        // });
       });
     });
   });

@@ -1,5 +1,5 @@
 import { Colour } from '../enums/enums';
-import { GridIndex } from '../types';
+import { AntData, GridIndex } from '../types';
 
 export default class Grid {
   private readonly grid: Colour[][];
@@ -18,7 +18,13 @@ export default class Grid {
       squareColour === Colour.White ? Colour.Black : Colour.White;
   }
 
-  public expandTop() {
+  public expandIfAntPassingBoundary(antData: AntData) {
+    if (antData.rotation === 0 && antData.gridIndex.row === 0) {
+      this.expandTop();
+    }
+  }
+
+  private expandTop() {
     const whiteTopRow = Array.from(
       { length: this.grid[0].length },
       (_) => Colour.White

@@ -43,10 +43,7 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
       ]
     );
     grid.invertAntCellColour(ant.getState().gridIndex);
-
-    if (ant.getState().rotation === 0 && ant.getState().gridIndex.row === 0) {
-      grid.expandTop();
-    }
+    grid.expandIfAntPassingBoundary(ant.getState());
 
     ant.move();
 
