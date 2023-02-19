@@ -12,9 +12,9 @@ type AntModel = {
 };
 
 const useAntModel = (ant: Ant, grid: Grid): AntModel => {
-  const [playState, setPlayState] = useState<PlayState>(PlayState.Stop);
   const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [playState, setPlayState] = useState<PlayState>(PlayState.Stop);
   const [antData, setAntData] = useState<AntData>(ant.getState());
   const [gridData, setGridData] = useState<Colour[][]>(grid.getState());
 
@@ -32,7 +32,9 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
 
   const tick = () => {
     ant.changeDirection(
-      grid.getState()[antData.gridIndex.row][antData.gridIndex.col]
+      grid.getState()[ant.getState().gridIndex.row][
+        ant.getState().gridIndex.col
+      ]
     );
     grid.invertAntCellColour(ant.getState().gridIndex);
     ant.move();
