@@ -23,21 +23,7 @@ export default class Grid {
       squareColour === Colour.White ? Colour.Black : Colour.White;
   }
 
-  public expandIfAntPassingBoundary(ant: Ant) {
-    if (ant.getState().rotation === 0 && ant.getState().gridIndex.row === 0) {
-      this.expandTop();
-      ant.adjustToBoundaryExpansion({ row: +1, col: 0 });
-    }
-
-    if (
-      ant.getState().rotation === 90 &&
-      ant.getState().gridIndex.col === this.grid[0].length - 1
-    ) {
-      this.expandRight();
-    }
-  }
-
-  private expandTop() {
+  public expandTop() {
     const whiteTopRow = Array.from(
       { length: this.grid[0].length },
       (_) => Colour.White
@@ -45,7 +31,7 @@ export default class Grid {
     this.grid.splice(0, 0, whiteTopRow);
   }
 
-  private expandRight() {
+  public expandRight() {
     this.grid = this.grid.map((row) => [...row, Colour.White]);
   }
 }
