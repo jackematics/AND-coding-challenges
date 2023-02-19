@@ -2,7 +2,7 @@ import { Colour } from '../enums/enums';
 import { AntData, GridIndex } from '../types';
 
 export default class Grid {
-  private readonly grid: Colour[][];
+  private grid: Colour[][];
 
   constructor(grid: Colour[][]) {
     this.grid = grid;
@@ -26,6 +26,13 @@ export default class Grid {
     if (antData.rotation === 0 && antData.gridIndex.row === 0) {
       this.expandTop();
     }
+
+    if (
+      antData.rotation === 90 &&
+      antData.gridIndex.col === this.grid[0].length - 1
+    ) {
+      this.expandRight();
+    }
   }
 
   private expandTop() {
@@ -34,5 +41,9 @@ export default class Grid {
       (_) => Colour.White
     );
     this.grid.splice(0, 0, whiteTopRow);
+  }
+
+  private expandRight() {
+    this.grid = this.grid.map((row) => [...row, Colour.White]);
   }
 }

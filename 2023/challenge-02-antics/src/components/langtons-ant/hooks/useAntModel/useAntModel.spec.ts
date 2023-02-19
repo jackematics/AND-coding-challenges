@@ -19,7 +19,7 @@ describe('useAntModel', () => {
             copy(AntModelTestData.antInitialGridIndex),
             AntModelTestData.antInitialRotation
           ),
-          new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+          new Grid(copy(AntModelTestData.initialGrid))
         )
       );
 
@@ -45,12 +45,13 @@ describe('useAntModel', () => {
               copy(AntModelTestData.antInitialGridIndex),
               AntModelTestData.antInitialRotation
             ),
-            new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+            new Grid(copy(AntModelTestData.initialGrid))
           )
         );
 
         act(() => result.current.start());
         act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
 
         await waitFor(() => {
           expect(
@@ -68,12 +69,13 @@ describe('useAntModel', () => {
               copy(AntModelTestData.antInitialGridIndex),
               AntModelTestData.antInitialRotation
             ),
-            new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+            new Grid(copy(AntModelTestData.initialGrid))
           )
         );
 
         act(() => result.current.start());
         act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
 
         await waitFor(() => {
           expect(result.current.antData.rotation).toBe(270);
@@ -95,6 +97,7 @@ describe('useAntModel', () => {
 
         act(() => result.current.start());
         act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
 
         await waitFor(() => {
           expect(
@@ -118,6 +121,7 @@ describe('useAntModel', () => {
 
         act(() => result.current.start());
         act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
 
         await waitFor(() => {
           expect(result.current.antData.rotation).toBe(90);
@@ -132,12 +136,13 @@ describe('useAntModel', () => {
             copy(AntModelTestData.antInitialGridIndex),
             AntModelTestData.antInitialRotation
           ),
-          new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+          new Grid(copy(AntModelTestData.initialGrid))
         )
       );
 
       act(() => result.current.start());
       act(() => jest.advanceTimersByTime(tickTimeUnit));
+      act(() => result.current.stop());
 
       await waitFor(() => {
         expect(result.current.antData.gridIndex.row).toBe(1);
@@ -149,12 +154,13 @@ describe('useAntModel', () => {
       const { result } = renderHook(() =>
         useAntModel(
           new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
-          new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+          new Grid(copy(AntModelTestData.initialGrid))
         )
       );
 
       act(() => result.current.start());
       act(() => jest.advanceTimersByTime(tickTimeUnit * 2));
+      act(() => result.current.stop());
 
       await waitFor(() => {
         expect(result.current.antData.gridIndex.row).toBe(2);
@@ -163,26 +169,47 @@ describe('useAntModel', () => {
     });
 
     describe('when the ant is about to cross a grid boundary', () => {
-      describe('top boundary', () => {
-        it('should add an extra row of white cells at the top boundary', async () => {
-          const { result } = renderHook(() =>
-            useAntModel(
-              new Ant(
-                copy(AntModelTestData.antTopBoundaryGridIndex),
-                AntModelTestData.antTopBoundaryRotation
-              ),
-              new Grid(copy(AntModelTestData.initialGridWhiteCentre))
-            )
+      it('should add an extra row of white cells at the top boundary', async () => {
+        const { result } = renderHook(() =>
+          useAntModel(
+            new Ant(
+              copy(AntModelTestData.antTopBoundaryGridIndex),
+              AntModelTestData.antTopBoundaryRotation
+            ),
+            new Grid(copy(AntModelTestData.initialGrid))
+          )
+        );
+
+        act(() => result.current.start());
+        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
+
+        await waitFor(() => {
+          expect(result.current.gridData).toStrictEqual(
+            AntModelTestData.gridTopBoundaryAdded
           );
+        });
+      });
 
-          act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+      it('should add an extra column of white cells at the right boundary', async () => {
+        const { result } = renderHook(() =>
+          useAntModel(
+            new Ant(
+              copy(AntModelTestData.antRightBoundaryGridIndex),
+              AntModelTestData.antRightBoundaryRotation
+            ),
+            new Grid(copy(AntModelTestData.initialGrid))
+          )
+        );
 
-          await waitFor(() => {
-            expect(result.current.gridData).toStrictEqual(
-              AntModelTestData.gridTopBoundaryAdded
-            );
-          });
+        act(() => result.current.start());
+        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => result.current.stop());
+
+        await waitFor(() => {
+          expect(result.current.gridData).toStrictEqual(
+            AntModelTestData.gridRightBoundaryAdded
+          );
         });
       });
     });
