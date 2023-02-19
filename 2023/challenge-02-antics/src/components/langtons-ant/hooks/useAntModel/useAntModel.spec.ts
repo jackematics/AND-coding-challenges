@@ -46,23 +46,6 @@ describe('useAntModel', () => {
           expect(result.current.antData.rotation).toBe(270);
         });
       });
-
-      it('should move the ant one cell in the rotated direction', async () => {
-        const { result } = renderHook(() =>
-          useAntModel(
-            new Ant({ ...AntModelTestData.antInitialGridIndex }, 0),
-            new Grid({ ...AntModelTestData.initialGridWhiteCentre })
-          )
-        );
-
-        act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(250));
-
-        await waitFor(() => {
-          expect(result.current.antData.gridIndex.row).toBe(1);
-          expect(result.current.antData.gridIndex.col).toBe(0);
-        });
-      });
     });
 
     describe('when the ant cell is initially black', () => {
@@ -100,6 +83,23 @@ describe('useAntModel', () => {
         await waitFor(() => {
           expect(result.current.antData.rotation).toBe(90);
         });
+      });
+    });
+
+    it('should move the ant one cell in the rotated direction', async () => {
+      const { result } = renderHook(() =>
+        useAntModel(
+          new Ant({ ...AntModelTestData.antInitialGridIndex }, 0),
+          new Grid({ ...AntModelTestData.initialGridWhiteCentre })
+        )
+      );
+
+      act(() => result.current.start());
+      act(() => jest.advanceTimersByTime(250));
+
+      await waitFor(() => {
+        expect(result.current.antData.gridIndex.row).toBe(1);
+        expect(result.current.antData.gridIndex.col).toBe(0);
       });
     });
   });

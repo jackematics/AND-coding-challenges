@@ -4,7 +4,7 @@ import { AntData, GridIndex, Rotation } from './types';
 const rotations: Rotation[] = [0, 90, 180, 270];
 
 export default class Ant {
-  private readonly gridIndex: GridIndex;
+  private gridIndex: GridIndex;
   private rotation: Rotation;
 
   constructor(gridIndex: GridIndex, rotation: Rotation) {
@@ -31,25 +31,11 @@ export default class Ant {
   }
 
   public move(): void {
-    switch (this.rotation) {
-      case 0:
-        this.gridIndex.row--;
-        break;
-
-      case 90:
-        this.gridIndex.col++;
-        break;
-
-      case 180:
-        this.gridIndex.row++;
-        break;
-
-      case 270:
-        this.gridIndex.col--;
-        break;
-
-      default:
-        throw new Error('invalid rotation');
-    }
+    this.gridIndex = {
+      0: { ...this.gridIndex, row: this.gridIndex.row - 1 },
+      90: { ...this.gridIndex, col: this.gridIndex.col + 1 },
+      180: { ...this.gridIndex, row: this.gridIndex.row + 1 },
+      270: { ...this.gridIndex, col: this.gridIndex.col - 1 },
+    }[this.rotation];
   }
 }
