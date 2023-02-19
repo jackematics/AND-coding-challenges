@@ -11,6 +11,31 @@ jest.spyOn(global, 'setInterval');
 const tickTimeUnit = 250;
 
 describe('useAntModel', () => {
+  describe('stop()', () => {
+    it('should stop the simulation', async () => {
+      const { result } = renderHook(() =>
+        useAntModel(
+          new Ant(
+            copy(AntModelTestData.antInitialGridIndex),
+            AntModelTestData.antInitialRotation
+          ),
+          new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+        )
+      );
+
+      act(() => result.current.start());
+      act(() => jest.advanceTimersByTime(tickTimeUnit));
+
+      act(() => result.current.stop());
+      act(() => jest.advanceTimersByTime(500));
+
+      await waitFor(() => {
+        expect(result.current.antData.gridIndex.row).toBe(1);
+        expect(result.current.antData.gridIndex.col).toBe(0);
+      });
+    });
+  });
+
   describe('start()', () => {
     describe('when ant cell is initially white', () => {
       it('should turn the ant current cell black', async () => {
@@ -159,6 +184,25 @@ describe('useAntModel', () => {
             );
           });
         });
+
+        // it('should move the ant to the correct cell on the newly created boundary', async () => {
+        //   const { result } = renderHook(() =>
+        //     useAntModel(
+        //       new Ant(
+        //         copy(AntModelTestData.antTopBoundaryGridIndex),
+        //         AntModelTestData.antTopBoundaryRotation
+        //       ),
+        //       new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+        //     )
+        //   );
+
+        //   act(() => result.current.start());
+        //   act(() => jest.advanceTimersByTime(tickTimeUnit));
+
+        //   await waitFor(() => {
+        //     expect(result.current.antData.gridIndex.row).toBe(0);
+        //   });
+        // });
       });
     });
   });

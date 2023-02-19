@@ -24,6 +24,10 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
     setPlayState(PlayState.Start);
   };
 
+  const stop = () => {
+    clearInterval(tickIntervalRef.current as NodeJS.Timeout);
+  };
+
   useEffect(() => {
     if (playState === PlayState.Start) {
       tickIntervalRef.current = setInterval(() => {
