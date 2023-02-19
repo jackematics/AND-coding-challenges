@@ -78,7 +78,7 @@ export default class AntGridModeller {
     };
   }
 
-  reset() {
+  public reset() {
     this.ant.reset(this.initialState.antData);
     this.grid.reset(this.initialState.gridData);
   }
