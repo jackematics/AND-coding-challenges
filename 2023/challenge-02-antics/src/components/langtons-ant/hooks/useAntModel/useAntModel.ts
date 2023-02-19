@@ -6,10 +6,11 @@ import { AntGridData } from './types';
 import AntGridModeller from './ant-grid/ant-grid';
 
 type AntModel = {
-  reset(): any;
   antGridData: AntGridData;
+  playState: PlayState;
   start: () => void;
   stop: () => void;
+  reset(): void;
 };
 
 const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
@@ -46,7 +47,7 @@ const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
     setAntGridData(copy(antGridModeller.getState()));
   };
 
-  return { antGridData, start, stop, reset };
+  return { antGridData, playState, start, stop, reset };
 };
 
 export default useAntModel;
