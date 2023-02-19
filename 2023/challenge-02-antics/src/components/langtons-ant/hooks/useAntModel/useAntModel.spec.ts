@@ -169,25 +169,48 @@ describe('useAntModel', () => {
     });
 
     describe('when the ant is about to cross a grid boundary', () => {
-      it('should add an extra row of white cells at the top boundary', async () => {
-        const { result } = renderHook(() =>
-          useAntModel(
-            new Ant(
-              copy(AntModelTestData.antTopBoundaryGridIndex),
-              AntModelTestData.antTopBoundaryRotation
-            ),
-            new Grid(copy(AntModelTestData.initialGrid))
-          )
-        );
-
-        act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(tickTimeUnit));
-        act(() => result.current.stop());
-
-        await waitFor(() => {
-          expect(result.current.gridData).toStrictEqual(
-            AntModelTestData.gridTopBoundaryAdded
+      describe('top boundary', () => {
+        it('should add an extra row of white cells at the top boundary', async () => {
+          const { result } = renderHook(() =>
+            useAntModel(
+              new Ant(
+                copy(AntModelTestData.antTopBoundaryGridIndex),
+                AntModelTestData.antTopBoundaryRotation
+              ),
+              new Grid(copy(AntModelTestData.initialGrid))
+            )
           );
+
+          act(() => result.current.start());
+          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => result.current.stop());
+
+          await waitFor(() => {
+            expect(result.current.gridData).toStrictEqual(
+              AntModelTestData.gridTopBoundaryAdded
+            );
+          });
+        });
+
+        it('should adjust the ant grid index accordingly', async () => {
+          const { result } = renderHook(() =>
+            useAntModel(
+              new Ant(
+                copy(AntModelTestData.antTopBoundaryGridIndex),
+                AntModelTestData.antTopBoundaryRotation
+              ),
+              new Grid(copy(AntModelTestData.initialGrid))
+            )
+          );
+
+          act(() => result.current.start());
+          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => result.current.stop());
+
+          await waitFor(() => {
+            expect(result.current.antData.gridIndex.row).toBe(0);
+            expect(result.current.antData.gridIndex.col).toBe(1);
+          });
         });
       });
 

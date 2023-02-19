@@ -30,6 +30,11 @@ export default class Ant {
         : rotations[nextIndexClockwise];
   }
 
+  public adjustToBoundaryExpansion(adjustmentAmount: GridIndex) {
+    this.gridIndex.row += adjustmentAmount.row;
+    this.gridIndex.col += adjustmentAmount.col;
+  }
+
   public move(): void {
     this.gridIndex = {
       0: { ...this.gridIndex, row: this.gridIndex.row - 1 },

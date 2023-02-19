@@ -1,3 +1,4 @@
+import Ant from '../ant';
 import { Colour } from '../enums/enums';
 import { AntData, GridIndex } from '../types';
 
@@ -22,14 +23,15 @@ export default class Grid {
       squareColour === Colour.White ? Colour.Black : Colour.White;
   }
 
-  public expandIfAntPassingBoundary(antData: AntData) {
-    if (antData.rotation === 0 && antData.gridIndex.row === 0) {
+  public expandIfAntPassingBoundary(ant: Ant) {
+    if (ant.getState().rotation === 0 && ant.getState().gridIndex.row === 0) {
       this.expandTop();
+      ant.adjustToBoundaryExpansion({ row: +1, col: 0 });
     }
 
     if (
-      antData.rotation === 90 &&
-      antData.gridIndex.col === this.grid[0].length - 1
+      ant.getState().rotation === 90 &&
+      ant.getState().gridIndex.col === this.grid[0].length - 1
     ) {
       this.expandRight();
     }
