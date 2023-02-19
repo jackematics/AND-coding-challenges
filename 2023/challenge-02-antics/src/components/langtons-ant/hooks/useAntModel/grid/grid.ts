@@ -12,6 +12,10 @@ export default class Grid {
     return this.grid;
   }
 
+  public getColourAtIndex(gridIndex: GridIndex): Colour {
+    return this.grid[gridIndex.row][gridIndex.col];
+  }
+
   public invertAntCellColour(index: GridIndex): void {
     const squareColour = this.grid[index.row][index.col];
     this.grid[index.row][index.col] =

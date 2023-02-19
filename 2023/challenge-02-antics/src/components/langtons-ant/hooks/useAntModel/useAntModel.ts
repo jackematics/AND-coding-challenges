@@ -37,14 +37,9 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
   }, [playState]);
 
   const tick = () => {
-    ant.changeDirection(
-      grid.getState()[ant.getState().gridIndex.row][
-        ant.getState().gridIndex.col
-      ]
-    );
+    ant.changeDirection(grid.getColourAtIndex(ant.getState().gridIndex));
     grid.invertAntCellColour(ant.getState().gridIndex);
     grid.expandIfAntPassingBoundary(ant.getState());
-
     ant.move();
 
     setAntData(copy(ant.getState()));
