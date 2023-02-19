@@ -34,7 +34,7 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
     ant.changeDirection(
       grid.getState()[antData.gridIndex.row][antData.gridIndex.col]
     );
-    grid.flipAntSquare(ant.getState().gridIndex);
+    grid.invertAntCellColour(ant.getState().gridIndex);
     ant.move();
 
     setAntData({ ...ant.getState() });
