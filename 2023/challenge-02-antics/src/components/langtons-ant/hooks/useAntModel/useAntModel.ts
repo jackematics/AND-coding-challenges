@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import Ant from './ant';
+import { copy } from 'copy-anything';
+
 import { Colour, PlayState } from './enums/enums';
+import Ant from './ant';
 import Grid from './grid/grid';
 import { AntData } from './types';
 
@@ -37,10 +39,15 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
       ]
     );
     grid.invertAntCellColour(ant.getState().gridIndex);
+
+    if (ant.getState().rotation === 0 && ant.getState().gridIndex.row === 0) {
+      grid.expandTop();
+    }
+
     ant.move();
 
-    setAntData({ ...ant.getState() });
-    setGridData({ ...grid.getState() });
+    setAntData(copy(ant.getState()));
+    setGridData(copy(grid.getState()));
   };
 
   return { antData, gridData, start, stop };

@@ -17,4 +17,12 @@ export default class Grid {
     this.grid[index.row][index.col] =
       squareColour === Colour.White ? Colour.Black : Colour.White;
   }
+
+  public expandTop() {
+    const whiteTopRow = Array.from(
+      { length: this.grid[0].length },
+      (_) => Colour.White
+    );
+    this.grid.splice(0, 0, whiteTopRow);
+  }
 }

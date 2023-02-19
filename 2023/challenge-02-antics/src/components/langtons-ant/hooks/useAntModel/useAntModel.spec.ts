@@ -16,7 +16,10 @@ describe('useAntModel', () => {
       it('should turn the ant current cell black', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
             new Grid(copy(AntModelTestData.initialGridWhiteCentre))
           )
         );
@@ -36,7 +39,10 @@ describe('useAntModel', () => {
       it('should turn the ant 90 degrees anticlockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
             new Grid(copy(AntModelTestData.initialGridWhiteCentre))
           )
         );
@@ -54,7 +60,10 @@ describe('useAntModel', () => {
       it('should turn the ant current cell white', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
             new Grid(copy(AntModelTestData.initialGridBlackCentre))
           )
         );
@@ -74,7 +83,10 @@ describe('useAntModel', () => {
       it('should turn the ant 90 degrees clockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
             new Grid(copy(AntModelTestData.initialGridBlackCentre))
           )
         );
@@ -91,7 +103,10 @@ describe('useAntModel', () => {
     it('should move the ant one cell in the rotated direction', async () => {
       const { result } = renderHook(() =>
         useAntModel(
-          new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
+          new Ant(
+            copy(AntModelTestData.antInitialGridIndex),
+            AntModelTestData.antInitialRotation
+          ),
           new Grid(copy(AntModelTestData.initialGridWhiteCentre))
         )
       );
@@ -119,6 +134,31 @@ describe('useAntModel', () => {
       await waitFor(() => {
         expect(result.current.antData.gridIndex.row).toBe(2);
         expect(result.current.antData.gridIndex.col).toBe(0);
+      });
+    });
+
+    describe('when the ant is about to cross a grid boundary', () => {
+      describe('top boundary', () => {
+        it('should add an extra row of white cells at the top boundary', async () => {
+          const { result } = renderHook(() =>
+            useAntModel(
+              new Ant(
+                copy(AntModelTestData.antTopBoundaryGridIndex),
+                AntModelTestData.antTopBoundaryRotation
+              ),
+              new Grid(copy(AntModelTestData.initialGridWhiteCentre))
+            )
+          );
+
+          act(() => result.current.start());
+          act(() => jest.advanceTimersByTime(tickTimeUnit));
+
+          await waitFor(() => {
+            expect(result.current.gridData).toStrictEqual(
+              AntModelTestData.gridTopBoundaryAdded
+            );
+          });
+        });
       });
     });
   });
