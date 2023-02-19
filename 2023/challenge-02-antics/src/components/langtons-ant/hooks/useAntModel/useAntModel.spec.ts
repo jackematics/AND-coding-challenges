@@ -12,33 +12,6 @@ jest.spyOn(global, 'setInterval');
 const tickTimeUnit = 250;
 
 describe('useAntModel', () => {
-  describe('stop()', () => {
-    it('should stop the simulation', async () => {
-      const { result } = renderHook(() =>
-        useAntModel(
-          new AntGridModeller(
-            new Ant(
-              copy(AntModelTestData.antInitialGridIndex),
-              AntModelTestData.antInitialRotation
-            ),
-            new Grid(copy(AntModelTestData.initialGrid))
-          )
-        )
-      );
-
-      act(() => result.current.start());
-      act(() => jest.advanceTimersByTime(tickTimeUnit));
-
-      act(() => result.current.stop());
-      act(() => jest.advanceTimersByTime(500));
-
-      await waitFor(() => {
-        expect(result.current.antGridData.antData.gridIndex.row).toBe(1);
-        expect(result.current.antGridData.antData.gridIndex.col).toBe(0);
-      });
-    });
-  });
-
   describe('start()', () => {
     describe('when ant cell is initially white', () => {
       it('should turn the ant current cell black', async () => {
@@ -378,6 +351,33 @@ describe('useAntModel', () => {
             expect(result.current.antGridData.antData.gridIndex.col).toBe(0);
           });
         });
+      });
+    });
+  });
+
+  describe('stop()', () => {
+    it('should stop the simulation', async () => {
+      const { result } = renderHook(() =>
+        useAntModel(
+          new AntGridModeller(
+            new Ant(
+              copy(AntModelTestData.antInitialGridIndex),
+              AntModelTestData.antInitialRotation
+            ),
+            new Grid(copy(AntModelTestData.initialGrid))
+          )
+        )
+      );
+
+      act(() => result.current.start());
+      act(() => jest.advanceTimersByTime(tickTimeUnit));
+
+      act(() => result.current.stop());
+      act(() => jest.advanceTimersByTime(500));
+
+      await waitFor(() => {
+        expect(result.current.antGridData.antData.gridIndex.row).toBe(1);
+        expect(result.current.antGridData.antData.gridIndex.col).toBe(0);
       });
     });
   });
