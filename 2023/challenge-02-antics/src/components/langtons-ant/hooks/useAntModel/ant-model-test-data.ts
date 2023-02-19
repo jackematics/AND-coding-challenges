@@ -39,4 +39,12 @@ export default class AntModelTestData {
     [Colour.White, Colour.Black, Colour.White],
     [Colour.White, Colour.White, Colour.White],
   ];
+
+  public static readonly antLeftBoundaryGridIndex = { row: 1, col: 0 };
+  public static readonly antLeftBoundaryRotation = 0;
+  public static readonly gridLeftBoundaryAdded = [
+    [Colour.White, Colour.White, Colour.White, Colour.White],
+    [Colour.White, Colour.Black, Colour.White, Colour.White],
+    [Colour.White, Colour.White, Colour.White, Colour.White],
+  ];
 }

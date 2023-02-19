@@ -35,6 +35,10 @@ export default class Grid {
     this.grid.push(this.createWhiteRow());
   }
 
+  public expandLeft() {
+    this.grid = this.grid.map((row) => [Colour.White, ...row]);
+  }
+
   private createWhiteRow() {
     return Array.from({ length: this.grid[0].length }, (_) => Colour.White);
   }

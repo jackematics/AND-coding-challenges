@@ -330,6 +330,55 @@ describe('useAntModel', () => {
           });
         });
       });
+
+      describe('left boundary', () => {
+        it('should add an extra column of white cells at the left boundary', async () => {
+          const { result } = renderHook(() =>
+            useAntModel(
+              new AntGridModeller(
+                new Ant(
+                  copy(AntModelTestData.antLeftBoundaryGridIndex),
+                  AntModelTestData.antLeftBoundaryRotation
+                ),
+                new Grid(copy(AntModelTestData.initialGrid))
+              )
+            )
+          );
+
+          act(() => result.current.start());
+          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => result.current.stop());
+
+          await waitFor(() => {
+            expect(result.current.antGridData.gridData).toStrictEqual(
+              AntModelTestData.gridLeftBoundaryAdded
+            );
+          });
+        });
+
+        // it('should adjust the ant grid index accordingly', async () => {
+        //   const { result } = renderHook(() =>
+        //     useAntModel(
+        //       new AntGridModeller(
+        //         new Ant(
+        //           copy(AntModelTestData.antRightBoundaryGridIndex),
+        //           AntModelTestData.antRightBoundaryRotation
+        //         ),
+        //         new Grid(copy(AntModelTestData.initialGrid))
+        //       )
+        //     )
+        //   );
+
+        //   act(() => result.current.start());
+        //   act(() => jest.advanceTimersByTime(tickTimeUnit));
+        //   act(() => result.current.stop());
+
+        //   await waitFor(() => {
+        //     expect(result.current.antGridData.antData.gridIndex.row).toBe(1);
+        //     expect(result.current.antGridData.antData.gridIndex.col).toBe(3);
+        //   });
+        // });
+      });
     });
   });
 });

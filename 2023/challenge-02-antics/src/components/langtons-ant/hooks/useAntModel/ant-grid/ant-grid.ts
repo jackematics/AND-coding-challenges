@@ -24,6 +24,7 @@ export default class AntGridModeller {
     this.expandGridIfAntPassingTop();
     this.expandGridIfAntPassingRight();
     this.expandGridIfAntPassingBottom();
+    this.expandGridIfAntPassingLeft();
   }
 
   private expandGridIfAntPassingTop() {
@@ -51,6 +52,15 @@ export default class AntGridModeller {
       this.ant.getState().gridIndex.row === this.grid.getState().length - 1
     ) {
       this.grid.expandBottom();
+    }
+  }
+
+  private expandGridIfAntPassingLeft() {
+    if (
+      this.ant.getState().rotation === 270 &&
+      this.ant.getState().gridIndex.col === 0
+    ) {
+      this.grid.expandLeft();
     }
   }
 
