@@ -9,7 +9,8 @@ import AntGridModeller from './ant-grid-modeller/ant-grid-modeller';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
-const tickTimeUnit = 250;
+
+const TICK_INTERVAL = 250;
 
 describe('useAntModel', () => {
   describe('start()', () => {
@@ -23,12 +24,13 @@ describe('useAntModel', () => {
                 AntModelTestData.antInitialRotation
               ),
               new Grid(copy(AntModelTestData.initialGrid))
-            )
+            ),
+            TICK_INTERVAL
           )
         );
 
         act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => jest.advanceTimersByTime(TICK_INTERVAL));
         act(() => result.current.stop());
 
         await waitFor(() => {
@@ -49,12 +51,13 @@ describe('useAntModel', () => {
                 AntModelTestData.antInitialRotation
               ),
               new Grid(copy(AntModelTestData.initialGrid))
-            )
+            ),
+            TICK_INTERVAL
           )
         );
 
         act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => jest.advanceTimersByTime(TICK_INTERVAL));
         act(() => result.current.stop());
 
         await waitFor(() => {
@@ -73,12 +76,13 @@ describe('useAntModel', () => {
                 AntModelTestData.antInitialRotation
               ),
               new Grid(copy(AntModelTestData.initialGridBlackCentre))
-            )
+            ),
+            TICK_INTERVAL
           )
         );
 
         act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => jest.advanceTimersByTime(TICK_INTERVAL));
         act(() => result.current.stop());
 
         await waitFor(() => {
@@ -99,12 +103,13 @@ describe('useAntModel', () => {
                 AntModelTestData.antInitialRotation
               ),
               new Grid(copy(AntModelTestData.initialGridBlackCentre))
-            )
+            ),
+            TICK_INTERVAL
           )
         );
 
         act(() => result.current.start());
-        act(() => jest.advanceTimersByTime(tickTimeUnit));
+        act(() => jest.advanceTimersByTime(TICK_INTERVAL));
         act(() => result.current.stop());
 
         await waitFor(() => {
@@ -122,12 +127,13 @@ describe('useAntModel', () => {
               AntModelTestData.antInitialRotation
             ),
             new Grid(copy(AntModelTestData.initialGrid))
-          )
+          ),
+          TICK_INTERVAL
         )
       );
 
       act(() => result.current.start());
-      act(() => jest.advanceTimersByTime(tickTimeUnit));
+      act(() => jest.advanceTimersByTime(TICK_INTERVAL));
       act(() => result.current.stop());
 
       await waitFor(() => {
@@ -142,12 +148,13 @@ describe('useAntModel', () => {
           new AntGridModeller(
             new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
             new Grid(copy(AntModelTestData.initialGrid))
-          )
+          ),
+          TICK_INTERVAL
         )
       );
 
       act(() => result.current.start());
-      act(() => jest.advanceTimersByTime(tickTimeUnit * 2));
+      act(() => jest.advanceTimersByTime(TICK_INTERVAL * 2));
       act(() => result.current.stop());
 
       await waitFor(() => {
@@ -167,12 +174,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antTopBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -191,12 +199,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antTopBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -216,12 +225,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antRightBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -240,12 +250,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antRightBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -265,12 +276,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antBottomBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -289,12 +301,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antBottomBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -314,12 +327,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antLeftBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -338,12 +352,13 @@ describe('useAntModel', () => {
                   AntModelTestData.antLeftBoundaryRotation
                 ),
                 new Grid(copy(AntModelTestData.initialGrid))
-              )
+              ),
+              TICK_INTERVAL
             )
           );
 
           act(() => result.current.start());
-          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => jest.advanceTimersByTime(TICK_INTERVAL));
           act(() => result.current.stop());
 
           await waitFor(() => {
@@ -365,12 +380,13 @@ describe('useAntModel', () => {
               AntModelTestData.antInitialRotation
             ),
             new Grid(copy(AntModelTestData.initialGrid))
-          )
+          ),
+          TICK_INTERVAL
         )
       );
 
       act(() => result.current.start());
-      act(() => jest.advanceTimersByTime(tickTimeUnit));
+      act(() => jest.advanceTimersByTime(TICK_INTERVAL));
 
       act(() => result.current.stop());
       act(() => jest.advanceTimersByTime(500));
@@ -392,12 +408,13 @@ describe('useAntModel', () => {
               AntModelTestData.antInitialRotation
             ),
             new Grid(copy(AntModelTestData.initialGrid))
-          )
+          ),
+          TICK_INTERVAL
         )
       );
 
       act(() => result.current.start());
-      act(() => jest.advanceTimersByTime(tickTimeUnit));
+      act(() => jest.advanceTimersByTime(TICK_INTERVAL));
       act(() => result.current.stop());
       act(() => result.current.reset());
 

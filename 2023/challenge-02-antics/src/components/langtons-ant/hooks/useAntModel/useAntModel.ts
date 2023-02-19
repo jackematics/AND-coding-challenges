@@ -13,7 +13,10 @@ type AntModel = {
   reset(): void;
 };
 
-const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
+const useAntModel = (
+  antGridModeller: AntGridModeller,
+  tickInterval: number
+): AntModel => {
   const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [playState, setPlayState] = useState<PlayState>(PlayState.Stop);
@@ -27,6 +30,7 @@ const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
 
   const stop = () => {
     clearInterval(tickIntervalRef.current as NodeJS.Timeout);
+    setPlayState(PlayState.Stop);
   };
 
   const reset = () => {
@@ -38,7 +42,7 @@ const useAntModel = (antGridModeller: AntGridModeller): AntModel => {
     if (playState === PlayState.Start) {
       tickIntervalRef.current = setInterval(() => {
         tick();
-      }, 250);
+      }, tickInterval);
     }
   }, [playState]);
 
