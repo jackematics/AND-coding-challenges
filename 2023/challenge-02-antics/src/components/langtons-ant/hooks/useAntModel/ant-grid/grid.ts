@@ -24,14 +24,18 @@ export default class Grid {
   }
 
   public expandTop() {
-    const whiteTopRow = Array.from(
-      { length: this.grid[0].length },
-      (_) => Colour.White
-    );
-    this.grid.splice(0, 0, whiteTopRow);
+    this.grid.splice(0, 0, this.createWhiteRow());
   }
 
   public expandRight() {
     this.grid = this.grid.map((row) => [...row, Colour.White]);
+  }
+
+  public expandBottom() {
+    this.grid.push(this.createWhiteRow());
+  }
+
+  private createWhiteRow() {
+    return Array.from({ length: this.grid[0].length }, (_) => Colour.White);
   }
 }
