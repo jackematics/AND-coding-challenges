@@ -1,6 +1,6 @@
 # Langton's Ant
 
-My solution to the Langton's Ant coding challenge completed in typescript with all stretch goals completed (if you count typescript as a unique framework? There was nothing in the requirements that says it isn't ;)).
+My solution to the Langton's Ant coding challenge completed in typescript with all stretch goals completed (if you count typescript as a unique framework? There was nothing in the requirements that says it isn't :stuck_out_tongue_winking_eye:).
 
 Really enjoyed this one, it was a good opportunity to try out a new approach to TDD in React by separating the logic in a custom hook and testing that, its return value acting like a backend api contract. Then I would only have html, css and some styling logic in the frontend. The component itself was not tested because it seemed incredibly awkward and the hook tests covered the most important functionality.
 
