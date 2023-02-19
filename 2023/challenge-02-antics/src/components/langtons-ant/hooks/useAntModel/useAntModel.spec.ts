@@ -5,7 +5,7 @@ import Ant from './ant-grid/ant';
 import Grid from './ant-grid/grid';
 import AntModelTestData from './ant-model-test-data';
 import { copy } from 'copy-anything';
-import AntGrid from './ant-grid/ant-grid';
+import AntGridModeller from './ant-grid/ant-grid';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
@@ -16,7 +16,7 @@ describe('useAntModel', () => {
     it('should stop the simulation', async () => {
       const { result } = renderHook(() =>
         useAntModel(
-          new AntGrid(
+          new AntGridModeller(
             new Ant(
               copy(AntModelTestData.antInitialGridIndex),
               AntModelTestData.antInitialRotation
@@ -44,7 +44,7 @@ describe('useAntModel', () => {
       it('should turn the ant current cell black', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new AntGrid(
+            new AntGridModeller(
               new Ant(
                 copy(AntModelTestData.antInitialGridIndex),
                 AntModelTestData.antInitialRotation
@@ -70,7 +70,7 @@ describe('useAntModel', () => {
       it('should turn the ant 90 degrees anticlockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new AntGrid(
+            new AntGridModeller(
               new Ant(
                 copy(AntModelTestData.antInitialGridIndex),
                 AntModelTestData.antInitialRotation
@@ -94,7 +94,7 @@ describe('useAntModel', () => {
       it('should turn the ant current cell white', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new AntGrid(
+            new AntGridModeller(
               new Ant(
                 copy(AntModelTestData.antInitialGridIndex),
                 AntModelTestData.antInitialRotation
@@ -120,7 +120,7 @@ describe('useAntModel', () => {
       it('should turn the ant 90 degrees clockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new AntGrid(
+            new AntGridModeller(
               new Ant(
                 copy(AntModelTestData.antInitialGridIndex),
                 AntModelTestData.antInitialRotation
@@ -143,7 +143,7 @@ describe('useAntModel', () => {
     it('should move the ant one cell in the rotated direction', async () => {
       const { result } = renderHook(() =>
         useAntModel(
-          new AntGrid(
+          new AntGridModeller(
             new Ant(
               copy(AntModelTestData.antInitialGridIndex),
               AntModelTestData.antInitialRotation
@@ -166,7 +166,7 @@ describe('useAntModel', () => {
     it('should move the one cell left then one cell down after two ticks', async () => {
       const { result } = renderHook(() =>
         useAntModel(
-          new AntGrid(
+          new AntGridModeller(
             new Ant(copy(AntModelTestData.antInitialGridIndex), 0),
             new Grid(copy(AntModelTestData.initialGrid))
           )
@@ -188,7 +188,7 @@ describe('useAntModel', () => {
         it('should add an extra row of white cells at the top boundary', async () => {
           const { result } = renderHook(() =>
             useAntModel(
-              new AntGrid(
+              new AntGridModeller(
                 new Ant(
                   copy(AntModelTestData.antTopBoundaryGridIndex),
                   AntModelTestData.antTopBoundaryRotation
@@ -212,7 +212,7 @@ describe('useAntModel', () => {
         it('should adjust the ant grid index accordingly', async () => {
           const { result } = renderHook(() =>
             useAntModel(
-              new AntGrid(
+              new AntGridModeller(
                 new Ant(
                   copy(AntModelTestData.antTopBoundaryGridIndex),
                   AntModelTestData.antTopBoundaryRotation
@@ -236,7 +236,7 @@ describe('useAntModel', () => {
       it('should add an extra column of white cells at the right boundary', async () => {
         const { result } = renderHook(() =>
           useAntModel(
-            new AntGrid(
+            new AntGridModeller(
               new Ant(
                 copy(AntModelTestData.antRightBoundaryGridIndex),
                 AntModelTestData.antRightBoundaryRotation

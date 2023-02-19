@@ -2,7 +2,7 @@ import { AntGridData } from '../types';
 import Ant from './ant';
 import Grid from './grid';
 
-export default class AntGrid {
+export default class AntGridModeller {
   private readonly ant: Ant;
   private readonly grid: Grid;
 
@@ -21,6 +21,11 @@ export default class AntGrid {
   }
 
   private expandGridIfAntPassingBoundary() {
+    this.expandGridIfAntPassingTop();
+    this.expandGridIfAntPassingRight();
+  }
+
+  private expandGridIfAntPassingTop() {
     if (
       this.ant.getState().rotation === 0 &&
       this.ant.getState().gridIndex.row === 0
@@ -28,7 +33,9 @@ export default class AntGrid {
       this.grid.expandTop();
       this.ant.adjustToBoundaryExpansion({ row: +1, col: 0 });
     }
+  }
 
+  private expandGridIfAntPassingRight() {
     if (
       this.ant.getState().rotation === 90 &&
       this.ant.getState().gridIndex.col === this.grid.getState()[0].length - 1

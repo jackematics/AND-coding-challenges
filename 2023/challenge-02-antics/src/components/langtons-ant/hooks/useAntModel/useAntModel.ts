@@ -3,7 +3,7 @@ import { copy } from 'copy-anything';
 
 import { PlayState } from './enums/enums';
 import { AntGridData } from './types';
-import AntGrid from './ant-grid/ant-grid';
+import AntGridModeller from './ant-grid/ant-grid';
 
 type AntModel = {
   antGridData: AntGridData;
@@ -11,7 +11,7 @@ type AntModel = {
   stop: () => void;
 };
 
-const useAntModel = (antGrid: AntGrid): AntModel => {
+const useAntModel = (antGrid: AntGridModeller): AntModel => {
   const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [playState, setPlayState] = useState<PlayState>(PlayState.Stop);
