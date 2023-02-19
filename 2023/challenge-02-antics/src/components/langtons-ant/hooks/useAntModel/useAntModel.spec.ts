@@ -307,28 +307,28 @@ describe('useAntModel', () => {
           });
         });
 
-        // it('should adjust the ant grid index accordingly', async () => {
-        //   const { result } = renderHook(() =>
-        //     useAntModel(
-        //       new AntGridModeller(
-        //         new Ant(
-        //           copy(AntModelTestData.antTopBoundaryGridIndex),
-        //           AntModelTestData.antTopBoundaryRotation
-        //         ),
-        //         new Grid(copy(AntModelTestData.initialGrid))
-        //       )
-        //     )
-        //   );
+        it('should adjust the ant grid index accordingly', async () => {
+          const { result } = renderHook(() =>
+            useAntModel(
+              new AntGridModeller(
+                new Ant(
+                  copy(AntModelTestData.antBottomBoundaryGridIndex),
+                  AntModelTestData.antBottomBoundaryRotation
+                ),
+                new Grid(copy(AntModelTestData.initialGrid))
+              )
+            )
+          );
 
-        //   act(() => result.current.start());
-        //   act(() => jest.advanceTimersByTime(tickTimeUnit));
-        //   act(() => result.current.stop());
+          act(() => result.current.start());
+          act(() => jest.advanceTimersByTime(tickTimeUnit));
+          act(() => result.current.stop());
 
-        //   await waitFor(() => {
-        //     expect(result.current.antGridData.antData.gridIndex.row).toBe(0);
-        //     expect(result.current.antGridData.antData.gridIndex.col).toBe(1);
-        //   });
-        // });
+          await waitFor(() => {
+            expect(result.current.antGridData.antData.gridIndex.row).toBe(3);
+            expect(result.current.antGridData.antData.gridIndex.col).toBe(1);
+          });
+        });
       });
     });
   });
