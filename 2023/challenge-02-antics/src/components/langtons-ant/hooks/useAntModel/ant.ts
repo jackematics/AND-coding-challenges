@@ -26,7 +26,30 @@ export default class Ant {
 
     this.rotation =
       currentTileColour === Colour.White
-        ? rotations[nextIndexClockwise]
-        : rotations[nextIndexAntiClockwise];
+        ? rotations[nextIndexAntiClockwise]
+        : rotations[nextIndexClockwise];
+  }
+
+  public move(): void {
+    switch (this.rotation) {
+      case 0:
+        this.gridIndex.row--;
+        break;
+
+      case 90:
+        this.gridIndex.col++;
+        break;
+
+      case 180:
+        this.gridIndex.row++;
+        break;
+
+      case 270:
+        this.gridIndex.col--;
+        break;
+
+      default:
+        throw new Error('invalid rotation');
+    }
   }
 }

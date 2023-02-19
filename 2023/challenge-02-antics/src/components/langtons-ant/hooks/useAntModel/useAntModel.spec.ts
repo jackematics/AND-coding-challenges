@@ -31,7 +31,7 @@ describe('useAntModel', () => {
         });
       });
 
-      it('should set the ant to face left', async () => {
+      it('should turn the ant 90 degrees anticlockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
             new Ant({ ...AntModelTestData.antInitialGridIndex }, 0),
@@ -44,6 +44,23 @@ describe('useAntModel', () => {
 
         await waitFor(() => {
           expect(result.current.antData.rotation).toBe(270);
+        });
+      });
+
+      it('should move the ant one cell in the rotated direction', async () => {
+        const { result } = renderHook(() =>
+          useAntModel(
+            new Ant({ ...AntModelTestData.antInitialGridIndex }, 0),
+            new Grid({ ...AntModelTestData.initialGridWhiteCentre })
+          )
+        );
+
+        act(() => result.current.start());
+        act(() => jest.advanceTimersByTime(250));
+
+        await waitFor(() => {
+          expect(result.current.antData.gridIndex.row).toBe(1);
+          expect(result.current.antData.gridIndex.col).toBe(0);
         });
       });
     });
@@ -69,7 +86,7 @@ describe('useAntModel', () => {
         });
       });
 
-      it('should set the ant to face right', async () => {
+      it('should turn the ant 90 degrees clockwise', async () => {
         const { result } = renderHook(() =>
           useAntModel(
             new Ant({ ...AntModelTestData.antInitialGridIndex }, 0),

@@ -35,6 +35,7 @@ const useAntModel = (ant: Ant, grid: Grid): AntModel => {
       grid.getState()[antData.gridIndex.row][antData.gridIndex.col]
     );
     grid.flipAntSquare(ant.getState().gridIndex);
+    ant.move();
 
     setAntData({ ...ant.getState() });
     setGridData({ ...grid.getState() });
