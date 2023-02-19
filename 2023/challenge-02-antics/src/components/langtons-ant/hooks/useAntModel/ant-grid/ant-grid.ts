@@ -61,6 +61,7 @@ export default class AntGridModeller {
       this.ant.getState().gridIndex.col === 0
     ) {
       this.grid.expandLeft();
+      this.ant.adjustToBoundaryExpansion({ row: 0, col: +1 });
     }
   }
 
