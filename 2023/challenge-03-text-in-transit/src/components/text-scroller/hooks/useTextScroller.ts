@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import ScrollCharacter from '../scroll-character';
 
-import TextScrollerOperations from '../text-scroller-operations';
+import TextScrollerOperations from '../utils/text-scroller-operations';
 
 type TextScrollerProps = {
   text: string;
@@ -17,11 +18,13 @@ const useTextScroller = ({
   screenWidth,
   tickInterval,
 }: TextScrollerProps): TextScrollerResult => {
-  const offScreenRef = useRef<string[]>(
-    TextScrollerOperations.initialiseOffScreenText(text)
+  const onScreenRef = useRef<ScrollCharacter[]>(
+    Array(screenWidth).fill(new ScrollCharacter(' '))
+  );
+  const offScreenRef = useRef<ScrollCharacter[]>(
+    TextScrollerOperations.initialiseScrollCharacters(text)
   );
 
-  const onScreenRef = useRef<string[]>(Array(screenWidth).fill(' '));
   const [tickIntervalCount, setTickIntervalCount] = useState(0);
 
   useEffect(() => {
@@ -47,7 +50,9 @@ const useTextScroller = ({
     offScreenRef.current = nextOffScreen;
   };
 
-  return { onScreen: onScreenRef.current.join('') };
+  return {
+    onScreen: TextScrollerOperations.convertToString(onScreenRef.current),
+  };
 };
 
 export default useTextScroller;

@@ -35,7 +35,7 @@ describe('useTextScroller', () => {
 
     await waitFor(() => {
       expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollOnce
+        TextScrollerMockData.scrollOncePlain
       );
     });
   });
@@ -53,7 +53,7 @@ describe('useTextScroller', () => {
 
     await waitFor(() => {
       expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTenTimes
+        TextScrollerMockData.scrollTenTimesPlain
       );
     });
   });
@@ -71,7 +71,7 @@ describe('useTextScroller', () => {
 
     await waitFor(() => {
       expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTwentyOneTimes
+        TextScrollerMockData.scrollTwentyOneTimesPlain
       );
     });
   });
@@ -100,21 +100,21 @@ describe('useTextScroller', () => {
     });
   });
 
-  // it('should support bold text', async () => {
-  //   const { result } = renderHook(() =>
-  //     useTextScroller({
-  //       text: TextScrollerMockData.someBoldText,
-  //       screenWidth: TextScrollerMockData.screenWidth,
-  //       tickInterval: TextScrollerMockData.tickInterval,
-  //     })
-  //   );
+  it.only('should support bold text', async () => {
+    const { result } = renderHook(() =>
+      useTextScroller({
+        text: TextScrollerMockData.someBoldText,
+        screenWidth: TextScrollerMockData.screenWidth,
+        tickInterval: TextScrollerMockData.tickInterval,
+      })
+    );
 
-  //   act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
+    act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
 
-  //   await waitFor(() => {
-  //     expect(result.current.onScreen).toStrictEqual(
-  //       TextScrollerMockData.emptyScroller
-  //     );
-  //   });
-  // });
+    await waitFor(() => {
+      expect(result.current.onScreen).toStrictEqual(
+        TextScrollerMockData.scrollTenTimesBold
+      );
+    });
+  });
 });

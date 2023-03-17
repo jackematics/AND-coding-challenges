@@ -1,0 +1,3 @@
+type Modifiers = {
+  bold: boolean;
+};
