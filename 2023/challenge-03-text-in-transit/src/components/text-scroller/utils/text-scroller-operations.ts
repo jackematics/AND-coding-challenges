@@ -4,6 +4,7 @@ export default class TextScrollerOperations {
   public static initialiseScrollCharacters(text: string): ScrollCharacter[] {
     let modifiers = {
       bold: false,
+      underlined: false,
     };
     return this.processIntoScrollCharacterArray(text, modifiers, []);
   }
@@ -47,6 +48,8 @@ export default class TextScrollerOperations {
     const updatedModifiers = {
       '[B]': { ...modifiers, bold: true },
       '[/B]': { ...modifiers, bold: false },
+      '[U]': { ...modifiers, underlined: true },
+      '[/U]': { ...modifiers, underlined: false },
     }[nextModifier];
 
     if (!updatedModifiers) {

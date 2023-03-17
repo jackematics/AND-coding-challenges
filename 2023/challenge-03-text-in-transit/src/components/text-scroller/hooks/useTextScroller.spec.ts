@@ -100,7 +100,7 @@ describe('useTextScroller', () => {
     });
   });
 
-  it.only('should support bold text', async () => {
+  it('should support bold text', async () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.someBoldText,
@@ -114,6 +114,24 @@ describe('useTextScroller', () => {
     await waitFor(() => {
       expect(result.current.onScreen).toStrictEqual(
         TextScrollerMockData.scrollTenTimesBold
+      );
+    });
+  });
+
+  it('should support underlined text', async () => {
+    const { result } = renderHook(() =>
+      useTextScroller({
+        text: TextScrollerMockData.someUnderlinedText,
+        screenWidth: TextScrollerMockData.screenWidth,
+        tickInterval: TextScrollerMockData.tickInterval,
+      })
+    );
+
+    act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
+
+    await waitFor(() => {
+      expect(result.current.onScreen).toStrictEqual(
+        TextScrollerMockData.scrollTenTimesUnderlined
       );
     });
   });

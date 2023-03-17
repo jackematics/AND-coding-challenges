@@ -15,4 +15,9 @@ export default class TextScrollerMockData {
     'The [B]quick[/B] brown fox jumps over the lazy dog';
   public static readonly scrollTenTimesBold =
     '          The <b>q</b><b>u</b><b>i</b><b>c</b><b>k</b> ';
+
+  public static readonly someUnderlinedText =
+    'The [U]quick[/U] brown fox jumps over the lazy dog';
+  public static readonly scrollTenTimesUnderlined =
+    '          The <u>q</u><u>u</u><u>i</u><u>c</u><u>k</u> ';
 }
