@@ -24,15 +24,21 @@ export default class TextScrollerOperations {
       return result;
     }
 
+    return text.indexOf('[') === 0
+      ? this.handleSpecialCharacters(text, modifiers, result)
+      : this.processIntoScrollCharacterArray(text.slice(1), modifiers, [
+          ...result,
+          new ScrollCharacter(text[0], modifiers),
+        ]);
+  }
+
+  private static handleSpecialCharacters(
+    text: string,
+    modifiers: Modifiers,
+    result: ScrollCharacter[]
+  ) {
     const nextModifierStart = text.indexOf('[');
     const nextModifierEnd = text.indexOf(']') + 1;
-
-    if (nextModifierStart !== 0) {
-      return this.processIntoScrollCharacterArray(text.slice(1), modifiers, [
-        ...result,
-        new ScrollCharacter(text[0], modifiers),
-      ]);
-    }
 
     const rawModifier = text.slice(nextModifierStart, nextModifierEnd);
     const modifierResult = this.processModifier(rawModifier);
