@@ -22,7 +22,7 @@ describe('useTextScroller', () => {
     );
   });
 
-  it('should set the last element to be the first letter of text after first tick', async () => {
+  it('should set the last element to be the first letter of text after first tick', () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.plainText,
@@ -33,14 +33,12 @@ describe('useTextScroller', () => {
 
     act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval));
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollOncePlain
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollOncePlain
+    );
   });
 
-  it('should be show ten letters on screen after ten ticks', async () => {
+  it('should be show ten letters on screen after ten ticks', () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.plainText,
@@ -51,11 +49,9 @@ describe('useTextScroller', () => {
 
     act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTenTimesPlain
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTenTimesPlain
+    );
   });
 
   it('should begin cutting off letters after the text has passed the screen width', async () => {
@@ -69,14 +65,12 @@ describe('useTextScroller', () => {
 
     act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 21));
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTwentyOneTimesPlain
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTwentyOneTimesPlain
+    );
   });
 
-  it('should show an empty screen once the whole word has been cycled through', async () => {
+  it('should show an empty screen once the whole word has been cycled through', () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.plainText,
@@ -93,14 +87,12 @@ describe('useTextScroller', () => {
       )
     );
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.emptyScroller
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.emptyScroller
+    );
   });
 
-  it('should support bold text', async () => {
+  it('should support bold text', () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.someBoldText,
@@ -111,14 +103,12 @@ describe('useTextScroller', () => {
 
     act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTenTimesBold
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTenTimesBold
+    );
   });
 
-  it('should support underlined text', async () => {
+  it('should support underlined text', () => {
     const { result } = renderHook(() =>
       useTextScroller({
         text: TextScrollerMockData.someUnderlinedText,
@@ -129,10 +119,24 @@ describe('useTextScroller', () => {
 
     act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
 
-    await waitFor(() => {
-      expect(result.current.onScreen).toStrictEqual(
-        TextScrollerMockData.scrollTenTimesUnderlined
-      );
-    });
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTenTimesUnderlined
+    );
+  });
+
+  it('should support bold and underlined text', () => {
+    const { result } = renderHook(() =>
+      useTextScroller({
+        text: TextScrollerMockData.someBoldAndUnderlinedText,
+        screenWidth: TextScrollerMockData.screenWidth,
+        tickInterval: TextScrollerMockData.tickInterval,
+      })
+    );
+
+    act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
+
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTenTimesBoldAndUnderlined
+    );
   });
 });
