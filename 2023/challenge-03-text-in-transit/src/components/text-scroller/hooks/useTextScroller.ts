@@ -9,7 +9,7 @@ type TextScrollerProps = {
 };
 
 type TextScrollerResult = {
-  onScreen: string[];
+  onScreen: string;
 };
 
 const useTextScroller = ({
@@ -21,7 +21,7 @@ const useTextScroller = ({
     TextScrollerOperations.initialiseOffScreenText(text)
   );
 
-  const onScreenRef = useRef<string[]>(Array(screenWidth).fill(''));
+  const onScreenRef = useRef<string[]>(Array(screenWidth).fill(' '));
   const [tickIntervalCount, setTickIntervalCount] = useState(0);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const useTextScroller = ({
     offScreenRef.current = nextOffScreen;
   };
 
-  return { onScreen: onScreenRef.current };
+  return { onScreen: onScreenRef.current.join('') };
 };
 
 export default useTextScroller;

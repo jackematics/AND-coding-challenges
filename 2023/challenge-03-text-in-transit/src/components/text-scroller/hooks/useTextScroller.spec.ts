@@ -99,4 +99,22 @@ describe('useTextScroller', () => {
       );
     });
   });
+
+  // it('should support bold text', async () => {
+  //   const { result } = renderHook(() =>
+  //     useTextScroller({
+  //       text: TextScrollerMockData.someBoldText,
+  //       screenWidth: TextScrollerMockData.screenWidth,
+  //       tickInterval: TextScrollerMockData.tickInterval,
+  //     })
+  //   );
+
+  //   act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
+
+  //   await waitFor(() => {
+  //     expect(result.current.onScreen).toStrictEqual(
+  //       TextScrollerMockData.emptyScroller
+  //     );
+  //   });
+  // });
 });
