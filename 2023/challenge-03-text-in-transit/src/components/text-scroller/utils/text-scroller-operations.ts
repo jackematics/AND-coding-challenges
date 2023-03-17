@@ -1,5 +1,10 @@
 import ScrollCharacter from '../scroll-character';
 
+type ModifierResult = {
+  modifier: string;
+  colour?: string;
+};
+
 export default class TextScrollerOperations {
   public static initialiseScrollCharacters(text: string): ScrollCharacter[] {
     let modifiers = {
@@ -32,8 +37,10 @@ export default class TextScrollerOperations {
       );
     }
 
-    const nextModifier = text.slice(nextModifierStart, nextModifierEnd);
-    const updatedModifiers = this.updateModifiers(modifiers, nextModifier);
+    const rawModifier = text.slice(nextModifierStart, nextModifierEnd);
+    const modifierResult = this.processModifier(rawModifier);
+
+    const updatedModifiers = this.updateModifiers(modifiers, modifierResult);
 
     return this.processIntoScrollCharacterArray(
       text.slice(nextModifierEnd),
@@ -44,15 +51,8 @@ export default class TextScrollerOperations {
 
   private static updateModifiers(
     modifiers: Modifiers,
-    nextModifier: string
+    modifierResult: ModifierResult
   ): Modifiers {
-    let modifier = nextModifier;
-    let colour;
-    if (modifier.includes('[C')) {
-      colour = this.extractColour(modifier);
-      modifier = '[C]';
-    }
-
     const updatedModifiers = {
       '[B]': { ...modifiers, bold: true },
       '[/B]': { ...modifiers, bold: false },
@@ -60,16 +60,27 @@ export default class TextScrollerOperations {
       '[/U]': { ...modifiers, underlined: false },
       '[C]': {
         ...modifiers,
-        colours: [colour, ...modifiers.colours],
+        colours: [modifierResult.colour, ...modifiers.colours],
       },
       '[/C]': { ...modifiers, colours: modifiers.colours.slice(1) },
-    }[modifier] as Modifiers;
+    }[modifierResult.modifier] as Modifiers;
 
     if (!updatedModifiers) {
       throw new Error('invalid modifier');
     }
 
     return updatedModifiers;
+  }
+
+  private static processModifier(modifier: string): ModifierResult {
+    if (modifier.includes('[C')) {
+      return {
+        modifier: '[C]',
+        colour: this.extractColour(modifier),
+      };
+    }
+
+    return { modifier };
   }
 
   private static extractColour(modifier: string) {
