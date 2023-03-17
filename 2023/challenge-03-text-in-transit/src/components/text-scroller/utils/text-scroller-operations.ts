@@ -40,8 +40,9 @@ export default class TextScrollerOperations {
     const nextModifierStart = text.indexOf('[');
     const nextModifierEnd = text.indexOf(']') + 1;
 
-    const rawModifier = text.slice(nextModifierStart, nextModifierEnd);
-    const modifierResult = this.processModifier(rawModifier);
+    const modifierResult = this.processModifier(
+      text.slice(nextModifierStart, nextModifierEnd)
+    );
     const updatedModifiers = this.updateModifiers(modifiers, modifierResult);
 
     return this.processIntoScrollCharacterArray(
