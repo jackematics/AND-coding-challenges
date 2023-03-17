@@ -11,23 +11,17 @@ export default class ScrollCharacter {
   }
 
   public toString() {
-    let result = this.character;
-    if (this.modifiers.bold) {
-      result = this.applyBold(result);
-    }
+    const boldApplied = this.applyBold(this.character);
+    const underlineApplied = this.applyUnderline(boldApplied);
 
-    if (this.modifiers.underlined) {
-      result = this.applyUnderline(result);
-    }
-
-    return result;
+    return underlineApplied;
   }
 
   private applyBold(result: string): string {
-    return `<b>${result}</b>`;
+    return this.modifiers.bold ? `<b>${result}</b>` : result;
   }
 
   private applyUnderline(result: string): string {
-    return `<u>${result}</u>`;
+    return this.modifiers.underlined ? `<u>${result}</u>` : result;
   }
 }
