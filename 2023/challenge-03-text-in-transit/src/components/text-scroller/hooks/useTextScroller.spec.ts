@@ -139,4 +139,20 @@ describe('useTextScroller', () => {
       TextScrollerMockData.scrollTenTimesBoldAndUnderlined
     );
   });
+
+  it('should support coloured text', () => {
+    const { result } = renderHook(() =>
+      useTextScroller({
+        text: TextScrollerMockData.someColouredText,
+        screenWidth: TextScrollerMockData.screenWidth,
+        tickInterval: TextScrollerMockData.tickInterval,
+      })
+    );
+
+    act(() => jest.advanceTimersByTime(TextScrollerMockData.tickInterval * 10));
+
+    expect(result.current.onScreen).toStrictEqual(
+      TextScrollerMockData.scrollTenTimesColoured
+    );
+  });
 });

@@ -25,4 +25,9 @@ export default class TextScrollerMockData {
     'The [B][U]quick[/U][/B] brown fox jumps over the lazy dog';
   public static readonly scrollTenTimesBoldAndUnderlined =
     '          The <u><b>q</b></u><u><b>u</b></u><u><b>i</b></u><u><b>c</b></u><u><b>k</b></u> ';
+
+  public static readonly someColouredText =
+    'The [C:#ff0000]quick[/C] brown fox jumps over the lazy dog';
+  public static readonly scrollTenTimesColoured =
+    '          The <span className="text-[#ff0000]">q</span><span className="text-[#ff0000]">u</span><span className="text-[#ff0000]">i</span><span className="text-[#ff0000]">c</span><span className="text-[#ff0000]">k</span> ';
 }

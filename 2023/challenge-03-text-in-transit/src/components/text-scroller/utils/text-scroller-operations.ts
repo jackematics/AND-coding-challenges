@@ -5,6 +5,7 @@ export default class TextScrollerOperations {
     let modifiers = {
       bold: false,
       underlined: false,
+      colours: [],
     };
     return this.processIntoScrollCharacterArray(text, modifiers, []);
   }
@@ -45,18 +46,35 @@ export default class TextScrollerOperations {
     modifiers: Modifiers,
     nextModifier: string
   ): Modifiers {
+    let modifier = nextModifier;
+    let colour;
+    if (modifier.includes('[C')) {
+      colour = this.extractColour(modifier);
+      modifier = '[C]';
+    }
+
     const updatedModifiers = {
       '[B]': { ...modifiers, bold: true },
       '[/B]': { ...modifiers, bold: false },
       '[U]': { ...modifiers, underlined: true },
       '[/U]': { ...modifiers, underlined: false },
-    }[nextModifier];
+      '[C]': {
+        ...modifiers,
+        colours: [colour, ...modifiers.colours],
+      },
+      '[/C]': { ...modifiers, colours: modifiers.colours.slice(1) },
+    }[modifier] as Modifiers;
 
     if (!updatedModifiers) {
       throw new Error('invalid modifier');
     }
 
     return updatedModifiers;
+  }
+
+  private static extractColour(modifier: string) {
+    const hexCodeLength = 7;
+    return modifier.split(':')[1].slice(0, hexCodeLength);
   }
 
   public static scrollLeft(

@@ -4,7 +4,7 @@ export default class ScrollCharacter {
 
   constructor(
     character: string,
-    modifiers: Modifiers = { bold: false, underlined: false }
+    modifiers: Modifiers = { bold: false, underlined: false, colours: [] }
   ) {
     this.character = character;
     this.modifiers = modifiers;
@@ -13,8 +13,9 @@ export default class ScrollCharacter {
   public toString() {
     const boldApplied = this.applyBold(this.character);
     const underlineApplied = this.applyUnderline(boldApplied);
+    const colourApplied = this.applyColour(underlineApplied);
 
-    return underlineApplied;
+    return colourApplied;
   }
 
   private applyBold(result: string): string {
@@ -23,5 +24,11 @@ export default class ScrollCharacter {
 
   private applyUnderline(result: string): string {
     return this.modifiers.underlined ? `<u>${result}</u>` : result;
+  }
+
+  private applyColour(result: string): string {
+    return this.modifiers.colours.length !== 0
+      ? `<span className="text-[${this.modifiers.colours[0]}]">${result}</span>`
+      : result;
   }
 }
