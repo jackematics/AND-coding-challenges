@@ -28,18 +28,14 @@ export default class TextScrollerOperations {
     const nextModifierEnd = text.indexOf(']') + 1;
 
     if (nextModifierStart !== 0) {
-      result.push(new ScrollCharacter(text[0], modifiers));
-
-      return this.processIntoScrollCharacterArray(
-        text.slice(1),
-        modifiers,
-        result
-      );
+      return this.processIntoScrollCharacterArray(text.slice(1), modifiers, [
+        ...result,
+        new ScrollCharacter(text[0], modifiers),
+      ]);
     }
 
     const rawModifier = text.slice(nextModifierStart, nextModifierEnd);
     const modifierResult = this.processModifier(rawModifier);
-
     const updatedModifiers = this.updateModifiers(modifiers, modifierResult);
 
     return this.processIntoScrollCharacterArray(
