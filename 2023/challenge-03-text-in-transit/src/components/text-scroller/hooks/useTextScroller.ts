@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ScrollState } from '../enums/text-scroller-enums';
-import { copy } from 'copy-anything';
 
-import TextScrollerInitialiser from '../text-scroller-initialiser';
+import TextScrollerOperations from '../text-scroller-operations';
 
 type TextScrollerProps = {
   text: string;
@@ -12,8 +10,6 @@ type TextScrollerProps = {
 
 type TextScrollerResult = {
   onScreen: string[];
-  start: () => void;
-  stop: () => void;
 };
 
 const useTextScroller = ({
@@ -21,44 +17,37 @@ const useTextScroller = ({
   screenWidth,
   tickInterval,
 }: TextScrollerProps): TextScrollerResult => {
-  const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.Stop);
-  const [offScreen, setOffScreen] = useState<string[]>(
-    TextScrollerInitialiser.initialiseOffScreenText(text)
-  );
-  const [onScreen, setOnScreen] = useState<string[]>(
-    Array(screenWidth).fill('')
+  const offScreenRef = useRef<string[]>(
+    TextScrollerOperations.initialiseOffScreenText(text)
   );
 
-  const start = () => {
-    setScrollState(ScrollState.Start);
-  };
-
-  const stop = () => {
-    clearInterval(tickIntervalRef.current as NodeJS.Timeout);
-    setScrollState(ScrollState.Stop);
-  };
+  const onScreenRef = useRef<string[]>(Array(screenWidth).fill(''));
+  const [tickIntervalCount, setTickIntervalCount] = useState(0);
 
   useEffect(() => {
-    if (scrollState === ScrollState.Start) {
-      tickIntervalRef.current = setInterval(() => {
-        tick();
-      }, tickInterval);
-    }
-  }, [scrollState]);
+    const interval = setInterval(() => {
+      tick();
+      setTickIntervalCount(tickIntervalCount + 1);
+    }, tickInterval);
+    return () => clearInterval(interval);
+  }, [tickIntervalCount]);
 
   const tick = () => {
-    const nextOnScreen = onScreen.slice(1).concat([offScreen[0]]);
-    const nextOffScreen = offScreen
-      .slice(1)
-      .concat([onScreen[onScreen.length - 1]]);
+    const nextOnScreen = TextScrollerOperations.scrollLeft(
+      onScreenRef.current,
+      offScreenRef.current
+    );
 
-    setOnScreen(nextOnScreen);
-    setOffScreen(nextOffScreen);
+    const nextOffScreen = TextScrollerOperations.scrollLeft(
+      offScreenRef.current,
+      onScreenRef.current
+    );
+
+    onScreenRef.current = nextOnScreen;
+    offScreenRef.current = nextOffScreen;
   };
 
-  return { start, stop, onScreen };
+  return { onScreen: onScreenRef.current };
 };
 
 export default useTextScroller;
