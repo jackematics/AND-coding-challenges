@@ -1,5 +1,7 @@
 # Text in Transit
 
+Challenge completed in React, and TS with all stretch goals completed. The only thing I'm not completely happy with is that all the text characters have different widths so on the screen the scroller can sometimes be a bit inconsistent in size.
+
 ## How to run
 
 `npm run dev` to run the application.

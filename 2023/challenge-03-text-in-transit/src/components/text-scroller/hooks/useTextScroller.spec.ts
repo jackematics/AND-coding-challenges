@@ -13,7 +13,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.plainText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -27,7 +27,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.plainText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -43,7 +43,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.plainText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -59,7 +59,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.plainText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -75,7 +75,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.plainText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -97,7 +97,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someBoldText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -113,7 +113,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someUnderlinedText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -129,7 +129,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someBoldAndUnderlinedText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -145,7 +145,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someColouredText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -161,7 +161,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someBoldColouredAndUnderlinedText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 
@@ -177,7 +177,7 @@ describe('useTextScroller', () => {
       useTextScroller({
         text: TextScrollerMockData.someBoldNestedColouredAndUnderlinedText,
         screenWidth: TextScrollerMockData.screenWidth,
-        tickInterval: TextScrollerMockData.tickInterval,
+        tickIntervalMilliseconds: TextScrollerMockData.tickInterval,
       })
     );
 

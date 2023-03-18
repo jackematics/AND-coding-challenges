@@ -13,14 +13,22 @@ function App() {
       <h1 className="mb-10 text-center font-sans text-6xl font-bold">
         Text in Transit
       </h1>
-      <div className="m-auto w-1/2">
-        <TextScroller text={trainText} screenWidth={25} tickInterval={225} />
+      <div className="m-auto w-1/4">
+        <TextScroller
+          text={trainText}
+          screenWidth={25}
+          tickIntervalMilliseconds={225}
+        />
         <TextScroller
           text={nestedColourText}
           screenWidth={35}
-          tickInterval={150}
+          tickIntervalMilliseconds={150}
         />
-        <TextScroller text={lemonSherbert} screenWidth={40} tickInterval={50} />
+        <TextScroller
+          text={lemonSherbert}
+          screenWidth={40}
+          tickIntervalMilliseconds={50}
+        />
       </div>
     </>
   );

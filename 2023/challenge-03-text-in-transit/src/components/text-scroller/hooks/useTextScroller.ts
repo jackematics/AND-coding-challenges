@@ -6,7 +6,7 @@ import TextScrollerOperations from '../utils/text-scroller-operations';
 type TextScrollerProps = {
   text: string;
   screenWidth: number;
-  tickInterval: number;
+  tickIntervalMilliseconds: number;
 };
 
 type TextScrollerResult = {
@@ -16,7 +16,7 @@ type TextScrollerResult = {
 const useTextScroller = ({
   text,
   screenWidth,
-  tickInterval,
+  tickIntervalMilliseconds,
 }: TextScrollerProps): TextScrollerResult => {
   const onScreenRef = useRef<ScrollCharacter[]>(
     Array(screenWidth).fill(new ScrollCharacter(' '))
@@ -31,7 +31,7 @@ const useTextScroller = ({
     const interval = setInterval(() => {
       tick();
       setTickIntervalCount(tickIntervalCount + 1);
-    }, tickInterval);
+    }, tickIntervalMilliseconds);
     return () => clearInterval(interval);
   }, [tickIntervalCount]);
 

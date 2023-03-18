@@ -4,18 +4,18 @@ import parse from 'html-react-parser';
 type TextScrollerProps = {
   text: string;
   screenWidth: number;
-  tickInterval: number;
+  tickIntervalMilliseconds: number;
 };
 
 const TextScroller = ({
   text,
   screenWidth,
-  tickInterval,
+  tickIntervalMilliseconds: tickInterval,
 }: TextScrollerProps) => {
   const { onScreen } = useTextScroller({
     text,
     screenWidth,
-    tickInterval,
+    tickIntervalMilliseconds: tickInterval,
   });
 
   return (
