@@ -20,7 +20,7 @@ const TextScroller = ({
 
   return (
     <>
-      <p className="">{parse(onScreen)}</p>
+      <p className="text-right">{parse(onScreen)}</p>
     </>
   );
 };

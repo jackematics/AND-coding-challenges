@@ -5,6 +5,8 @@ function App() {
     'Welcome on board this service to [B]London[/B]. Please have [U]all[/U] tickets and passes ready for inspection. This service is expected to depart [C:#00FF00]on time[/C]';
   const nestedColourText =
     '[C:#FF0000]All of this text is Red, but [C:#0000FF][B][U]THIS[/U][/B] text is Blue.[/C][/C]';
+  const lemonSherbert =
+    "Everything seems to be in [B]Order[/B]. I'm going to go across the street, and get you some [C:#FFA500][B][U]orange sherbert[/U][/B][/C]. Here, have a [B]piece[/B] of [B]gum[/B].";
 
   return (
     <>
@@ -12,16 +14,13 @@ function App() {
         Text in Transit
       </h1>
       <div className="m-auto w-1/2">
-        <div className="border-2 border-black">
-          <TextScroller text={trainText} screenWidth={25} tickInterval={225} />
-        </div>
-        <div className="border-2 border-black">
-          <TextScroller
-            text={nestedColourText}
-            screenWidth={35}
-            tickInterval={150}
-          />
-        </div>
+        <TextScroller text={trainText} screenWidth={25} tickInterval={225} />
+        <TextScroller
+          text={nestedColourText}
+          screenWidth={35}
+          tickInterval={150}
+        />
+        <TextScroller text={lemonSherbert} screenWidth={40} tickInterval={50} />
       </div>
     </>
   );
