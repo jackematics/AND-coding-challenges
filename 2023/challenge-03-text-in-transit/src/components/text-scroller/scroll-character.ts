@@ -6,7 +6,7 @@ export default class ScrollCharacter {
     character: string,
     modifiers: Modifiers = { bold: false, underlined: false, colours: [] }
   ) {
-    this.character = character;
+    this.character = character === ' ' ? '&nbsp;' : character;
     this.modifiers = modifiers;
   }
 
@@ -28,7 +28,7 @@ export default class ScrollCharacter {
 
   private applyColour(result: string): string {
     return this.modifiers.colours.length !== 0
-      ? `<span className="text-[${this.modifiers.colours[0]}]">${result}</span>`
+      ? `<span style="color:${this.modifiers.colours[0]}">${result}</span>`
       : result;
   }
 }
